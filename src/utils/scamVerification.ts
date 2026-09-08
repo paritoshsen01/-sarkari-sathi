@@ -1,4 +1,5 @@
 import { prototypeSchemes } from '../data/schemes';
+import { officialSchemesDb } from '../data/officialSchemesDb';
 
 export type VerificationResult = 'verified' | 'suspicious' | 'unknown';
 
@@ -6,6 +7,7 @@ export interface VerificationResponse {
   status: VerificationResult;
   message: string;
   matchedScheme?: string;
+  officialUrl?: string;
 }
 
 export function verifyScheme(name: string, url: string, msg: string): VerificationResponse {
@@ -14,8 +16,8 @@ export function verifyScheme(name: string, url: string, msg: string): Verificati
   const m = msg.toLowerCase().trim();
 
   // 1. Check for immediate Red Flags (Suspicious)
-  const scamKeywords = ['free money', 'lottery', 'urgent', 'send otp', 'click here to claim', '₹5000 free', 'win', 'prize', 'whatsapp forward'];
-  const suspiciousUrls = ['bit.ly', 'tinyurl', 'free-gov-money', 'xyz', 'click.ru', 'wa.me'];
+  const scamKeywords = ['free money', 'lottery', 'urgent', 'send otp', 'click here to claim', '₹5000 free', 'win', 'prize', 'whatsapp forward', 'forwarded many times'];
+  const suspiciousUrls = ['bit.ly', 'tinyurl', 'free-gov-money', 'xyz', 'click.ru', 'wa.me', 'ngrok.io'];
 
   const hasScamKeywords = scamKeywords.some(kw => m.includes(kw));
   const hasSuspiciousUrl = suspiciousUrls.some(su => u.includes(su));
@@ -27,33 +29,60 @@ export function verifyScheme(name: string, url: string, msg: string): Verificati
     };
   }
 
-  // 2. Check for Green Flags (Verified)
-  // Find a matching scheme
+  // 2. Check for Green Flags (Verified) against both Prototype DB and Massive Official DB
   let matchedSchemeName = '';
-  const isKnownScheme = prototypeSchemes.some(s => {
-    if (s.name.toLowerCase().includes(n) || n.includes(s.name.toLowerCase())) {
+  let officialSchemeUrl = '';
+  let foundInDb = false;
+
+  // Check Official DB first
+  for (const s of officialSchemesDb) {
+    if (n === s.name.toLowerCase() || s.aliases.some(alias => n.includes(alias) || alias.includes(n))) {
+      foundInDb = true;
       matchedSchemeName = s.name;
-      return true;
+      officialSchemeUrl = s.url;
+      break;
     }
-    return false;
-  });
+  }
 
-  const isOfficialUrl = u.includes('.gov.in') || u.includes('.nic.in');
+  // Fallback to Prototype DB
+  if (!foundInDb) {
+    for (const s of prototypeSchemes) {
+      if (s.name.toLowerCase().includes(n) || n.includes(s.name.toLowerCase())) {
+        foundInDb = true;
+        matchedSchemeName = s.name;
+        break;
+      }
+    }
+  }
 
-  if (isKnownScheme && isOfficialUrl) {
+  const isOfficialUrl = u.includes('.gov.in') || u.includes('.nic.in') || (officialSchemeUrl && u.includes(officialSchemeUrl));
+
+  if (foundInDb && isOfficialUrl) {
     return {
       status: 'verified',
       message: 'This matches an official Government scheme and the provided website is verified.',
-      matchedScheme: matchedSchemeName
+      matchedScheme: matchedSchemeName,
+      officialUrl: officialSchemeUrl
+    };
+  }
+
+  // If we know the scheme, but the URL doesn't match the official one, it's highly suspicious!
+  if (foundInDb && u && !isOfficialUrl) {
+    return {
+      status: 'suspicious',
+      message: \`WARNING: You are looking for a real scheme (\${matchedSchemeName}), but the website link you provided is FAKE! Do not enter your details.\`,
+      matchedScheme: matchedSchemeName,
+      officialUrl: officialSchemeUrl || 'Always use .gov.in websites'
     };
   }
 
   // 3. Fallback (Could not fully verify)
-  if (isKnownScheme && !u) {
+  if (foundInDb && !u) {
     return {
       status: 'unknown',
-      message: 'The scheme name exists, but without an official website link, we cannot fully verify this specific message. Be cautious.',
-      matchedScheme: matchedSchemeName
+      message: 'The scheme name exists, but without a website link, we cannot fully verify this specific message. Be cautious.',
+      matchedScheme: matchedSchemeName,
+      officialUrl: officialSchemeUrl
     };
   }
 

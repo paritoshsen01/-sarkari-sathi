@@ -169,10 +169,15 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
                   {result.message}
                 </p>
 
-                {result.matchedScheme && result.status !== 'suspicious' && (
+                {result.matchedScheme && (
                   <div className="mt-4 pt-4 border-t border-black/10">
                     <p className="text-sm font-semibold mb-1 opacity-80">Matched Official Database Entry:</p>
                     <p className="font-bold">{result.matchedScheme}</p>
+                    {result.officialUrl && (
+                      <p className="text-sm font-medium mt-1 text-slate-700 bg-white/50 px-3 py-1 rounded inline-block">
+                        Official Website: <strong>{result.officialUrl}</strong>
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
