@@ -1,6 +1,24 @@
 import Fuse from 'fuse.js';
 import { prototypeSchemes, type Scheme } from '../data/schemes';
 
+// Extract state/district logic
+const STATES = ['madhya pradesh', 'maharashtra', 'uttar pradesh', 'bihar', 'rajasthan', 'gujarat', 'karnataka', 'tamil nadu'];
+const DISTRICTS = ['sehore', 'bhopal', 'indore', 'pune', 'mumbai', 'lucknow', 'patna'];
+
+function extractLocation(text: string) {
+  const lowerText = text.toLowerCase();
+  let state = '';
+  let district = '';
+
+  for (const s of STATES) {
+    if (lowerText.includes(s)) state = s;
+  }
+  for (const d of DISTRICTS) {
+    if (lowerText.includes(d)) district = d;
+  }
+  return { state, district };
+}
+
 // Enhanced dictionary for schemes to catch synonyms and common phrases
 const enhancedSchemes = prototypeSchemes.map(scheme => {
   let extraTags: string[] = [];
@@ -17,6 +35,11 @@ const enhancedSchemes = prototypeSchemes.map(scheme => {
   if (scheme.id === 'pmmvy') extraTags = ['pregnant', 'child', 'delivery', 'maternity', 'bachha', 'jacha'];
   if (scheme.id === 'pmbjp') extraTags = ['chemist', 'store', 'pill', 'goli', 'sasti', 'sasta', 'clinic'];
 
+  // Add location tags so that "sehore" directly matches "sehore krishi sahayata"
+  if (scheme.locationName) {
+    extraTags.push(scheme.locationName.toLowerCase());
+  }
+
   return {
     ...scheme,
     searchableText: [...scheme.tags, ...extraTags, scheme.name, scheme.category, scheme.benefit].join(' ')
@@ -27,82 +50,120 @@ const enhancedSchemes = prototypeSchemes.map(scheme => {
 const needFuse = new Fuse(enhancedSchemes, {
   keys: ['searchableText'],
   includeScore: true,
-  threshold: 0.4, // Lower threshold means more strict matching (0.0 is perfect match, 1.0 is match anything)
-  ignoreLocation: true, // Don't care where in the text it appears
-  useExtendedSearch: true // Allows for advanced querying if needed
+  threshold: 0.4,
+  ignoreLocation: true,
+  useExtendedSearch: true
 });
 
 /**
  * Uses fuzzy search to find schemes related to a spoken need.
- * @param spokenText The raw text spoken by the user
- * @returns Array of matched schemes with scores
  */
 export function findSchemesByNeed(spokenText: string): Scheme[] {
-  // If text is very short, we don't want weird random matches
   if (!spokenText || spokenText.trim().length < 2) return [];
+
+  // Extract location from spoken text
+  const loc = extractLocation(spokenText);
 
   const results = needFuse.search(spokenText);
   
-  // Convert Fuse results back to Scheme format, assigning a flat 100 score for UI purposes 
-  // (or we could invert the fuse score, where 0 is perfect)
-  return results.map(result => ({
-    ...result.item,
-    score: result.score !== undefined ? Math.max(10, Math.round((1 - result.score) * 100)) : 100
-  })).filter(s => (s.score || 0) > 40); // Only return decent matches
+  return results.map(result => {
+    let score = result.score !== undefined ? Math.max(10, Math.round((1 - result.score) * 100)) : 100;
+    
+    // Hyperlocal prioritization for free-text search
+    if (result.item.locationLevel === 'District' && loc.district && result.item.locationName.toLowerCase().includes(loc.district)) {
+      score += 40; // Massive boost for local matching
+    } else if (result.item.locationLevel === 'State' && loc.state && result.item.locationName.toLowerCase().includes(loc.state)) {
+      score += 25; // Large boost for state matching
+    } else if (result.item.locationLevel !== 'National') {
+      // If the scheme is specific to a location, but user didn't mention it or it doesn't match, heavily penalize it
+      score -= 50;
+    }
+
+    return {
+      ...result.item,
+      score: Math.min(100, Math.max(0, score)) // cap between 0-100
+    };
+  }).filter(s => (s.score || 0) > 40).sort((a, b) => (b.score || 0) - (a.score || 0));
 }
 
 /**
- * Advanced matching for the questionnaire flow, incorporating fuzzy text checks
+ * Parses income string into maximum income value.
+ */
+function parseIncome(incomeStr: string): number {
+  const s = incomeStr.toLowerCase();
+  if (s.includes('1–2') || s.includes('1-2')) return 200000;
+  if (s.includes('2–5') || s.includes('2-5')) return 500000;
+  if (s.includes('1') && (s.includes('below') || s.includes('कम'))) return 100000;
+  return 1000000; // Above 5 lakh or unknown
+}
+
+/**
+ * Advanced strict matching engine
  */
 export function calculateDetailedScores(answers: Record<number, string>): Scheme[] {
   const state = (answers[0] || '').toLowerCase();
-  const occ = (answers[2] || '').toLowerCase();
-  const familySizeStr = answers[4] || '1';
-  const hasRationCard = (answers[5] || '').toLowerCase().includes('yes') || (answers[5] || '').includes('हाँ') || (answers[5] || '').includes('हओ');
-  const hasStudentFamily = (answers[6] || '').toLowerCase().includes('yes') || (answers[6] || '').includes('हाँ') || (answers[6] || '').includes('हओ');
-
-  // Use simple fuse instances just to check boolean flags accurately despite typos
-  const isFarmer = new Fuse([{v:'farmer'},{v:'farm'},{v:'kisan'},{v:'kheti'},{v:'agriculture'}], {keys:['v'], threshold:0.3}).search(occ).length > 0;
-  const isStudent = new Fuse([{v:'student'},{v:'padhai'},{v:'school'},{v:'college'},{v:'छात्र'}], {keys:['v'], threshold:0.3}).search(occ).length > 0;
-  const isLabourer = new Fuse([{v:'labourer'},{v:'mazdoor'},{v:'mulia'},{v:'worker'},{v:'daily wage'}], {keys:['v'], threshold:0.3}).search(occ).length > 0;
+  const district = (answers[1] || '').toLowerCase();
+  
+  const age = parseInt(answers[4]) || 30; // Default to 30 if parsing fails
+  const occ = (answers[5] || '').toLowerCase();
+  const incomeVal = parseIncome(answers[6] || '');
+  const familySizeStr = answers[7] || '1';
+  
+  const hasRationCard = (answers[8] || '').toLowerCase().includes('yes') || (answers[8] || '').includes('हाँ') || (answers[8] || '').includes('हओ');
+  const hasStudentFamily = (answers[9] || '').toLowerCase().includes('yes') || (answers[9] || '').includes('हाँ') || (answers[9] || '').includes('हओ');
 
   return prototypeSchemes.map(scheme => {
-    let score = 50; 
-    
-    if (scheme.id === 'pm-kisan') {
-      if (isFarmer) score = 95;
-      else score = 20; 
-    }
-    
-    if (scheme.id === 'scholarship') {
-      if (isStudent || hasStudentFamily) score = 92;
-      else score = 30;
-    }
-    
-    if (scheme.id === 'pm-jay') {
-      if (hasRationCard) score = 85;
-    }
-    
-    if (scheme.id === 'pm-ujjwala') {
-      if (hasRationCard) score = 80;
+    let score = 80; // Base score for a matched scheme
+
+    // 1. Check Strict Eligibility Rules
+    if (scheme.eligibility) {
+      const e = scheme.eligibility;
+
+      // Age Checks
+      if (e.minAge !== undefined && age < e.minAge) score = 0;
+      if (e.maxAge !== undefined && age > e.maxAge) score = 0;
+
+      // Income Check
+      if (e.maxIncome !== undefined && incomeVal > e.maxIncome) score = 0;
+
+      // Occupation Check
+      if (e.occupations && e.occupations.length > 0) {
+        // Simple fuzzy match for occupations
+        const occFuse = new Fuse(e.occupations.map(v => ({v})), {keys:['v'], threshold:0.3});
+        if (occFuse.search(occ).length === 0) {
+          score = 0; // Did not match allowed occupations
+        }
+      }
+
+      // Boolean Checks
+      if (e.requiresRationCard && !hasRationCard) score = 0;
+      if (e.requiresStudent && !hasStudentFamily && !occ.includes('student') && !occ.includes('छात्र')) score = 0;
+      
+      // Gender Check (assuming "Homemaker" implies Female or similar context, but we don't have gender input explicitly yet)
+      // Since gender input isn't collected yet, we won't strictly penalize unless they stated an occupation totally opposing it, 
+      // but it's safer to leave gender open until we add a gender question.
     }
 
-    if (scheme.id === 'pm-ajay') {
-      if (isLabourer) score = 88;
-      else score = 45;
+    // 2. HYPERLOCAL MATCHING LOGIC (Boosts and strict location drops)
+    if (score > 0) {
+      if (scheme.locationLevel === 'District') {
+        if (district && scheme.locationName.toLowerCase().includes(district)) {
+          score += 20; // Boost
+        } else {
+          score = 0; // Filter out if not in this district
+        }
+      } else if (scheme.locationLevel === 'State') {
+        if (state && scheme.locationName.toLowerCase().includes(state)) {
+          score += 15; // Boost
+        } else {
+          score = 0; // Filter out if not in this state
+        }
+      }
     }
-
-    // Schemes that broadly apply based on rural need, give them a baseline boost
-    if (['jal-jeevan', 'saubhagya', 'pm-gkay', 'pm-awas'].includes(scheme.id)) {
-      if (hasRationCard || isLabourer || isFarmer) score = 75; // high chance of qualifying if they are in these categories
-      else score = 60;
-    }
-
-    if (score === 50 || score === 60) score += Math.floor(Math.random() * 15);
 
     return {
       ...scheme,
-      score
+      score: Math.min(100, Math.max(0, score))
     };
-  }).sort((a, b) => (b.score || 0) - (a.score || 0));
+  }).filter(s => (s.score || 0) > 0).sort((a, b) => (b.score || 0) - (a.score || 0));
 }

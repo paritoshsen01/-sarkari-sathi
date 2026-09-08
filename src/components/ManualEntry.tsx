@@ -12,6 +12,9 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
   
   // States for the 7 questions
   const [state, setState] = useState('');
+  const [district, setDistrict] = useState('');
+  const [block, setBlock] = useState('');
+  const [village, setVillage] = useState('');
   const [age, setAge] = useState('');
   const [occupation, setOccupation] = useState('');
   const [income, setIncome] = useState('');
@@ -23,12 +26,15 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
     e.preventDefault();
     const answers: Record<number, string> = {
       0: state,
-      1: age,
-      2: occupation,
-      3: income,
-      4: familySize,
-      5: rationCard,
-      6: student
+      1: district,
+      2: block,
+      3: village,
+      4: age,
+      5: occupation,
+      6: income,
+      7: familySize,
+      8: rationCard,
+      9: student
     };
     onComplete(answers);
   };
@@ -64,6 +70,42 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
             <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[1]}</label>
             <input 
               required
+              type="text" 
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="e.g. Sehore"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[2]}</label>
+            <input 
+              required
+              type="text" 
+              value={block}
+              onChange={(e) => setBlock(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="e.g. Ashta"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[3]}</label>
+            <input 
+              required
+              type="text" 
+              value={village}
+              onChange={(e) => setVillage(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="e.g. Kothri"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[4]}</label>
+            <input 
+              required
               type="number" 
               value={age}
               onChange={(e) => setAge(e.target.value)}
@@ -73,7 +115,7 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[2]}</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[5]}</label>
             <select 
               required
               value={occupation}
@@ -88,7 +130,7 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[3]}</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[6]}</label>
             <select 
               required
               value={income}
@@ -103,7 +145,7 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[4]}</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[7]}</label>
             <input 
               required
               type="number" 
@@ -115,7 +157,7 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[5]}</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[8]}</label>
             <select 
               required
               value={rationCard}
@@ -129,7 +171,7 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[6]}</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">{content.questions[9]}</label>
             <select 
               required
               value={student}

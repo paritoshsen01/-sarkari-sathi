@@ -1,4 +1,15 @@
 export interface Scheme {
+  eligibility?: {
+    minAge?: number;
+    maxAge?: number;
+    occupations?: string[];
+    maxIncome?: number;
+    requiresRationCard?: boolean;
+    requiresStudent?: boolean;
+    gender?: 'Female' | 'Male' | 'Any';
+  };
+  locationLevel: 'National' | 'State' | 'District' | 'Local';
+  locationName: string;
   id: string;
   name: string;
   category: string;
@@ -16,6 +27,8 @@ export interface Scheme {
 export const prototypeSchemes: Scheme[] = [
   {
     id: "pm-kisan",
+    locationLevel: "National",
+    locationName: "India",
     name: "PM-KISAN",
     category: "Agriculture",
     icon: "🌾",
@@ -51,6 +64,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-jay",
+    locationLevel: "National",
+    locationName: "India",
     name: "Ayushman Bharat – PM-JAY",
     category: "Healthcare",
     icon: "🏥",
@@ -86,6 +101,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "scholarship",
+    locationLevel: "National",
+    locationName: "India",
     name: "National Scholarship Scheme",
     category: "Education",
     icon: "🎓",
@@ -122,6 +139,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-ujjwala",
+    locationLevel: "National",
+    locationName: "India",
     name: "PM Ujjwala Yojana",
     category: "Household / LPG",
     icon: "🔥",
@@ -158,6 +177,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-ajay",
+    locationLevel: "National",
+    locationName: "India",
     name: "PM-AJAY",
     category: "Welfare / SC Empowerment",
     icon: "🤝",
@@ -194,6 +215,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "jal-jeevan",
+    locationLevel: "National",
+    locationName: "India",
     name: "Jal Jeevan Mission",
     category: "Infrastructure / Water",
     icon: "💧",
@@ -228,6 +251,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "saubhagya",
+    locationLevel: "National",
+    locationName: "India",
     name: "Saubhagya Yojana",
     category: "Infrastructure / Electricity",
     icon: "⚡",
@@ -262,6 +287,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-gkay",
+    locationLevel: "National",
+    locationName: "India",
     name: "PM Garib Kalyan Anna Yojana",
     category: "Welfare / Food Grains",
     icon: "🌾",
@@ -295,6 +322,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-awas",
+    locationLevel: "National",
+    locationName: "India",
     name: "PM Awas Yojana (PMAY-G)",
     category: "Infrastructure / Housing",
     icon: "🏠",
@@ -330,6 +359,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pmmvy",
+    locationLevel: "National",
+    locationName: "India",
     name: "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
     category: "Healthcare",
     icon: "🤰",
@@ -365,6 +396,8 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pmbjp",
+    locationLevel: "National",
+    locationName: "India",
     name: "PM Bhartiya Janaushadhi Pariyojana",
     category: "Healthcare",
     icon: "💊",
@@ -392,6 +425,69 @@ export const prototypeSchemes: Scheme[] = [
         "ड्रॉपडाउन मेनू से अपना राज्य और जिला चुनें।",
         "पोर्टल निकटतम जन औषधि केंद्र का सटीक पता और संपर्क विवरण प्रदर्शित करेगा।",
         "सस्ती जेनेरिक दवाएं खरीदने के लिए वैध डॉक्टर के पर्चे (यदि आवश्यक हो) के साथ केंद्र पर जाएं।"
+      ]
+    }
+  }
+
+  ,
+  {
+    id: "mp-ladli-behna",
+    name: "Mukhyamantri Ladli Behna Yojana",
+    category: "Women Empowerment",
+    icon: "👩‍👧",
+    benefit: "Financial assistance of ₹1250 per month to eligible women.",
+    whatIsIt: "A state-level scheme in Madhya Pradesh providing financial assistance to women to empower them and improve their health and nutrition.",
+    whoIsEligible: "Women aged 21 to 60 residing in Madhya Pradesh. Family income must be less than ₹2.5 lakh.",
+    documents: [
+      "Samagra ID",
+      "Aadhaar Card",
+      "Bank Account (DBT Enabled)",
+      "Mobile Number linked to Aadhaar"
+    ],
+    link: "https://cmladlibahna.mp.gov.in/",
+    tags: ["money", "पैसा", "women", "mahila", "madhya pradesh"],
+    locationLevel: "State",
+    locationName: "Madhya Pradesh",
+    guideSteps: {
+      en: [
+        "Visit your local Gram Panchayat or Ward Office.",
+        "Obtain the Ladli Behna Yojana application form.",
+        "Fill the form and attach photocopies of Samagra ID and Aadhaar.",
+        "Submit the form to the camp officer and take the receipt."
+      ],
+      hi: [
+        "अपने स्थानीय ग्राम पंचायत या वार्ड कार्यालय पर जाएँ।",
+        "लाड़ली बहना योजना का आवेदन फॉर्म प्राप्त करें।",
+        "फॉर्म भरें और समग्र आईडी और आधार की फोटोकॉपी संलग्न करें।",
+        "कैंप अधिकारी को फॉर्म जमा करें और रसीद लें।"
+      ]
+    }
+  },
+  {
+    id: "sehore-krishi-sahayata",
+    name: "Sehore Krishi Sahayata",
+    category: "Agriculture",
+    icon: "🚜",
+    benefit: "Subsidy on agricultural equipment and seeds.",
+    whatIsIt: "A district-level initiative for farmers in Sehore to promote modern farming techniques.",
+    whoIsEligible: "Must be a registered farmer residing in Sehore district.",
+    documents: [
+      "Kisan Credit Card",
+      "Khasra/Khatauni",
+      "Resident Proof (Sehore)"
+    ],
+    link: "https://sehore.nic.in/",
+    tags: ["agriculture", "farmer", "kisan", "kheti", "sehore"],
+    locationLevel: "District",
+    locationName: "Sehore",
+    guideSteps: {
+      en: [
+        "Visit the District Agriculture Office in Sehore.",
+        "Submit your land details and application for equipment subsidy."
+      ],
+      hi: [
+        "सीहोर में जिला कृषि कार्यालय जाएँ।",
+        "अपनी जमीन का विवरण और उपकरण सब्सिडी के लिए आवेदन जमा करें।"
       ]
     }
   }
