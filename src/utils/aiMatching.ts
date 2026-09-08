@@ -89,7 +89,30 @@ export function findSchemesByNeed(spokenText: string): Scheme[] {
 /**
  * Parses income string into maximum income value.
  */
-function parseIncome(incomeStr: string): number {
+function isLocationMatch(userInput: string, schemeLoc: string): boolean {
+  if (!userInput) return false;
+  let user = userInput.toLowerCase().trim().replace(/\./g, '');
+  let loc = schemeLoc.toLowerCase().trim();
+  
+  if (user === loc) return true;
+  if (loc.includes(user) || user.includes(loc)) return true;
+  
+  // Abbreviation map
+  const abbrev: Record<string, string[]> = {
+    'madhya pradesh': ['mp'],
+    'uttar pradesh': ['up'],
+    'andhra pradesh': ['ap'],
+    'maharashtra': ['mh'],
+    'tamil nadu': ['tn'],
+    'west bengal': ['wb']
+  };
+  
+  if (abbrev[loc] && abbrev[loc].includes(user)) return true;
+  
+  // Fuzzy match as fallback
+  const fuse = new Fuse([{v: loc}], {keys:['v'], threshold: 0.3});
+  return fuse.search(user).length > 0;
+}\n\nfunction parseIncome(incomeStr: string): number {
   const s = incomeStr.toLowerCase();
   
   // Match manual entry exact translated array strings
@@ -110,11 +133,32 @@ function parseIncome(incomeStr: string): number {
 /**
  * Advanced strict matching engine
  */
-export function calculateDetailedScores(answers: Record<number, string>): Scheme[] {
+function parseAge(ageStr: string): number {
+  const s = (ageStr || '').toLowerCase();
+  if (!s) return 30; // Default
+
+  // Check if it already has numbers
+  const match = s.match(/\d+/);
+  if (match) return parseInt(match[0]);
+
+  // Translate common words to numbers
+  const wordMap: Record<string, number> = {
+    'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
+    'twenty': 20, 'thirty': 30, 'forty': 40, 'fifty': 50, 'sixty': 60, 'seventy': 70, 'eighty': 80, 'ninety': 90,
+    'pachas': 50, 'saath': 60, 'sattar': 70, 'assi': 80, 'nabbe': 90, 'sau': 100,
+    'bis': 20, 'tees': 30, 'chalis': 40
+  };
+
+  for (const [word, num] of Object.entries(wordMap)) {
+    if (s.includes(word)) return num;
+  }
+  
+  return 30; // Fallback
+}\n\nexport function calculateDetailedScores(answers: Record<number, string>): Scheme[] {
   const state = (answers[0] || '').toLowerCase();
   const district = (answers[1] || '').toLowerCase();
   
-  const age = parseInt(answers[4]) || 30; // Default to 30 if parsing fails
+  const age = parseAge(answers[4]);
   const occ = (answers[5] || '').toLowerCase();
   const incomeVal = parseIncome(answers[6] || '');
   const familySizeStr = answers[7] || '1';
@@ -171,13 +215,13 @@ export function calculateDetailedScores(answers: Record<number, string>): Scheme
     // 2. HYPERLOCAL MATCHING LOGIC (Boosts and strict location drops)
     if (score > 0) {
       if (scheme.locationLevel === 'District') {
-        if (district && scheme.locationName.toLowerCase().includes(district)) {
+        if (district && isLocationMatch(district, scheme.locationName)) {
           score += 20; // Massive boost for exact district
         } else {
           score = 0; // Filter out if not in this district
         }
       } else if (scheme.locationLevel === 'State') {
-        if (state && scheme.locationName.toLowerCase().includes(state)) {
+        if (state && isLocationMatch(state, scheme.locationName)) {
           score += 15; // High boost for exact state
         } else {
           score = 0; // Filter out if not in this state
