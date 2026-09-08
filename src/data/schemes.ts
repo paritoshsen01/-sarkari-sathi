@@ -28,7 +28,7 @@ export interface Scheme {
 export const prototypeSchemes: Scheme[] = [
   {
     id: "pm-kisan",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'land'], occupations: ['farmer', 'kisan', 'agriculture', 'kheti', 'krishi', 'shetkari', 'krushak', 'chasi', 'khedut', 'vivasayi', 'krushikudu'], minAge: 18, maxIncome: 200000 },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'land'], occupations: ['farmer', 'kisan', 'agriculture', 'kheti', 'krishi', 'shetkari', 'krushak', 'chasi', 'khedut', 'vivasayi', 'krushikudu', 'किसान', 'खेती', 'कृषक', 'शेतकरी', 'কৃষক', 'চাষী', 'କୃଷକ', 'ଚାଷୀ', 'రైతు', 'விவசாயி', 'ખેડૂત'], minAge: 18, maxIncome: 200000 },
     locationLevel: "National",
     locationName: "India",
     name: "PM-KISAN",
@@ -104,7 +104,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "scholarship",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'income', 'caste', 'domicile'], requiresStudent: true, occupations: ['student', 'chhatra', 'vidyarthi', 'shiksharthi', 'chhatro', 'shikshok'], minAge: 5, maxAge: 25 },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'income', 'caste', 'domicile'], requiresStudent: true, occupations: ['student', 'chhatra', 'vidyarthi', 'shiksharthi', 'chhatro', 'shikshok', 'छात्र', 'विद्यार्थी', 'ছাত্র', 'শিক্ষার্থী', 'ଛାତ୍ର', 'ବିଦ୍ୟାର୍ଥୀ', 'విద్యార్థి', 'மாணவர்', 'વિદ્યાર્થી'], minAge: 5, maxAge: 25 },
     locationLevel: "National",
     locationName: "India",
     name: "National Scholarship Scheme",
@@ -478,7 +478,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "sehore-krishi-sahayata",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'land', 'domicile'], occupations: ['farmer', 'kisan', 'agriculture', 'kheti', 'krishi', 'shetkari', 'krushak', 'chasi', 'khedut', 'vivasayi', 'krushikudu'], minAge: 18 },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'land', 'domicile'], occupations: ['farmer', 'kisan', 'agriculture', 'kheti', 'krishi', 'shetkari', 'krushak', 'chasi', 'khedut', 'vivasayi', 'krushikudu', 'किसान', 'खेती', 'कृषक', 'शेतकरी', 'কৃষক', 'চাষী', 'କୃଷକ', 'ଚାଷୀ', 'రైతు', 'விவசாயி', 'ખેડૂત'], minAge: 18 },
     locationLevel: "District",
     locationName: "Sehore",
     name: "Sehore Krishi Sahayata",

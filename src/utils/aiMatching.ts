@@ -211,7 +211,10 @@ export function calculateDetailedScores(answers: Record<number, string>): Scheme
       }
       
       if (e.requiresStudent) {
-        if (!hasStudentFamily && !occ.includes('student') && !occ.includes('छात्र')) score = 0;
+        const studentScripts = ['student', 'chhatra', 'vidyarthi', 'shiksharthi', 'chhatro', 'shikshok', 'छात्र', 'विद्यार्थी', 'ছাত্র', 'শিক্ষার্থী', 'ଛାତ୍ର', 'ବିଦ୍ୟାର୍ଥୀ', 'విద్యార్థి', 'மாணவர்', 'વિદ્યાર્થી'];
+        const isUserStudent = studentScripts.some(s => occ.includes(s));
+        
+        if (!hasStudentFamily && !isUserStudent) score = 0;
         if (score > 0) score += 5;
       }
     }
