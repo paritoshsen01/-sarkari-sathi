@@ -10,6 +10,7 @@ export interface Scheme {
   link: string;
   tags: string[]; 
   guideSteps: Record<string, string[]>;
+  score?: number;
 }
 
 export const prototypeSchemes: Scheme[] = [
