@@ -114,48 +114,44 @@ export function calculateDetailedScores(answers: Record<number, string>): Scheme
   const userDocsStr = (answers[10] || '').toLowerCase();
 
   return prototypeSchemes.map(scheme => {
-    let score = 90; // Base score for a matched scheme
+    let score = 70; // Base score for generic match
 
     // 1. Check Strict Eligibility Rules
     if (scheme.eligibility) {
       const e = scheme.eligibility;
 
       // Age Checks
-      if (e.minAge !== undefined && age < e.minAge) score = 0;
-      if (e.maxAge !== undefined && age > e.maxAge) score = 0;
+      if (e.minAge !== undefined || e.maxAge !== undefined) {
+        if (e.minAge !== undefined && age < e.minAge) score = 0;
+        if (e.maxAge !== undefined && age > e.maxAge) score = 0;
+        if (score > 0) score += 5; // Targeted age match bonus
+      }
 
       // Income Check
-      if (e.maxIncome !== undefined && incomeVal > e.maxIncome) score = 0;
+      if (e.maxIncome !== undefined) {
+        if (incomeVal > e.maxIncome) score = 0;
+        if (score > 0) score += 5; // Targeted income match bonus
+      }
 
       // Occupation Check
       if (e.occupations && e.occupations.length > 0) {
-        // Simple fuzzy match for occupations
         const occFuse = new Fuse(e.occupations.map(v => ({v})), {keys:['v'], threshold:0.3});
         if (occFuse.search(occ).length === 0) {
           score = 0; // Did not match allowed occupations
+        } else {
+          if (score > 0) score += 10; // Targeted occupation match bonus
         }
       }
 
       // Boolean Checks
-      if (e.requiresRationCard && !hasRationCard) score = 0;
-      if (e.requiresStudent && !hasStudentFamily && !occ.includes('student') && !occ.includes('छात्र')) score = 0;
-
-      // Document Validation Penalties
-      if (score > 0 && e.requiredDocuments && e.requiredDocuments.length > 0) {
-        let missingDocs = 0;
-        for (const reqDoc of e.requiredDocuments) {
-          // Some fuzzy checking for document keywords
-          const key = reqDoc.toLowerCase();
-          if (key.includes('aadhaar') && !userDocsStr.includes('aadhaar')) missingDocs++;
-          else if (key.includes('bank') && !userDocsStr.includes('bank')) missingDocs++;
-          else if (key.includes('ration') && !userDocsStr.includes('ration')) missingDocs++;
-          else if (key.includes('land') && !userDocsStr.includes('land') && !userDocsStr.includes('property')) missingDocs++;
-          else if (key.includes('income') && !userDocsStr.includes('income')) missingDocs++;
-          else if (key.includes('caste') && !userDocsStr.includes('caste')) missingDocs++;
-          else if (key.includes('domicile') && !userDocsStr.includes('domicile') && !userDocsStr.includes('resident')) missingDocs++;
-          else if (key.includes('medical') && !userDocsStr.includes('medical') && !userDocsStr.includes('birth')) missingDocs++;
-        }
-        score -= (missingDocs * 15);
+      if (e.requiresRationCard) {
+        if (!hasRationCard) score = 0;
+        if (score > 0) score += 5;
+      }
+      
+      if (e.requiresStudent) {
+        if (!hasStudentFamily && !occ.includes('student') && !occ.includes('छात्र')) score = 0;
+        if (score > 0) score += 5;
       }
     }
 
@@ -163,13 +159,13 @@ export function calculateDetailedScores(answers: Record<number, string>): Scheme
     if (score > 0) {
       if (scheme.locationLevel === 'District') {
         if (district && scheme.locationName.toLowerCase().includes(district)) {
-          score += 15; // Boost
+          score += 20; // Massive boost for exact district
         } else {
           score = 0; // Filter out if not in this district
         }
       } else if (scheme.locationLevel === 'State') {
         if (state && scheme.locationName.toLowerCase().includes(state)) {
-          score += 10; // Boost
+          score += 15; // High boost for exact state
         } else {
           score = 0; // Filter out if not in this state
         }

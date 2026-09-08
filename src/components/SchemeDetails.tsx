@@ -14,6 +14,17 @@ export function SchemeDetails({ lang, scheme, onBack }: SchemeDetailsProps) {
   const content = languages[lang].details;
   const [showGuide, setShowGuide] = useState(false);
   const [isReading, setIsReading] = useState(false);
+  const [checkedDocs, setCheckedDocs] = useState<number[]>([]);
+
+  const toggleDoc = (idx: number) => {
+    setCheckedDocs(prev => 
+      prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
+    );
+  };
+
+  const docProgress = scheme.documents.length > 0 
+    ? Math.round((checkedDocs.length / scheme.documents.length) * 100) 
+    : 100;
 
   const readDetails = () => {
     if (!('speechSynthesis' in window)) return;
@@ -129,17 +140,50 @@ export function SchemeDetails({ lang, scheme, onBack }: SchemeDetailsProps) {
           </section>
 
           <section>
-            <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-900 mb-3">
-              <FileText className="w-5 h-5 text-primary-600" />
-              {content.documents}
-            </h2>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+              <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-900">
+                <FileText className="w-5 h-5 text-primary-600" />
+                {content.documents}
+              </h2>
+              {scheme.documents.length > 0 && (
+                <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-full border border-slate-200">
+                  <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full transition-all duration-500 ${docProgress === 100 ? 'bg-green-500' : 'bg-primary-500'}`}
+                      style={{ width: `${docProgress}%` }}
+                    />
+                  </div>
+                  <span className={`text-sm font-bold ${docProgress === 100 ? 'text-green-600' : 'text-primary-700'}`}>
+                    {docProgress === 100 ? 'Ready!' : `${docProgress}%`}
+                  </span>
+                </div>
+              )}
+            </div>
+            
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {scheme.documents.map((doc, idx) => (
-                <li key={idx} className="flex items-center gap-2 bg-slate-50 p-3 rounded-lg text-slate-700">
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-400"></div>
-                  {doc}
-                </li>
-              ))}
+              {scheme.documents.map((doc, idx) => {
+                const isChecked = checkedDocs.includes(idx);
+                return (
+                  <li 
+                    key={idx} 
+                    onClick={() => toggleDoc(idx)}
+                    className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
+                      isChecked 
+                        ? 'bg-green-50 border-green-200 shadow-sm' 
+                        : 'bg-white border-slate-200 hover:border-primary-300 hover:shadow-sm hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded border flex items-center justify-center transition-colors ${
+                      isChecked ? 'bg-green-500 border-green-500' : 'border-slate-300 bg-white'
+                    }`}>
+                      {isChecked && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
+                    </div>
+                    <span className={`text-sm md:text-base transition-colors ${isChecked ? 'text-green-800 font-medium' : 'text-slate-700'}`}>
+                      {doc}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </section>
 
