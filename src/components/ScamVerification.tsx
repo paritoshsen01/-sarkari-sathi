@@ -9,7 +9,7 @@ interface ScamVerificationProps {
 }
 
 export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
-  const content = languages[lang].home; // We'll add translations later, fallback to English for now
+  const content = languages[lang].home; 
 
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
@@ -137,11 +137,11 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
       {/* Results Section */}
       {result && !isVerifying && (
         <div className="mt-8 animate-fade-in-up">
-          <div className={\`p-6 rounded-3xl border shadow-sm \${
+          <div className={"p-6 rounded-3xl border shadow-sm " + (
             result.status === 'verified' ? 'bg-green-50 border-green-200' :
             result.status === 'suspicious' ? 'bg-red-50 border-red-200' :
             'bg-amber-50 border-amber-200'
-          }\`}>
+          )}>
             
             <div className="flex items-start gap-4">
               <div className="mt-1">
@@ -151,21 +151,21 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
               </div>
               
               <div>
-                <h3 className={\`text-xl font-bold mb-2 \${
+                <h3 className={"text-xl font-bold mb-2 " + (
                   result.status === 'verified' ? 'text-green-800' :
                   result.status === 'suspicious' ? 'text-red-800' :
                   'text-amber-800'
-                }\`}>
+                )}>
                   {result.status === 'verified' ? 'Verified Official Scheme' :
                    result.status === 'suspicious' ? 'Suspicious / Fake Scheme Detected!' :
                    'Could Not Fully Verify'}
                 </h3>
                 
-                <p className={\`text-base leading-relaxed \${
+                <p className={"text-base leading-relaxed " + (
                   result.status === 'verified' ? 'text-green-700' :
                   result.status === 'suspicious' ? 'text-red-700' :
                   'text-amber-700'
-                }\`}>
+                )}>
                   {result.message}
                 </p>
 
