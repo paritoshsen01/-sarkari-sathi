@@ -112,7 +112,9 @@ function isLocationMatch(userInput: string, schemeLoc: string): boolean {
   // Fuzzy match as fallback
   const fuse = new Fuse([{v: loc}], {keys:['v'], threshold: 0.3});
   return fuse.search(user).length > 0;
-}\n\nfunction parseIncome(incomeStr: string): number {
+}
+
+function parseIncome(incomeStr: string): number {
   const s = incomeStr.toLowerCase();
   
   // Match manual entry exact translated array strings
@@ -154,7 +156,9 @@ function parseAge(ageStr: string): number {
   }
   
   return 30; // Fallback
-}\n\nexport function calculateDetailedScores(answers: Record<number, string>): Scheme[] {
+}
+
+export function calculateDetailedScores(answers: Record<number, string>): Scheme[] {
   const state = (answers[0] || '').toLowerCase();
   const district = (answers[1] || '').toLowerCase();
   
