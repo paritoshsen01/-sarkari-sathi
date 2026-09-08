@@ -70,7 +70,7 @@ export function verifyScheme(name: string, url: string, msg: string): Verificati
   if (foundInDb && u && !isOfficialUrl) {
     return {
       status: 'suspicious',
-      message: \`WARNING: You are looking for a real scheme (\${matchedSchemeName}), but the website link you provided is FAKE! Do not enter your details.\`,
+      message: 'WARNING: You are looking for a real scheme (' + matchedSchemeName + '), but the website link you provided is FAKE! Do not enter your details.',
       matchedScheme: matchedSchemeName,
       officialUrl: officialSchemeUrl || 'Always use .gov.in websites'
     };
