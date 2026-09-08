@@ -111,9 +111,10 @@ export function calculateDetailedScores(answers: Record<number, string>): Scheme
   
   const hasRationCard = (answers[8] || '').toLowerCase().includes('yes') || (answers[8] || '').includes('हाँ') || (answers[8] || '').includes('हओ');
   const hasStudentFamily = (answers[9] || '').toLowerCase().includes('yes') || (answers[9] || '').includes('हाँ') || (answers[9] || '').includes('हओ');
+  const userDocsStr = (answers[10] || '').toLowerCase();
 
   return prototypeSchemes.map(scheme => {
-    let score = 80; // Base score for a matched scheme
+    let score = 90; // Base score for a matched scheme
 
     // 1. Check Strict Eligibility Rules
     if (scheme.eligibility) {
@@ -138,23 +139,37 @@ export function calculateDetailedScores(answers: Record<number, string>): Scheme
       // Boolean Checks
       if (e.requiresRationCard && !hasRationCard) score = 0;
       if (e.requiresStudent && !hasStudentFamily && !occ.includes('student') && !occ.includes('छात्र')) score = 0;
-      
-      // Gender Check (assuming "Homemaker" implies Female or similar context, but we don't have gender input explicitly yet)
-      // Since gender input isn't collected yet, we won't strictly penalize unless they stated an occupation totally opposing it, 
-      // but it's safer to leave gender open until we add a gender question.
+
+      // Document Validation Penalties
+      if (score > 0 && e.requiredDocuments && e.requiredDocuments.length > 0) {
+        let missingDocs = 0;
+        for (const reqDoc of e.requiredDocuments) {
+          // Some fuzzy checking for document keywords
+          const key = reqDoc.toLowerCase();
+          if (key.includes('aadhaar') && !userDocsStr.includes('aadhaar')) missingDocs++;
+          else if (key.includes('bank') && !userDocsStr.includes('bank')) missingDocs++;
+          else if (key.includes('ration') && !userDocsStr.includes('ration')) missingDocs++;
+          else if (key.includes('land') && !userDocsStr.includes('land') && !userDocsStr.includes('property')) missingDocs++;
+          else if (key.includes('income') && !userDocsStr.includes('income')) missingDocs++;
+          else if (key.includes('caste') && !userDocsStr.includes('caste')) missingDocs++;
+          else if (key.includes('domicile') && !userDocsStr.includes('domicile') && !userDocsStr.includes('resident')) missingDocs++;
+          else if (key.includes('medical') && !userDocsStr.includes('medical') && !userDocsStr.includes('birth')) missingDocs++;
+        }
+        score -= (missingDocs * 15);
+      }
     }
 
     // 2. HYPERLOCAL MATCHING LOGIC (Boosts and strict location drops)
     if (score > 0) {
       if (scheme.locationLevel === 'District') {
         if (district && scheme.locationName.toLowerCase().includes(district)) {
-          score += 20; // Boost
+          score += 15; // Boost
         } else {
           score = 0; // Filter out if not in this district
         }
       } else if (scheme.locationLevel === 'State') {
         if (state && scheme.locationName.toLowerCase().includes(state)) {
-          score += 15; // Boost
+          score += 10; // Boost
         } else {
           score = 0; // Filter out if not in this state
         }
