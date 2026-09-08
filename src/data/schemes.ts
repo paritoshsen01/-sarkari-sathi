@@ -103,7 +103,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "scholarship",
-    eligibility: { requiresStudent: true },
+    eligibility: { requiresStudent: true, maxAge: 30 },
     locationLevel: "National",
     locationName: "India",
     name: "National Scholarship Scheme",
@@ -368,7 +368,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pmmvy",
-    eligibility: { gender: 'Female', minAge: 19 },
+    eligibility: { gender: 'Female', minAge: 19, maxAge: 50 },
     locationLevel: "National",
     locationName: "India",
     name: "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
