@@ -91,10 +91,20 @@ export function findSchemesByNeed(spokenText: string): Scheme[] {
  */
 function parseIncome(incomeStr: string): number {
   const s = incomeStr.toLowerCase();
-  if (s.includes('1–2') || s.includes('1-2')) return 200000;
-  if (s.includes('2–5') || s.includes('2-5')) return 500000;
-  if (s.includes('1') && (s.includes('below') || s.includes('कम'))) return 100000;
-  return 1000000; // Above 5 lakh or unknown
+  
+  // Match manual entry exact translated array strings
+  if (s.includes('1-2') || s.includes('1–2') || s.includes('1- 2')) return 200000;
+  if (s.includes('2-5') || s.includes('2–5')) return 500000;
+  
+  // If it has '5' but not '2'
+  if (s.includes('5')) return 1000000; 
+  // If it has '1'
+  if (s.includes('1')) return 100000;
+
+  // Voice fallbacks
+  if (s.includes('0000')) return parseInt(s.match(/\d+/)?.[0] || '1000000');
+  
+  return 1000000; // Default Above 5 lakh or unknown
 }
 
 /**
@@ -109,8 +119,11 @@ export function calculateDetailedScores(answers: Record<number, string>): Scheme
   const incomeVal = parseIncome(answers[6] || '');
   const familySizeStr = answers[7] || '1';
   
-  const hasRationCard = (answers[8] || '').toLowerCase().includes('yes') || (answers[8] || '').includes('हाँ') || (answers[8] || '').includes('हओ');
-  const hasStudentFamily = (answers[9] || '').toLowerCase().includes('yes') || (answers[9] || '').includes('हाँ') || (answers[9] || '').includes('हओ');
+  const rCardStr = (answers[8] || '').toLowerCase();
+  const hasRationCard = rCardStr.includes('yes') || rCardStr.includes('हाँ') || rCardStr.includes('हओ') || rCardStr.includes('ହଁ') || rCardStr.includes('होय') || rCardStr.includes('হ্যাঁ') || rCardStr.includes('అవును') || rCardStr.includes('ஆம்') || rCardStr.includes('હા') || rCardStr.includes('y');
+
+  const stuStr = (answers[9] || '').toLowerCase();
+  const hasStudentFamily = stuStr.includes('yes') || stuStr.includes('हाँ') || stuStr.includes('हओ') || stuStr.includes('ହଁ') || stuStr.includes('होय') || stuStr.includes('হ্যাঁ') || stuStr.includes('అవును') || stuStr.includes('ஆம்') || stuStr.includes('હા') || stuStr.includes('y');
   const userDocsStr = (answers[10] || '').toLowerCase();
 
   return prototypeSchemes.map(scheme => {

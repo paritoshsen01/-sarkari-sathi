@@ -28,7 +28,7 @@ export interface Scheme {
 export const prototypeSchemes: Scheme[] = [
   {
     id: "pm-kisan",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'land', 'domicile'], occupations: ['farmer', 'kisan', 'agriculture'], minAge: 18 },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'land'], occupations: ['farmer', 'kisan', 'agriculture', 'kheti', 'krishi', 'shetkari', 'krushak', 'chasi', 'khedut', 'vivasayi', 'krushikudu'], minAge: 18, maxIncome: 200000 },
     locationLevel: "National",
     locationName: "India",
     name: "PM-KISAN",
@@ -66,7 +66,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-jay",
-    eligibility: { requiredDocuments: ['aadhaar', 'ration'], requiresRationCard: true, maxIncome: 500000 },
+    eligibility: { requiredDocuments: ['aadhaar', 'ration'], maxIncome: 200000 },
     locationLevel: "National",
     locationName: "India",
     name: "Ayushman Bharat – PM-JAY",
@@ -104,7 +104,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "scholarship",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'income', 'domicile'], requiresStudent: true, maxAge: 30 },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'income', 'caste', 'domicile'], requiresStudent: true, occupations: ['student', 'chhatra', 'vidyarthi', 'shiksharthi', 'chhatro', 'shikshok'], minAge: 5, maxAge: 25 },
     locationLevel: "National",
     locationName: "India",
     name: "National Scholarship Scheme",
@@ -143,7 +143,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-ujjwala",
-    eligibility: { requiredDocuments: ['aadhaar', 'ration', 'bank'], requiresRationCard: true, gender: 'Female', minAge: 18 },
+    eligibility: { requiredDocuments: ['aadhaar', 'ration', 'bank'], requiresRationCard: true, minAge: 18, maxIncome: 100000 },
     locationLevel: "National",
     locationName: "India",
     name: "PM Ujjwala Yojana",
@@ -182,7 +182,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-ajay",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'caste'], occupations: ['labourer', 'mazdoor', 'worker', 'daily wage'], minAge: 18 },
+    eligibility: { requiredDocuments: ['aadhaar', 'caste', 'bank', 'income'], maxIncome: 250000 },
     locationLevel: "National",
     locationName: "India",
     name: "PM-AJAY",
@@ -221,7 +221,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "jal-jeevan",
-    eligibility: { requiredDocuments: ['aadhaar', 'domicile'], maxIncome: 500000 },
+    eligibility: { requiredDocuments: ['aadhaar'] },
     locationLevel: "National",
     locationName: "India",
     name: "Jal Jeevan Mission",
@@ -258,7 +258,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "saubhagya",
-    eligibility: { maxIncome: 500000 },
+    eligibility: { requiredDocuments: ['aadhaar', 'ration'] },
     locationLevel: "National",
     locationName: "India",
     name: "Saubhagya Yojana",
@@ -295,7 +295,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-gkay",
-    eligibility: { requiredDocuments: ['aadhaar', 'ration'], requiresRationCard: true, maxIncome: 200000 },
+    eligibility: { requiredDocuments: ['ration', 'aadhaar'], requiresRationCard: true },
     locationLevel: "National",
     locationName: "India",
     name: "PM Garib Kalyan Anna Yojana",
@@ -331,7 +331,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pm-awas",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'ration'], maxIncome: 300000, requiresRationCard: true },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'ration'], maxIncome: 200000 },
     locationLevel: "National",
     locationName: "India",
     name: "PM Awas Yojana (PMAY-G)",
@@ -369,7 +369,7 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "pmmvy",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'medical'], gender: 'Female', minAge: 19, maxAge: 50 },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'medical'], minAge: 18, maxAge: 40 },
     locationLevel: "National",
     locationName: "India",
     name: "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
@@ -444,7 +444,9 @@ export const prototypeSchemes: Scheme[] = [
   ,
   {
     id: "mp-ladli-behna",
-    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'domicile'], gender: 'Female', minAge: 21, maxAge: 60, maxIncome: 250000 },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'domicile'], minAge: 21, maxAge: 60, maxIncome: 250000 },
+    locationLevel: "State",
+    locationName: "Madhya Pradesh",
     name: "Mukhyamantri Ladli Behna Yojana",
     category: "Women Empowerment",
     icon: "👩‍👧",
@@ -478,7 +480,9 @@ export const prototypeSchemes: Scheme[] = [
   },
   {
     id: "sehore-krishi-sahayata",
-    eligibility: { occupations: ['farmer', 'kisan', 'agriculture'], minAge: 18 },
+    eligibility: { requiredDocuments: ['aadhaar', 'bank', 'land', 'domicile'], occupations: ['farmer', 'kisan', 'agriculture', 'kheti', 'krishi', 'shetkari', 'krushak', 'chasi', 'khedut', 'vivasayi', 'krushikudu'], minAge: 18 },
+    locationLevel: "District",
+    locationName: "Sehore",
     name: "Sehore Krishi Sahayata",
     category: "Agriculture",
     icon: "🚜",
