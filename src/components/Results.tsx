@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { ArrowRight, AlertCircle } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { ArrowRight, AlertCircle, Volume2, Square } from 'lucide-react';
 import { type LanguageCode, languages } from '../data/languages';
 import { prototypeSchemes, type Scheme } from '../data/schemes';
 import { calculateDetailedScores } from '../utils/aiMatching';
@@ -13,6 +13,7 @@ interface ResultsProps {
 
 export function Results({ lang, answers, forcedSchemes, onSelectScheme }: ResultsProps) {
   const content = languages[lang].results;
+  const [isReading, setIsReading] = useState(false);
   
   const matchedSchemes = useMemo(() => {
     if (forcedSchemes && forcedSchemes.length > 0) {
@@ -22,11 +23,66 @@ export function Results({ lang, answers, forcedSchemes, onSelectScheme }: Result
     return calculateDetailedScores(answers);
   }, [answers, forcedSchemes]);
 
+  const readSchemes = () => {
+    if (!('speechSynthesis' in window)) return;
+    
+    if (isReading) {
+      window.speechSynthesis.cancel();
+      setIsReading(false);
+      return;
+    }
+
+    const introText = content.header + ". " + content.subtitle + ". ";
+    const schemesText = matchedSchemes.map((s, i) => `${i + 1}. ${s.name}. ${s.benefit}`).join('. ');
+    const textToRead = introText + schemesText;
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    const langMap: Record<string, string> = {
+      en: 'en-IN', hi: 'hi-IN', bun: 'hi-IN', cg: 'hi-IN', sat: 'hi-IN', spv: 'or-IN',
+      mr: 'mr-IN', bn: 'bn-IN', te: 'te-IN', ta: 'ta-IN', gu: 'gu-IN', bho: 'hi-IN', mai: 'hi-IN'
+    };
+    utterance.lang = langMap[lang] || 'hi-IN';
+    
+    utterance.onstart = () => setIsReading(true);
+    utterance.onend = () => setIsReading(false);
+    utterance.onerror = () => setIsReading(false);
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Cleanup on unmount
+  React.useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="text-center mb-10">
         <h2 className="text-3xl font-bold text-slate-900 mb-4">{content.header}</h2>
-        <p className="text-lg text-slate-600">{content.subtitle}</p>
+        <p className="text-lg text-slate-600 mb-6">{content.subtitle}</p>
+        
+        <button 
+          onClick={readSchemes}
+          className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all shadow-md ${
+            isReading 
+              ? 'bg-red-50 text-red-600 border border-red-200 hover:bg-red-100' 
+              : 'bg-primary-50 text-primary-700 border border-primary-200 hover:bg-primary-100'
+          }`}
+        >
+          {isReading ? (
+            <>
+              <Square className="w-5 h-5 fill-current" />
+              Stop Reading
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-5 h-5" />
+              Listen to Results
+            </>
+          )}
+        </button>
       </div>
 
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 flex items-start gap-3">
