@@ -5,11 +5,12 @@ import { NeedAssistant } from './components/NeedAssistant';
 import { ManualEntry } from './components/ManualEntry';
 import { Results } from './components/Results';
 import { SchemeDetails } from './components/SchemeDetails';
+import { ScamVerification } from './components/ScamVerification';
 import { type LanguageCode, languages } from './data/languages';
 import { type Scheme } from './data/schemes';
 import { Globe, Menu } from 'lucide-react';
 
-type ViewState = 'home' | 'assistant' | 'need-assistant' | 'manual' | 'results' | 'details';
+type ViewState = 'home' | 'assistant' | 'need-assistant' | 'manual' | 'results' | 'details' | 'scam-verification';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewState>('home');
@@ -33,6 +34,10 @@ function App() {
     setAnswers({});
     setForcedSchemes(null);
     setCurrentView('manual');
+  };
+
+  const handleStartScamVerification = () => {
+    setCurrentView('scam-verification');
   };
 
   const handleAssistantComplete = (finalAnswers: Record<number, string>) => {
@@ -108,7 +113,12 @@ function App() {
             onStartVoice={handleStartVoice} 
             onStartManual={handleStartManual} 
             onStartNeedAssistant={handleStartNeedAssistant}
+            onStartScamVerification={handleStartScamVerification}
           />
+        )}
+        
+        {currentView === 'scam-verification' && (
+          <ScamVerification lang={lang} onBack={navigateHome} />
         )}
         
         {currentView === 'assistant' && (

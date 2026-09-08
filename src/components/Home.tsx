@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mic, FileSearch, HelpCircle } from 'lucide-react';
+import { Mic, FileSearch, HelpCircle, ShieldAlert } from 'lucide-react';
 import { type LanguageCode, languages } from '../data/languages';
 
 interface HomeProps {
@@ -7,9 +7,10 @@ interface HomeProps {
   onStartVoice: () => void;
   onStartManual: () => void;
   onStartNeedAssistant: () => void;
+  onStartScamVerification: () => void;
 }
 
-export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant }: HomeProps) {
+export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, onStartScamVerification }: HomeProps) {
   const content = languages[lang].home;
 
   return (
@@ -40,6 +41,19 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant }
             {content.manualCTA}
           </button>
         </div>
+      </div>
+
+      <div className="bg-red-50/80 border border-red-200 rounded-3xl p-6 md:p-8 mb-16 animate-fade-in-up hover-lift cursor-pointer flex flex-col sm:flex-row items-center gap-6 shadow-sm" onClick={onStartScamVerification}>
+        <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+          <ShieldAlert className="w-8 h-8" />
+        </div>
+        <div className="text-center sm:text-left flex-1">
+          <h2 className="text-2xl font-bold text-red-800 mb-2">Fake Scheme Check</h2>
+          <p className="text-red-700 font-medium">Received a suspicious WhatsApp message about free government money? Verify it here.</p>
+        </div>
+        <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-bold whitespace-nowrap shadow-md transition-colors">
+          Verify Now
+        </button>
       </div>
 
       <div className="glass-panel rounded-3xl p-8 md:p-12 mb-16 text-center animate-fade-in-up border-2 border-primary-100 relative overflow-hidden" style={{ animationDelay: '100ms' }}>
