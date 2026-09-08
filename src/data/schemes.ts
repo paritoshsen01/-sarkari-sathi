@@ -461,8 +461,6 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://cmladlibahna.mp.gov.in/",
     tags: ["money", "पैसा", "women", "mahila", "madhya pradesh"],
-    locationLevel: "State",
-    locationName: "Madhya Pradesh",
     guideSteps: {
       en: [
         "Visit your local Gram Panchayat or Ward Office.",
@@ -496,8 +494,6 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://sehore.nic.in/",
     tags: ["agriculture", "farmer", "kisan", "kheti", "sehore"],
-    locationLevel: "District",
-    locationName: "Sehore",
     guideSteps: {
       en: [
         "Visit the District Agriculture Office in Sehore.",
