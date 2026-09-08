@@ -195,7 +195,7 @@ export function ManualEntry({ lang, onComplete }: ManualEntryProps) {
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-3">{content.questions[10] || "Which documents do you currently have?"}</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {(content.documents || ['Aadhaar', 'Bank Account', 'Ration Card', 'Land/Property Record', 'Income Certificate', 'Caste Certificate', 'Domicile/Resident Certificate', 'Medical/Birth Record']).map((doc: string) => (
+              {((content as any).documents || ['Aadhaar', 'Bank Account', 'Ration Card', 'Land/Property Record', 'Income Certificate', 'Caste Certificate', 'Domicile/Resident Certificate', 'Medical/Birth Record']).map((doc: string) => (
                 <label key={doc} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${documents.includes(doc) ? 'bg-primary-50 border-primary-300' : 'bg-white border-slate-200 hover:bg-slate-50'}`}>
                   <input
                     type="checkbox"
