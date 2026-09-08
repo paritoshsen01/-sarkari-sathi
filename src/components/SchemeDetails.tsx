@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ArrowLeft, ExternalLink, CheckCircle2, FileText, Info, Users, Mic } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, ExternalLink, CheckCircle2, FileText, Info, Users, Mic, Volume2, Square } from 'lucide-react';
 import { type LanguageCode, languages } from '../data/languages';
 import { type Scheme } from '../data/schemes';
 import { SchemeGuide } from './SchemeGuide';
@@ -13,29 +13,84 @@ interface SchemeDetailsProps {
 export function SchemeDetails({ lang, scheme, onBack }: SchemeDetailsProps) {
   const content = languages[lang].details;
   const [showGuide, setShowGuide] = useState(false);
+  const [isReading, setIsReading] = useState(false);
+
+  const readDetails = () => {
+    if (!('speechSynthesis' in window)) return;
+    
+    if (isReading) {
+      window.speechSynthesis.cancel();
+      setIsReading(false);
+      return;
+    }
+
+    const textToRead = `${scheme.name}. ${content.whatIsIt}: ${scheme.whatIsIt} ${content.whoIsEligible}: ${scheme.whoIsEligible} ${content.benefits}: ${scheme.benefit}`;
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    const langMap: Record<string, string> = {
+      en: 'en-IN', hi: 'hi-IN', bun: 'hi-IN', cg: 'hi-IN', sat: 'hi-IN', spv: 'or-IN',
+      mr: 'mr-IN', bn: 'bn-IN', te: 'te-IN', ta: 'ta-IN', gu: 'gu-IN', bho: 'hi-IN', mai: 'hi-IN'
+    };
+    utterance.lang = langMap[lang] || 'hi-IN';
+    
+    utterance.onstart = () => setIsReading(true);
+    utterance.onend = () => setIsReading(false);
+    utterance.onerror = () => setIsReading(false);
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <button 
-        onClick={onBack}
-        className="flex items-center gap-2 text-slate-600 hover:text-primary-600 mb-6 font-medium transition-colors"
-      >
-        <ArrowLeft className="w-5 h-5" />
-        {content.back}
-      </button>
+      <div className="flex justify-between items-center mb-6">
+        <button 
+          onClick={onBack}
+          className="flex items-center gap-2 text-slate-600 hover:text-primary-600 font-medium transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          {content.back}
+        </button>
+        
+        <button 
+          onClick={readDetails}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors border ${
+            isReading 
+              ? 'bg-red-50 text-red-600 border-red-200 hover:bg-red-100' 
+              : 'bg-primary-50 text-primary-700 border-primary-200 hover:bg-primary-100'
+          }`}
+        >
+          {isReading ? (
+            <>
+              <Square className="w-4 h-4 fill-current" />
+              Stop Reading
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-4 h-4" />
+              Listen to Details
+            </>
+          )}
+        </button>
+      </div>
 
       <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
         {/* Header */}
         <div className="bg-slate-50 p-5 md:p-8 border-b border-slate-200">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-            <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-3xl">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-3xl flex-shrink-0">
               {scheme.icon}
             </div>
             <div>
               <span className="px-3 py-1 rounded-full text-sm font-medium bg-white text-slate-600 border border-slate-200 inline-block mb-2">
                 {scheme.category}
               </span>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900">{scheme.name}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 leading-tight">{scheme.name}</h1>
             </div>
           </div>
         </div>
