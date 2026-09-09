@@ -6,11 +6,12 @@ import { ManualEntry } from './components/ManualEntry';
 import { Results } from './components/Results';
 import { SchemeDetails } from './components/SchemeDetails';
 import { ScamVerification } from './components/ScamVerification';
+import { SihSkillingPortal } from './components/SihSkillingPortal';
 import { type LanguageCode, languages } from './data/languages';
 import { type Scheme } from './data/schemes';
-import { Globe, Menu } from 'lucide-react';
+import { Globe, Menu, Sparkles } from 'lucide-react';
 
-type ViewState = 'home' | 'assistant' | 'need-assistant' | 'manual' | 'results' | 'details' | 'scam-verification';
+type ViewState = 'home' | 'assistant' | 'need-assistant' | 'manual' | 'results' | 'details' | 'scam-verification' | 'sih-skilling';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewState>('home');
@@ -40,6 +41,10 @@ function App() {
     setCurrentView('scam-verification');
   };
 
+  const handleStartSihSkilling = () => {
+    setCurrentView('sih-skilling');
+  };
+
   const handleAssistantComplete = (finalAnswers: Record<number, string>) => {
     setAnswers(finalAnswers);
     setForcedSchemes(null);
@@ -57,6 +62,10 @@ function App() {
   };
 
   const navigateHome = () => setCurrentView('home');
+
+  if (currentView === 'sih-skilling') {
+    return <SihSkillingPortal onBackToHome={navigateHome} />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
@@ -76,8 +85,17 @@ function App() {
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             
+            {/* SIH 2026 Navigation Badge */}
+            <button 
+              onClick={handleStartSihSkilling}
+              className="flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md shadow-orange-500/20 transition-all hover:scale-105"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>SIH 2026 Skilling 🎙️</span>
+            </button>
+
             <div className="relative group flex items-center gap-2 bg-slate-50/50 px-3 py-1.5 rounded-full border border-slate-200/50">
               <Globe className="w-4 h-4 text-slate-500" />
               <select 
@@ -114,6 +132,7 @@ function App() {
             onStartManual={handleStartManual} 
             onStartNeedAssistant={handleStartNeedAssistant}
             onStartScamVerification={handleStartScamVerification}
+            onStartSihSkilling={handleStartSihSkilling}
           />
         )}
         

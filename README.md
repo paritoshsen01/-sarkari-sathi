@@ -1,69 +1,66 @@
 # Sarkari Sathi (सरकारी साथी) 🇮🇳
 
-> **Apni awaaz mein, apne haq ki yojana.**  
-> *Discover eligible Indian government schemes & detect fake scam messages using natural voice and regional languages.*
+> **Your Voice. Your Skills. Your Opportunity.**  
+> *AI-Driven Voice Assistant for Livelihood Mapping and NSQF-Aligned Skilling Recommendations for SC Communities under the GIA Component of PM-AJAY.*
 
+[![SIH 2026 Prototype](https://img.shields.io/badge/SIH_2026-PM--AJAY_Skilling-orange?style=for-the-badge&logo=gov)](https://paritoshsen01.github.io/-sarkari-sathi/)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-brightgreen?style=for-the-badge&logo=github)](https://paritoshsen01.github.io/-sarkari-sathi/)
 [![Built with React](https://img.shields.io/badge/React_19-TypeScript-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS_v4-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 
 ---
 
-## 🚀 Key Features
+## 🏆 SIH 2026 Special Challenge Feature
 
-- 🎙️ **Voice First Assistant**: Ask questions and discover government schemes by speaking in your regional Indian language.
-- 🔍 **Need-Based Facility Search**: Simply state what facility you need (*Water, Electricity, Food, Housing, Healthcare, or Money*) to find relevant schemes instantly.
-- 🛡️ **Scam & Fake Scheme Checker**: Paste suspicious WhatsApp forwards, SMS messages, or websites to verify their authenticity against official `.gov.in` databases.
-- 🌐 **13+ Regional Language Support**: Hindi, English, Bundelkhandi, Chhattisgarhi, Santhali, Sambalpuri, Marathi, Bengali, Telugu, Tamil, Gujarati, Bhojpuri, and Maithili.
-- 📊 **Smart AI Eligibility Matcher**: Evaluates state, age, occupation, income, and family criteria to present high-match and possible-match schemes.
-- 🔊 **Text-to-Speech Accessibility**: Listen to scheme descriptions and step-by-step application guidelines out loud.
+### Problem Statement:
+> **“AI-Driven Voice Assistant for Livelihood Mapping and NSQF-Aligned Skilling Recommendations for SC Communities under the GIA Component of PM-AJAY.”**
+
+### Core Highlights:
+- 🎙️ **Voice-First Natural Interface**: Hands-free multi-lingual diagnostic interview covering education, current occupation, traditional work, skills, career interests, employment preference, mobility, and location.
+- 🚀 **1-Click Jury Demo Presets**: Includes pre-configured beneficiary profiles (*Rural Youth, Homemaker, Mechanics*) for instant evaluation during live jury demonstrations.
+- ⚡ **Skill Gap Analysis & NSQF Ranking**: Dynamically calculates match scores for NSQF-aligned pathways (*Assistant Electrician, Solar PV Technician, Automotive EV Repair, Digital Kiosk Operator*).
+- 💼 **Training-to-Livelihood Outcome Mapping**: Links training courses to tangible wage jobs, PM Surya Ghar installations, Mudra loans, and self-employment micro-enterprises.
+- 🗺️ **Personalized Livelihood Roadmap**: 6-step visual timeline from current skills to sustainable enterprise creation.
+- 📊 **SIH Jury Dashboard**: Live analytics tracking beneficiaries profiled, training match distribution, and district demand metrics.
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 All Features
+
+- 🎙️ **Multi-Lingual Voice Assistant**: Discover government schemes and skilling pathways by speaking in your regional Indian language.
+- 🔍 **Need-Based Search**: Simply state what facility you need (*Water, Electricity, Food, Housing, Healthcare, or Money*).
+- 🛡️ **Scam & Fake Scheme Checker**: Verify suspicious WhatsApp forwards, SMS messages, or website URLs against official `.gov.in` databases.
+- 🌐 **13+ Indian Languages Supported**: Hindi, English, Bundelkhandi, Chhattisgarhi, Marathi, Bengali, Telugu, Tamil, Gujarati, Bhojpuri, Maithili, etc.
+- 🔊 **Text-to-Speech Accessibility**: Listen to scheme descriptions, eligibility criteria, and document checklists out loud.
+
+---
+
+## 🛠️ Tech Stack & Architecture
 
 - **Frontend**: React 19, TypeScript, Vite
 - **Styling**: Tailwind CSS v4, Lucide Icons
-- **Search & Matching**: Fuse.js, Custom Rule-Based Matcher
-- **Audio & Speech**: Web Speech API (Speech Recognition & Speech Synthesis)
+- **Voice & Speech**: Web Speech API (Speech Recognition + Speech Synthesis)
+- **Recommendation Engine**: Custom Multi-Factor Match Scoring (Interest + Existing Skills + Education + Preference + Location)
 - **Deployment**: GitHub Pages (`gh-pages`)
 
 ---
 
 ## 📦 Getting Started
 
-### Prerequisites
-- Node.js (v18+ recommended)
-- npm or yarn
+```bash
+# Clone the repository
+git clone https://github.com/paritoshsen01/-sarkari-sathi.git
+cd -sarkari-sathi
 
-### Local Setup
+# Install dependencies
+npm install
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/paritoshsen01/-sarkari-sathi.git
-   cd -sarkari-sathi
-   ```
+# Run dev server
+npm run dev
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:5173` in your browser.
-
-4. **Build for production**:
-   ```bash
-   npm run build
-   ```
-
-5. **Deploy to GitHub Pages**:
-   ```bash
-   npm run deploy
-   ```
+# Build for production & deploy to GitHub Pages
+npm run deploy
+```
 
 ---
 

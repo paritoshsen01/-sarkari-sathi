@@ -8,14 +8,49 @@ interface HomeProps {
   onStartManual: () => void;
   onStartNeedAssistant: () => void;
   onStartScamVerification: () => void;
+  onStartSihSkilling: () => void;
 }
 
-export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, onStartScamVerification }: HomeProps) {
+export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, onStartScamVerification, onStartSihSkilling }: HomeProps) {
   const t = getTranslation(lang);
   const content = t.home;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+
+      {/* SIH 2026 Special Challenge Banner */}
+      <div 
+        onClick={onStartSihSkilling}
+        className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-2 border-orange-500/50 rounded-3xl p-6 md:p-8 mb-10 cursor-pointer shadow-xl hover:border-orange-400 transition-all hover-lift relative overflow-hidden group"
+      >
+        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-orange-500/30 group-hover:scale-105 transition-transform">
+              🏆
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="bg-orange-500/20 text-orange-300 border border-orange-500/40 text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded">
+                  SIH 2026 Featured Prototype
+                </span>
+                <span className="text-xs text-amber-300 font-semibold">PM-AJAY GIA Skilling</span>
+              </div>
+              <h2 className="text-2xl font-bold text-white group-hover:text-orange-300 transition-colors">
+                AI Voice Assistant for Livelihood & NSQF Skilling
+              </h2>
+              <p className="text-sm text-slate-300 mt-1 max-w-xl">
+                “Your Voice. Your Skills. Your Opportunity.” — Voice-first livelihood mapping for SC beneficiaries.
+              </p>
+            </div>
+          </div>
+
+          <button className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold px-6 py-3 rounded-full text-sm whitespace-nowrap shadow-lg shadow-orange-500/25 flex items-center gap-2 group-hover:translate-x-1 transition-all">
+            <span>Launch SIH Prototype 🎙️</span>
+          </button>
+        </div>
+      </div>
+
       <div className="text-center mb-16 mt-8 animate-fade-in-up">
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight gradient-text">
           Sarkari Sathi
