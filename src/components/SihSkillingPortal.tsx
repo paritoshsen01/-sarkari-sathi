@@ -18,179 +18,21 @@ interface SihSkillingPortalProps {
   lang?: LanguageCode;
   onBackToHome: () => void;
 }
-
-const portalText = {
-  hi: {
-    navVoice: "🎙️ वॉयस इंटरव्यू",
-    navProfile: "📊 प्रोफाइल एवं सिफारिशें",
-    navBack: "मुख्य साइट पर वापस",
-    bannerTitle: "“आपकी आवाज़। आपके कौशल। आपका अवसर।”",
-    bannerSub: "PM-AJAY के तहत SC लाभार्थियों के लिए AI-संचालित वॉयस आजीविका एवं कौशल मार्गदर्शन।",
-    bannerDesc: "सरकारी साथी से अपनी पसंद की भाषा में बात करें। AI सहायक आपकी पृष्ठभूमि, मौजूदा कौशल और रुचियों को समझकर आपके लिए उपयुक्त NSQF-अनुशंसित प्रशिक्षण और स्थानीय रोजगार खोजने में मदद करता है।",
-    journeyTitle: "संपूर्ण आजीविका प्रक्रिया:",
-    journeyCitizen: "👤 नागरिक",
-    journeyVoice: "🎙️ वॉयस AI",
-    journeyGap: "⚡ कौशल अंतर",
-    journeyTraining: "🎓 NSQF प्रशिक्षण",
-    journeyLivelihood: "💼 आजीविका",
-    talkCTA: "🎙️ सरकारी साथी से बात करें",
-    sampleHeader: "नमूना नागरिक प्रोफाइल (त्वरित मूल्यांकन)",
-    sampleDesc: "अनुशंसा इंजन का तुरंत परीक्षण करने के लिए किसी एक प्रोफाइल को चुनें:",
-    qProgress: "प्रश्न",
-    of: "का",
-    voiceGuide: "सरकारी साथी वॉयस गाइड",
-    speaking: "बोल रहा हूँ...",
-    noTyping: "टाइप करने की आवश्यकता नहीं है। बस स्वाभाविक रूप से बोलें।",
-    repeatVoice: "🔊 आवाज दोहराएं",
-    micListening: "🔴 सुन रहा हूँ... अपने माइक में स्पष्ट बोलें",
-    micTapToSpeak: "उत्तर बोलने के लिए माइक पर क्लिक करें",
-    speechRecognized: "पहचाना गया उत्तर:",
-    confirmNext: "उत्तर की पुष्टि करें और आगे बढ़ें →",
-    orClick: "या उत्तर चुनें:",
-    micIssue: "माइक में समस्या है?",
-    hideTyping: "टाइपिंग बॉक्स छिपाएं",
-    typeAnswer: "⌨️ इसके बजाय अपना उत्तर टाइप करें",
-    typePlaceholder: "अपना उत्तर टाइप करें...",
-    next: "आगे बढ़ें",
-    profileTitle: "आपकी आजीविका प्रोफाइल",
-    profileSub: "आपके AI वॉयस मूल्यांकन और पृष्ठभूमि से निर्मित",
-    editProfile: "प्रोफाइल संपादित करें",
-    saveProfile: "प्रोफाइल सहेजें",
-    retakeInterview: "🔄 वॉयस इंटरव्यू दोबारा दें",
-    education: "शिक्षा",
-    currentWork: "वर्तमान कार्य",
-    traditionalWork: "पारंपरिक कार्य",
-    existingSkills: "मौजूदा कौशल",
-    careerInterest: "करियर रुचि",
-    workPref: "रोजगार प्राथमिकता",
-    mobilityLimit: "आवागमन सीमा",
-    location: "स्थान",
-    skillGapTitle: "आपकी आजीविका और कौशल अंतर (Skill Gap) को समझें",
-    skillGapSub: "प्रायोगिक क्षमताओं बनाम कौशल मानकों का विश्लेषणात्मक मूल्यांकन",
-    currentSit: "1. वर्तमान स्थिति",
-    keyStrengths: "2. मुख्य क्षमताएं",
-    identifiedGaps: "3. पहचाने गए कौशल अंतर",
-    recTitle: "अनुशंसित कौशल मार्ग (NSQF Pathways)",
-    recSub: "आपकी प्रोफाइल और स्थानीय PM-AJAY GIA केंद्रों के अनुसार",
-    potentialMatch: "संभावित मैच — अंतिम पात्रता आधिकारिक PM-AJAY दिशानिर्देशों के अनुसार सत्यापित होगी",
-    matchScore: "मैच स्कोर",
-    whyRecommended: "क्यों अनुशंसित?",
-    outcomes: "आजीविका परिणाम:",
-    viewDetailsDoc: "आजीविका विवरण और दस्तावेज़ देखें →",
-    roadmapTag: "रणनीतिक करियर समयरेखा",
-    roadmapTitle: "आपकी अनुशंसित आजीविका रोडमैप",
-    roadmapSub: "मौजूदा कौशल से स्थाई व्यवसाय तक चरणबद्ध मार्ग",
-    roadmapSteps: [
-      { step: "1", title: "मौजूदा कौशल", desc: "प्रायोगिक अनुभव की पहचान" },
-      { step: "2", title: "कौशल अंतर", desc: "सुरक्षा और तकनीकी अंतर की पहचान" },
-      { step: "3", title: "NSQF प्रशिक्षण", desc: "मुफ़्त 3-महीने का PM-AJAY GIA कोर्स" },
-      { step: "4", title: "प्रमाणन", desc: "सेक्टर स्किल काउंसिल सर्टिफिकेट" },
-      { step: "5", title: "स्थानीय रोजगार", desc: "अप्रेंटिसशिप या नौकरी" },
-      { step: "6", title: "स्वरोजगार", desc: "मुद्रा ऋण और व्यापार स्थापना" }
-    ],
-    ruralTitle: "ग्रामीण और कम-कनेक्टिविटी क्षेत्रों के लिए निर्मित",
-    ruralSub: "ग्राम पंचायतों में बिना किसी रुकावट के पहुंच",
-    modalDuration: "अवधि:",
-    modalEdu: "शिक्षा:",
-    modalBenefits: "PM-AJAY GIA घटक के लाभ",
-    modalDocs: "आवश्यक दस्तावेज़ों की सूची",
-    modalOpp: "आपके निकटतम अवसर",
-    getGuidance: "आवेदन मार्गदर्शन प्राप्त करें →",
-    guidanceAlert: "आवेदन मार्गदर्शन तैयार! आपकी दस्तावेज़ सूची और नजदीकी प्रशिक्षण केंद्र के संपर्क विवरण तैयार कर लिए गए हैं।"
-  },
-  en: {
-    navVoice: "🎙️ Voice Interview",
-    navProfile: "📊 Profile & Recommendations",
-    navBack: "Back to Main Site",
-    bannerTitle: "“Your Voice. Your Skills. Your Opportunity.”",
-    bannerSub: "AI-powered livelihood mapping and skilling guidance for SC beneficiaries under PM-AJAY.",
-    bannerDesc: "Talk to Sarkari Sathi in your preferred language. The AI assistant understands your background, existing skills, and interests to help you discover suitable NSQF-aligned training and local livelihood opportunities.",
-    journeyTitle: "End-to-End Livelihood Journey:",
-    journeyCitizen: "👤 Citizen",
-    journeyVoice: "🎙️ Voice AI",
-    journeyGap: "⚡ Skill Gap",
-    journeyTraining: "🎓 NSQF Training",
-    journeyLivelihood: "💼 Livelihood",
-    talkCTA: "🎙️ Talk to Sarkari Sathi",
-    sampleHeader: "Sample Citizen Profiles (Quick Assessment)",
-    sampleDesc: "Select a sample profile to instantly evaluate the recommendation engine:",
-    qProgress: "Question",
-    of: "of",
-    voiceGuide: "Sarkari Sathi Voice Guide",
-    speaking: "Speaking...",
-    noTyping: "No typing required. Just speak naturally.",
-    repeatVoice: "🔊 Repeat Voice",
-    micListening: "🔴 Listening... Speak clearly into your mic",
-    micTapToSpeak: "Click Microphone to Speak Answer",
-    speechRecognized: "Recognized Speech:",
-    confirmNext: "Confirm Answer & Next →",
-    orClick: "Or click an answer:",
-    micIssue: "Microphone issue?",
-    hideTyping: "Hide Typing Box",
-    typeAnswer: "⌨️ Type your answer instead",
-    typePlaceholder: "Type your answer here...",
-    next: "Next",
-    profileTitle: "Your Livelihood Profile",
-    profileSub: "Generated from your AI voice assessment & background",
-    editProfile: "Edit Profile",
-    saveProfile: "Save Profile",
-    retakeInterview: "🔄 Re-take Interview",
-    education: "Education",
-    currentWork: "Current Work",
-    traditionalWork: "Traditional Work",
-    existingSkills: "Existing Skills",
-    careerInterest: "Career Interest",
-    workPref: "Work Preference",
-    mobilityLimit: "Mobility Limit",
-    location: "Location",
-    skillGapTitle: "Understanding Your Livelihood & Skill Gaps",
-    skillGapSub: "Diagnostic analysis of existing practical abilities vs required skill standards",
-    currentSit: "1. Current Situation",
-    keyStrengths: "2. Key Strengths",
-    identifiedGaps: "3. Identified Skill Gaps",
-    recTitle: "Recommended Skill Pathways",
-    recSub: "Matched to your profile & local PM-AJAY GIA training centers",
-    potentialMatch: "Potential Match — Final eligibility verified per official PM-AJAY guidelines",
-    matchScore: "Match Score",
-    whyRecommended: "Why Recommended?",
-    outcomes: "Livelihood Outcomes:",
-    viewDetailsDoc: "View Livelihood Details & Documents →",
-    roadmapTag: "Strategic Career Timeline",
-    roadmapTitle: "Your Suggested Livelihood Roadmap",
-    roadmapSub: "A step-by-step pathway from your existing skills to sustained enterprise & employment",
-    roadmapSteps: [
-      { step: "1", title: "Current Skills", desc: "Recognize existing experience" },
-      { step: "2", title: "Skill Gap", desc: "Identify safety & technical gaps" },
-      { step: "3", title: "NSQF Training", desc: "Free 3-month PM-AJAY GIA course" },
-      { step: "4", title: "Certification", desc: "Sector Skill Council Certificate" },
-      { step: "5", title: "Local Job", desc: "Apprenticeship or employment" },
-      { step: "6", title: "Self Enterprise", desc: "Mudra loan & business setup" }
-    ],
-    ruralTitle: "Built for Rural & Low-Connectivity Environments",
-    ruralSub: "Access channels ensuring zero-barrier entry across Gram Panchayats",
-    modalDuration: "Duration:",
-    modalEdu: "Education:",
-    modalBenefits: "PM-AJAY GIA Component Benefits",
-    modalDocs: "Required Documents Checklist",
-    modalOpp: "Opportunities Near You",
-    getGuidance: "Get Application Guidance →",
-    guidanceAlert: "Application Guidance Generated! Your document checklist and nearby training center contact details have been prepared."
-  }
-};
+import { portalText } from '../data/portalText';
 
 export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPortalProps) {
   // Active Navigation View State
   const [activeTab, setActiveTab] = useState<'interview' | 'profile' | 'results' | 'roadmap'>('interview');
   
   // Language Selection (syncs with global site language)
-  const [selectedLang, setSelectedLang] = useState<'hi' | 'en'>(lang === 'en' ? 'en' : 'hi');
+  const [selectedLang, setSelectedLang] = useState<LanguageCode>(lang);
   const [langConfirmed, setLangConfirmed] = useState(false);
 
   useEffect(() => {
-    setSelectedLang(lang === 'en' ? 'en' : 'hi');
+    setSelectedLang(lang);
   }, [lang]);
 
-  const pt = selectedLang === 'en' ? portalText.en : portalText.hi;
+  const pt = portalText[selectedLang] || portalText.hi;
 
   // Voice Interview State
   const [currentQIndex, setCurrentQIndex] = useState(0);
@@ -908,7 +750,7 @@ export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPort
               </div>
 
               <div className="grid sm:grid-cols-2 md:grid-cols-6 gap-3">
-                {pt.roadmapSteps.map((item, index) => (
+                {pt.roadmapSteps.map((item: any, index: number) => (
                   <div key={index} className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 text-center hover-lift">
                     <div className="w-8 h-8 rounded-full bg-primary-600 text-white font-extrabold text-sm flex items-center justify-center mx-auto mb-3 shadow-md">
                       {item.step}

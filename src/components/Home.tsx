@@ -31,22 +31,24 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full">
-                  PM-AJAY Special Feature
+                <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] uppercase font-mono font-bold px-2.5 py-0.5 rounded-full">
+                  {(content as any).pmAjayBanner?.badge || 'PM-AJAY Special Feature'}
                 </span>
-                <span className="text-xs text-teal-700 font-semibold">GIA Component Skilling</span>
+                <span className="text-xs text-teal-700 font-semibold">
+                  {(content as any).pmAjayBanner?.subBadge || 'GIA Component Skilling'}
+                </span>
               </div>
               <h2 className="text-2xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                AI Voice Assistant for Livelihood & NSQF Skilling
+                {(content as any).pmAjayBanner?.title || 'AI Voice Assistant for Livelihood & NSQF Skilling'}
               </h2>
               <p className="text-sm text-slate-600 mt-1 max-w-xl">
-                “Your Voice. Your Skills. Your Opportunity.” — Voice-first livelihood mapping for SC beneficiaries.
+                {(content as any).pmAjayBanner?.desc || '“Your Voice. Your Skills. Your Opportunity.” — Voice-first livelihood mapping for SC beneficiaries.'}
               </p>
             </div>
           </div>
 
           <button className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold px-6 py-3 rounded-full text-sm whitespace-nowrap shadow-lg shadow-emerald-600/20 flex items-center gap-2 group-hover:translate-x-1 transition-all">
-            <span>PM-AJAY Voice Assistant 🎙️</span>
+            <span>{(content as any).pmAjayBanner?.cta || 'PM-AJAY Voice Assistant 🎙️'}</span>
           </button>
         </div>
       </div>

@@ -16,6 +16,13 @@ export const languages = {
       ],
       howItWorks: 'How it works',
       steps: ['Speak', 'Answer', 'Get matched', 'Apply'],
+      pmAjayBanner: {
+      badge: "PM-AJAY Special Feature",
+      subBadge: "GIA Component Skilling",
+      title: "AI Voice Assistant for Livelihood & NSQF Skilling",
+      desc: "“Your Voice. Your Skills. Your Opportunity.” — Voice-first livelihood mapping for SC beneficiaries.",
+      cta: "PM-AJAY Voice Assistant 🎙️"
+}
     },
     assistant: {
       greeting: 'Namaste! I am Sarkari Sathi.',
@@ -76,6 +83,13 @@ export const languages = {
       ],
       howItWorks: 'यह कैसे काम करता है',
       steps: ['बोलें', 'जवाब दें', 'योजना पाएं', 'आवेदन करें'],
+      pmAjayBanner: {
+      badge: "PM-AJAY विशेष सुविधा",
+      subBadge: "GIA घटक कौशल विकास",
+      title: "आजीविका और NSQF कौशल के लिए AI वॉयस असिस्टेंट",
+      desc: "“आपकी आवाज़। आपके कौशल। आपका अवसर।” — SC लाभार्थियों के लिए वॉयस-फर्स्ट आजीविका मैपिंग।",
+      cta: "PM-AJAY वॉयस असिस्टेंट 🎙️"
+}
     },
     assistant: {
       greeting: 'नमस्ते! मैं सरकारी साथी हूँ।',
@@ -136,6 +150,13 @@ export const languages = {
       ],
       howItWorks: 'कैसो काम करत है',
       steps: ['बोलो', 'जबाव दओ', 'योजना पाओ', 'आवेदन करो'],
+      pmAjayBanner: {
+      badge: "PM-AJAY खास सुबिधा",
+      subBadge: "GIA घटक कौशल",
+      title: "आजीविका और NSQF कौशल के लाने AI आवाज असिस्टेंट",
+      desc: "“तुमारी आवाज। तुमारे कौशल। तुमाओ मौका।” — SC लाभार्थिन के लाने आवाज-फर्स्ट आजीविका मैपिंग।",
+      cta: "PM-AJAY आवाज असिस्टेंट 🎙️"
+}
     },
     assistant: {
       greeting: 'राम-राम! हम सरकारी साथी आंय।',
@@ -196,6 +217,13 @@ export const languages = {
       ],
       howItWorks: 'कइसे काम करथे',
       steps: ['बोलव', 'जवाब दव', 'योजना पाव', 'आवेदन करव'],
+      pmAjayBanner: {
+      badge: "PM-AJAY खास सुविधा",
+      subBadge: "GIA घटक कौशल",
+      title: "आजीविका अउ NSQF कौशल बर AI अवाज असिस्टेंट",
+      desc: "“आप के अवाज। आप के कौशल। आप के मौका।” — SC हितग्राही मन बर अवाज-फर्स्ट आजीविका मैपिंग।",
+      cta: "PM-AJAY अवाज असिस्टेंट 🎙️"
+}
     },
     assistant: {
       greeting: 'जय जोहार! मय सरकारी साथी अंव।',
@@ -256,6 +284,13 @@ export const languages = {
       ],
       howItWorks: 'How it works',
       steps: ['Speak', 'Answer', 'Get matched', 'Apply'],
+      pmAjayBanner: {
+      badge: "PM-AJAY ᱠᱷᱟᱥ ᱥᱩᱵᱤᱫᱷᱟ",
+      subBadge: "GIA ᱠᱚᱢᱯᱳᱱᱮᱱᱴ ᱥᱠᱤᱞᱤᱝ",
+      title: "ᱠᱟᱹᱢᱤ ᱟᱨ NSQF ᱥᱠᱤᱞᱤᱝ ᱞᱟᱹᱜᱤᱫ AI ᱟᱲᱟᱝ ᱟᱥᱤᱥᱴᱮᱱᱴ",
+      desc: "“ᱟᱢᱟᱜ ᱟᱲᱟᱝ᱾ ᱟᱢᱟᱜ ᱦᱩᱱᱟᱹᱨ᱾ ᱟᱢᱟᱜ ᱫᱟᱣ᱾” — SC ᱦᱚᱲ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱟᱲᱟᱝ-ᱯᱷᱟᱨᱥᱴ ᱠᱟᱹᱢᱤ ᱢᱮᱯᱤᱝ᱾",
+      cta: "PM-AJAY ᱟᱲᱟᱝ ᱟᱥᱤᱥᱴᱮᱱᱴ 🎙️"
+}
     },
     assistant: {
       greeting: 'Johar! I am Sarkari Sathi.',
@@ -316,6 +351,13 @@ export const languages = {
       ],
       howItWorks: 'Kemiti kama kare',
       steps: ['Kuha', 'Uttara', 'Yojana Pau', 'Abedana'],
+      pmAjayBanner: {
+      badge: "PM-AJAY Swatantra Suvidha",
+      subBadge: "GIA Component Skilling",
+      title: "Jibika au NSQF Skilling pain AI Voice Assistant",
+      desc: "“Apankara Swara. Apankara Dakhayata. Apankara Sujoga.” — SC beneficiary mananka pain voice-first jibika mapping.",
+      cta: "PM-AJAY Voice Assistant 🎙️"
+}
     },
     assistant: {
       greeting: 'Juhar! Mu Sarkari Sathi.',
@@ -376,6 +418,13 @@ export const languages = {
       ],
       howItWorks: 'हे कसे काम करते',
       steps: ['बोला', 'उत्तर द्या', 'योजना मिळवा', 'अर्ज करा'],
+      pmAjayBanner: {
+      badge: "PM-AJAY विशेष सुविधा",
+      subBadge: "GIA घटक कौशल्य",
+      title: "उपजीविका आणि NSQF कौशल्यासाठी AI व्हॉइस असिस्टंट",
+      desc: "“तुमचा आवाज. तुमचे कौशल्य. तुमची संधी.” — SC लाभार्थ्यांसाठी व्हॉइस-फर्स्ट उपजीविका मॅपिंग.",
+      cta: "PM-AJAY व्हॉइस असिस्टंट 🎙️"
+}
     },
     assistant: {
       greeting: 'नमस्कार! मी सरकारी साथी आहे.',
@@ -436,6 +485,13 @@ export const languages = {
       ],
       howItWorks: 'এটি কীভাবে কাজ করে',
       steps: ['বলুন', 'উত্তর দিন', 'প্রকল্প পান', 'আবেদন করুন'],
+      pmAjayBanner: {
+      badge: "PM-AJAY বিশেষ বৈশিষ্ট্য",
+      subBadge: "GIA কম্পোনেন্ট স্কিলিং",
+      title: "জীবিকা এবং NSQF স্কিলিংয়ের জন্য AI ভয়েস সহকারী",
+      desc: "“আপনার কণ্ঠ। আপনার দক্ষতা। আপনার সুযোগ।” — SC সুবিধাভোগীদের জন্য ভয়েস-ফার্স্ট জীবিকা ম্যাপিং।",
+      cta: "PM-AJAY ভয়েস সহকারী 🎙️"
+}
     },
     assistant: {
       greeting: 'নমস্কার! আমি সরকারি সাথী।',
@@ -496,6 +552,13 @@ export const languages = {
       ],
       howItWorks: 'ఇది ఎలా పనిచేస్తుంది',
       steps: ['మాట్లాడండి', 'సమాధానం', 'పథకం పొందండి', 'దరఖాస్తు చేయండి'],
+      pmAjayBanner: {
+      badge: "PM-AJAY ప్రత్యేక ఫీచర్",
+      subBadge: "GIA కాంపోనెంట్ స్కిల్లింగ్",
+      title: "జీవనోపాధి మరియు NSQF స్కిల్లింగ్ కోసం AI వాయిస్ అసిస్టెంట్",
+      desc: "“మీ వాయిస్. మీ నైపుణ్యాలు. మీ అవకాశం.” — SC లబ్ధిదారుల కోసం వాయిస్-ఫస్ట్ జీవనోపాధి మ్యాపింగ్.",
+      cta: "PM-AJAY వాయిస్ అసిస్టెంట్ 🎙️"
+}
     },
     assistant: {
       greeting: 'నమస్కారం! నేను ప్రభుత్వ సాథిని.',
@@ -556,6 +619,13 @@ export const languages = {
       ],
       howItWorks: 'எப்படி செயல்படுகிறது',
       steps: ['பேசுக', 'பதில்', 'திட்டத்தைப் பெறுக', 'விண்ணப்பிக்கவும்'],
+      pmAjayBanner: {
+      badge: "PM-AJAY சிறப்பு அம்சம்",
+      subBadge: "GIA கூறு திறன் மேம்பாடு",
+      title: "வாழ்வாதாரம் மற்றும் NSQF திறனுக்கான AI குரல் உதவியாளர்",
+      desc: "“உங்கள் குரல். உங்கள் திறன்கள். உங்கள் வாய்ப்பு.” — SC பயனாளிகளுக்கான குரல் முதல் வாழ்வாதார மேப்பிங்.",
+      cta: "PM-AJAY குரல் உதவியாளர் 🎙️"
+}
     },
     assistant: {
       greeting: 'வணக்கம்! நான் சர்காரி சாதி.',
@@ -616,6 +686,13 @@ export const languages = {
       ],
       howItWorks: 'તે કેવી રીતે કામ કરે છે',
       steps: ['બોલો', 'જવાબ આપો', 'યોજના મેળવો', 'અરજી કરો'],
+      pmAjayBanner: {
+      badge: "PM-AJAY વિશેષ સુવિધા",
+      subBadge: "GIA ઘટક કૌશલ્ય",
+      title: "આજીવિકા અને NSQF કૌશલ્ય માટે AI વોઇસ આસિસ્ટન્ટ",
+      desc: "“તમારો અવાજ. તમારું કૌશલ્ય. તમારી તક.” — SC લાભાર્થીઓ માટે વોઇસ-ફર્સ્ટ આજીવિકા મેપિંગ.",
+      cta: "PM-AJAY વોઇસ આસિસ્ટન્ટ 🎙️"
+}
     },
     assistant: {
       greeting: 'નમસ્તે! હું સરકારી સાથી છું.',
@@ -676,6 +753,13 @@ export const languages = {
       ],
       howItWorks: 'कइसे काम करेला',
       steps: ['बोलीं', 'जवाब दीं', 'योजना पाईं', 'आवेदन करीं'],
+      pmAjayBanner: {
+      badge: "PM-AJAY विशेष सुविधा",
+      subBadge: "GIA घटक कौशल",
+      title: "आजीविका आउर NSQF कौशल खातिर AI आवाज असिस्टेंट",
+      desc: "“रउवा आवाज। रउवा कौशल। रउवा मौका।” — SC लाभार्थियन खातिर आवाज-फर्स्ट आजीविका मैपिंग।",
+      cta: "PM-AJAY आवाज असिस्टेंट 🎙️"
+}
     },
     assistant: {
       greeting: 'प्रणाम! हम सरकारी साथी हईं।',
@@ -736,6 +820,13 @@ export const languages = {
       ],
       howItWorks: 'कोना काज करैत अछि',
       steps: ['बाजू', 'जवाब दियौ', 'योजना पाबू', 'आवेदन करू'],
+      pmAjayBanner: {
+      badge: "PM-AJAY विशेष सुविधा",
+      subBadge: "GIA घटक कौशल",
+      title: "आजीविका आ NSQF कौशल लेल AI आवाज असिस्टेंट",
+      desc: "“अहाँक आवाज। अहाँक कौशल। अहाँक मौका।” — SC लाभार्थियन लेल आवाज-फर्स्ट आजीविका मैपिंग।",
+      cta: "PM-AJAY आवाज असिस्टेंट 🎙️"
+}
     },
     assistant: {
       greeting: 'प्रणाम! हम सरकारी साथी छी।',
@@ -791,6 +882,13 @@ export interface ExtraTranslations {
     scamCheckTitle: string;
     scamCheckDesc: string;
     scamCheckCTA: string;
+    pmAjayBanner?: {
+      badge: string;
+      subBadge: string;
+      title: string;
+      desc: string;
+      cta: string;
+    };
   };
   needAssistant: {
     prompt: string;
@@ -841,7 +939,14 @@ const extras: Record<string, ExtraTranslations> = {
       needCTA: 'Tell us your need',
       scamCheckTitle: 'Fake Scheme Check',
       scamCheckDesc: 'Received a suspicious WhatsApp message about free government money? Verify it here.',
-      scamCheckCTA: 'Verify Now'
+      scamCheckCTA: 'Verify Now',
+      pmAjayBanner: {
+        badge: 'PM-AJAY Special Feature',
+        subBadge: 'GIA Component Skilling',
+        title: 'AI Voice Assistant for Livelihood & NSQF Skilling',
+        desc: '“Your Voice. Your Skills. Your Opportunity.” — Voice-first livelihood mapping for SC beneficiaries.',
+        cta: 'PM-AJAY Voice Assistant 🎙️'
+      }
     },
     needAssistant: {
       prompt: 'What specific facility do you need? For example: Water, Electricity, Food, Housing, Healthcare, or Money.',
@@ -890,7 +995,14 @@ const extras: Record<string, ExtraTranslations> = {
       needCTA: 'अपनी आवश्यकता बताएं',
       scamCheckTitle: 'फर्जी / धोखाधड़ी योजना जांच',
       scamCheckDesc: 'क्या आपको मुफ्त सरकारी पैसे के बारे में कोई संदिग्ध WhatsApp या SMS संदेश मिला है? यहां जांचें।',
-      scamCheckCTA: 'अभी जांच करें'
+      scamCheckCTA: 'अभी जांच करें',
+      pmAjayBanner: {
+        badge: 'PM-AJAY विशेष सुविधा',
+        subBadge: 'GIA घटक कौशल',
+        title: 'आजीविका एवं NSQF कौशल के लिए AI वॉयस सहायक',
+        desc: '“आपकी आवाज़। आपके कौशल। आपका अवसर।” — SC लाभार्थियों के लिए वॉयस-आधारित आजीविका मैपिंग।',
+        cta: 'PM-AJAY वॉयस असिस्टेंट 🎙️'
+      }
     },
     needAssistant: {
       prompt: 'आपको किस विशेष सुविधा की आवश्यकता है? उदाहरण के लिए: पानी, बिजली, राशन, घर, स्वास्थ्य, या पैसा।',
@@ -939,7 +1051,14 @@ const extras: Record<string, ExtraTranslations> = {
       needCTA: 'अपनई जरूरत बताओ',
       scamCheckTitle: 'फर्जी योजना की जांच',
       scamCheckDesc: 'का तुमाओ WhatsApp पर सरकारी पैसा को कोई संदिग्ध मैसेज आओ है? इते जांच करो।',
-      scamCheckCTA: 'अभी जांच करो'
+      scamCheckCTA: 'अभी जांच करो',
+      pmAjayBanner: {
+        badge: 'PM-AJAY खास सुविधा',
+        subBadge: 'GIA घटक काम-धंधा',
+        title: 'आजीविका और कौशल के लाने वॉयस सहायक',
+        desc: '“तुमाई आवाज। तुमाओ हुनर। तुमाओ मौका।” — SC भाइयों के लाने आवाज सई काम-धंधा खोजो।',
+        cta: 'PM-AJAY वॉयस असिस्टेंट 🎙️'
+      }
     },
     needAssistant: {
       prompt: 'तुम खों का चीज की जरूरत है? जइसे: पानी, बिजली, राशन, मकान, दवाई या पईसा।',
