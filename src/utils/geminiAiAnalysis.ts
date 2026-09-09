@@ -31,7 +31,7 @@ export async function generateLivelihoodAnalysis(
   }));
 
   const prompt = `
-You are Sarkari Sathi, an expert Livelihood & Skilling Advisor for the Indian Government's PM-AJAY Scheme.
+You are AJAY Sathi, an expert Livelihood & Skilling Advisor for the Indian Government's PM-AJAY Scheme.
 You are interacting with a beneficiary from rural/semi-rural India.
 
 Here is their profile:

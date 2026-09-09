@@ -25,7 +25,7 @@ export const languages = {
 }
     },
     assistant: {
-      greeting: 'Namaste! I am Sarkari Sathi.',
+      greeting: 'Namaste! I am AJAY Sathi.',
       intro: 'I will help you find government schemes. Just answer a few simple questions.',
       tapToSpeak: 'Tap to Speak',
       orType: 'Or type your answer below',
@@ -293,7 +293,7 @@ export const languages = {
 }
     },
     assistant: {
-      greeting: 'Johar! I am Sarkari Sathi.',
+      greeting: 'Johar! I am AJAY Sathi.',
       intro: 'I will help you find government schemes. Just answer a few simple questions.',
       tapToSpeak: 'Tap to Speak',
       orType: 'Or type your answer below',
@@ -360,7 +360,7 @@ export const languages = {
 }
     },
     assistant: {
-      greeting: 'Juhar! Mu Sarkari Sathi.',
+      greeting: 'Juhar! Mu AJAY Sathi.',
       intro: 'Mu apananku sarakari yojana khojibare sahajya karibi. Khali kichhi sahaja prashna ra uttara dia.',
       tapToSpeak: 'Kahiba pain dabantu',
       orType: 'Kimba tale likhi uttara diantu',

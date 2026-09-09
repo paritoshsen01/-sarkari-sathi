@@ -81,7 +81,7 @@ function App() {
               <span className="text-white font-bold text-lg">S</span>
             </div>
             <span className="text-xl font-bold text-slate-900 hidden sm:block">
-              Sarkari Sathi
+              AJAY Sathi
             </span>
           </div>
 

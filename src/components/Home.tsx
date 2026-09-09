@@ -55,7 +55,7 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
 
       <div className="text-center mb-16 mt-8 animate-fade-in-up">
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight gradient-text">
-          Sarkari Sathi
+          AJAY Sathi
         </h1>
         <p className="text-xl md:text-2xl text-primary-600 font-semibold mb-6">
           {content.tagline}

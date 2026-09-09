@@ -223,7 +223,7 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xl font-bold tracking-tight text-slate-900">Sarkari Sathi</span>
+                <span className="text-xl font-bold tracking-tight text-slate-900">AJAY Sathi</span>
                 <span className="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-bold">
                   PM-AJAY Skilling
                 </span>
@@ -642,7 +642,7 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
               {isAiLoading && (
                 <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
                   <RefreshCw className="w-10 h-10 text-primary-600 animate-spin mb-4" />
-                  <p className="text-lg font-bold text-slate-800">Sarkari Sathi AI is analyzing your profile...</p>
+                  <p className="text-lg font-bold text-slate-800">AJAY Sathi AI is analyzing your profile...</p>
                   <p className="text-sm text-slate-500">Mapping your skills to PM-AJAY NSQF Pathways</p>
                 </div>
               )}
@@ -968,7 +968,7 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
             <div className="bg-primary-600 p-4 text-white flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <Key className="w-5 h-5" />
-                <h2 className="text-lg font-bold">Sarkari Sathi AI Activation</h2>
+                <h2 className="text-lg font-bold">AJAY Sathi AI Activation</h2>
               </div>
               <button onClick={() => setShowApiKeyModal(false)} className="p-2 hover:bg-white/20 rounded-full transition-colors">
                 <X className="w-5 h-5" />
