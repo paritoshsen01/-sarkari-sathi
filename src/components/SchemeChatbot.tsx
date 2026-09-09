@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Mic, Volume2, VolumeX, Settings } from 'lucide-react';
+import { MessageCircle, X, Send, Mic, Volume2, VolumeX, Settings, Sparkles } from 'lucide-react';
 import { type LanguageCode } from '../data/languages';
 import { chatWithGemini, type ChatMessage } from '../utils/geminiChatbot';
 
@@ -138,37 +138,50 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-primary-600 to-emerald-500 rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-transform z-50 group"
+          className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-tr from-emerald-600 via-primary-600 to-teal-500 rounded-full shadow-[0_10px_25px_-5px_rgba(16,185,129,0.5)] flex items-center justify-center text-white hover:scale-110 transition-all duration-300 z-50 group hover:shadow-[0_15px_35px_-5px_rgba(16,185,129,0.6)]"
         >
-          <MessageCircle className="w-7 h-7 group-hover:animate-bounce" />
+          {/* Pulsing rings effect behind icon */}
+          <div className="absolute inset-0 rounded-full border-2 border-white/20 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+          
+          <Sparkles className="w-8 h-8 group-hover:rotate-12 transition-transform duration-300" />
+          
           {/* Notification Dot */}
-          <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-amber-400 border-2 border-white rounded-full animate-pulse"></span>
+          <span className="absolute top-1 right-1 w-4 h-4 bg-amber-400 border-2 border-white rounded-full animate-pulse shadow-sm"></span>
         </button>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[90vw] sm:w-[380px] h-[550px] max-h-[85vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 border border-slate-200 flex flex-col">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[92vw] sm:w-[400px] h-[600px] max-h-[85vh] bg-slate-50 rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden z-50 border border-white/50 backdrop-blur-xl">
           
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary-600 to-emerald-600 p-4 text-white flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <MessageCircle className="w-6 h-6" />
+          <div className="relative bg-gradient-to-r from-emerald-700 via-primary-700 to-teal-700 p-5 text-white flex items-center justify-between shrink-0 shadow-md z-10 overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-black/10 rounded-full blur-xl -ml-8 -mb-8"></div>
+            
+            <div className="flex items-center gap-4 relative z-10">
+              <div className="relative">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner">
+                  <Sparkles className="w-6 h-6 text-emerald-100" />
+                </div>
+                {/* Active indicator */}
+                <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-emerald-700 rounded-full"></div>
               </div>
               <div>
-                <h3 className="font-bold text-lg leading-tight">AJAY Sathi AI</h3>
-                <p className="text-xs text-primary-100">Government Schemes Guide</p>
+                <h3 className="font-bold text-lg tracking-tight">AJAY Sathi AI</h3>
+                <p className="text-xs text-emerald-100 font-medium">Always online & ready to help</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button onClick={() => setShowSettings(!showSettings)} className="p-1.5 hover:bg-white/20 rounded-full transition-colors">
+            
+            <div className="flex items-center gap-1 relative z-10">
+              <button onClick={() => setShowSettings(!showSettings)} className="p-2 hover:bg-white/20 rounded-full transition-colors" title="API Settings">
                 <Settings className="w-5 h-5" />
               </button>
-              <button onClick={() => setIsSpeakerOn(!isSpeakerOn)} className="p-1.5 hover:bg-white/20 rounded-full transition-colors">
-                {isSpeakerOn ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+              <button onClick={() => setIsSpeakerOn(!isSpeakerOn)} className="p-2 hover:bg-white/20 rounded-full transition-colors" title="Toggle Voice">
+                {isSpeakerOn ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5 opacity-70" />}
               </button>
-              <button onClick={() => setIsOpen(false)} className="p-1.5 hover:bg-white/20 rounded-full transition-colors">
+              <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/20 rounded-full transition-colors bg-black/10 ml-1" title="Close Chat">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -176,38 +189,56 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
 
           {/* Settings Overlay */}
           {showSettings && (
-            <div className="absolute inset-0 top-16 bg-white z-20 p-6 flex flex-col shrink-0">
-              <h4 className="font-bold text-slate-800 mb-2">AI Settings</h4>
-              <p className="text-xs text-slate-500 mb-4">Enter your Gemini API Key to activate the chat.</p>
-              <input 
-                type="password" 
-                value={tempApiKey}
-                onChange={e => setTempApiKey(e.target.value)}
-                placeholder="AIzaSy..."
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm mb-4 focus:outline-primary-500"
-              />
-              <div className="flex gap-2">
-                <button onClick={saveApiKey} className="flex-1 bg-primary-600 text-white py-2 rounded-lg text-sm font-bold">Save</button>
-                <button onClick={() => setShowSettings(false)} className="flex-1 bg-slate-100 text-slate-700 py-2 rounded-lg text-sm font-bold">Cancel</button>
+            <div className="absolute inset-x-0 top-[88px] bottom-0 bg-white/95 backdrop-blur-sm z-20 p-6 flex flex-col shadow-inner animate-in slide-in-from-top-2">
+              <h4 className="font-bold text-slate-800 mb-1 text-lg">AI Connection Settings</h4>
+              <p className="text-sm text-slate-500 mb-6">Update your Gemini API Key to continue chatting.</p>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1 block">API Key</label>
+                  <input 
+                    type="password" 
+                    value={tempApiKey}
+                    onChange={e => setTempApiKey(e.target.value)}
+                    placeholder="AIzaSy..."
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all shadow-inner"
+                  />
+                </div>
+                
+                <div className="flex gap-3 pt-2">
+                  <button onClick={saveApiKey} className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl text-sm font-bold shadow-md shadow-emerald-200 transition-colors">
+                    Save Changes
+                  </button>
+                  <button onClick={() => setShowSettings(false)} className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-xl text-sm font-bold transition-colors">
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           )}
 
           {/* Messages Area */}
-          <div className="flex-1 p-4 overflow-y-auto bg-slate-50 flex flex-col gap-4">
+          <div className="flex-1 p-5 overflow-y-auto bg-slate-50/50 flex flex-col gap-5 relative">
             {messages.length === 0 && !isLoading && (
-              <div className="text-center text-slate-400 text-sm mt-10">
-                Starting chat...
+              <div className="absolute inset-0 flex flex-col items-center justify-center opacity-60">
+                <MessageCircle className="w-16 h-16 text-slate-300 mb-4" />
+                <p className="text-slate-400 font-medium">Start a conversation...</p>
               </div>
             )}
             
             {messages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div key={idx} className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                {msg.role === 'model' && (
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md mr-2 shrink-0 mt-auto mb-1">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </div>
+                )}
+                
                 <div 
-                  className={`max-w-[85%] p-3 rounded-2xl text-sm shadow-sm ${
+                  className={`max-w-[75%] p-4 text-sm leading-relaxed ${
                     msg.role === 'user' 
-                      ? 'bg-primary-600 text-white rounded-tr-sm' 
-                      : 'bg-white border border-slate-100 text-slate-700 rounded-tl-sm'
+                      ? 'bg-gradient-to-br from-primary-600 to-emerald-600 text-white shadow-md rounded-[20px] rounded-br-sm' 
+                      : 'bg-white text-slate-700 shadow-sm border border-slate-100/50 rounded-[20px] rounded-bl-sm'
                   }`}
                 >
                   {msg.role === 'model' ? formatMessage(msg.text) : msg.text}
@@ -216,49 +247,62 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
             ))}
             
             {isLoading && (
-              <div className="flex justify-start">
-                <div className="max-w-[80%] p-4 rounded-2xl bg-white border border-slate-100 rounded-tl-sm flex gap-1 items-center shadow-sm">
-                  <div className="w-2 h-2 bg-primary-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                  <div className="w-2 h-2 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+              <div className="flex justify-start w-full">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md mr-2 shrink-0 mt-auto mb-1">
+                  <Sparkles className="w-4 h-4 text-white animate-pulse" />
+                </div>
+                <div className="bg-white p-4 rounded-[20px] rounded-bl-sm border border-slate-100 shadow-sm flex items-center gap-1.5 h-12">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></div>
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef} className="h-2" />
           </div>
 
           {/* Input Area */}
-          <div className="p-3 bg-white border-t border-slate-200 flex items-end gap-2 shrink-0">
-            <button 
-              onClick={toggleListening}
-              className={`p-3 rounded-full shrink-0 transition-colors shadow-sm ${isListening ? 'bg-red-50 text-red-600 animate-pulse' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
-            >
-              <Mic className="w-5 h-5" />
-            </button>
-            <textarea 
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSend();
-                }
-              }}
-              placeholder="Ask about any scheme..."
-              className="flex-1 max-h-32 min-h-12 resize-none bg-slate-100 border-none rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20"
-              rows={1}
-            />
-            <button 
-              onClick={() => handleSend()}
-              disabled={!input.trim() || isLoading}
-              className={`p-3 rounded-full shrink-0 shadow-md transition-all ${
-                input.trim() && !isLoading 
-                  ? 'bg-primary-600 text-white hover:bg-primary-700 hover:scale-105' 
-                  : 'bg-slate-200 text-slate-400 cursor-not-allowed'
-              }`}
-            >
-              <Send className="w-5 h-5" />
-            </button>
+          <div className="p-4 bg-white border-t border-slate-100 shrink-0 z-10 rounded-b-3xl">
+            <div className="relative flex items-end gap-2 bg-slate-50 border border-slate-200 rounded-2xl p-1 shadow-inner focus-within:ring-2 focus-within:ring-emerald-500/20 focus-within:border-emerald-300 transition-all">
+              
+              <button 
+                onClick={toggleListening}
+                className={`p-3 rounded-xl shrink-0 transition-all ${
+                  isListening 
+                    ? 'bg-red-100 text-red-600 shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse' 
+                    : 'text-slate-400 hover:bg-slate-200 hover:text-slate-600'
+                }`}
+                title="Speak your question"
+              >
+                <Mic className="w-5 h-5" />
+              </button>
+              
+              <textarea 
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+                placeholder={isListening ? "Listening..." : "Type your message..."}
+                className="flex-1 max-h-32 min-h-[44px] py-3 bg-transparent border-none resize-none text-sm focus:outline-none placeholder:text-slate-400"
+                rows={1}
+              />
+              
+              <button 
+                onClick={() => handleSend()}
+                disabled={!input.trim() || isLoading}
+                className={`p-3 m-1 rounded-xl shrink-0 transition-all duration-300 ${
+                  input.trim() && !isLoading 
+                    ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg transform hover:-translate-y-0.5' 
+                    : 'bg-slate-100 text-slate-300 cursor-not-allowed'
+                }`}
+              >
+                <Send className="w-5 h-5 ml-0.5" />
+              </button>
+            </div>
           </div>
           
         </div>
