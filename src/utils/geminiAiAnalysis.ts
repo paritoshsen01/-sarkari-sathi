@@ -18,8 +18,15 @@ export async function generateLivelihoodAnalysis(
     throw new Error("Gemini API Key is missing. Please provide it in the settings.");
   }
 
+  const modelsToTry = [
+    "gemini-1.5-flash-latest",
+    "gemini-1.5-flash",
+    "gemini-1.5-pro",
+    "gemini-pro",
+    "gemini-1.0-pro-latest"
+  ];
+
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   // List available pathways to the AI
   const availablePathways = nsqfPathways.map(p => ({
@@ -66,11 +73,31 @@ JSON Structure:
 }
 `;
 
+  let lastError = null;
+  let text = "";
+
+  for (const modelName of modelsToTry) {
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      text = response.text().trim();
+      lastError = null; // Success!
+      console.log("Successfully used model:", modelName);
+      break; 
+    } catch (err: any) {
+      console.warn(`Model ${modelName} failed:`, err.message);
+      lastError = err;
+      // If it's a 404, we continue to the next model.
+      // If it's something like 403 (Invalid API key), we should probably stop, but we can safely try all.
+    }
+  }
+
+  if (lastError && !text) {
+    throw new Error(`[AI Analysis Failed]: All models failed. Last error: ${lastError.message || "Unknown error"}`);
+  }
+
   try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text().trim();
-    
     let parsedData;
     try {
       // Clean up if it returned markdown
@@ -110,7 +137,7 @@ JSON Structure:
       recommendedPathways: finalPathways
     };
   } catch (error: any) {
-    console.error("Gemini API Error:", error);
-    throw new Error(`[AI Analysis Failed]: ${error.message || "Unknown error"}`);
+    console.error("Gemini Data Processing Error:", error);
+    throw new Error(`[AI Data Error]: ${error.message || "Unknown error"}`);
   }
 }
