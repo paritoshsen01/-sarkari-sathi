@@ -103,8 +103,8 @@ JSON Structure:
       skillGaps: parsedData.skillGaps || "Some skill upgrading required.",
       recommendedPathways: finalPathways
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Gemini API Error:", error);
-    throw new Error("Failed to generate AI analysis. Please check your API key or try again.");
+    throw new Error(`Failed to generate AI analysis. Details: ${error.message || "Unknown error"}. Please check your API key or try again.`);
   }
 }
