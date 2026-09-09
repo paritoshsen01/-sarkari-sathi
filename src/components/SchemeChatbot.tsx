@@ -22,10 +22,13 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
 
-  // Initialize greeting on open
+  // Initialize greeting on open and stop speech on close
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       handleSend("Hello");
+    }
+    if (!isOpen && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
     }
   }, [isOpen]);
 
@@ -69,6 +72,13 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
       setInput('');
       recognitionRef.current?.start();
     }
+  };
+
+  const toggleSpeaker = () => {
+    if (isSpeakerOn && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeakerOn(!isSpeakerOn);
   };
 
   const speakText = (text: string) => {
@@ -178,7 +188,7 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
               <button onClick={() => setShowSettings(!showSettings)} className="p-2 hover:bg-white/20 rounded-full transition-colors" title="API Settings">
                 <Settings className="w-5 h-5" />
               </button>
-              <button onClick={() => setIsSpeakerOn(!isSpeakerOn)} className="p-2 hover:bg-white/20 rounded-full transition-colors" title="Toggle Voice">
+              <button onClick={toggleSpeaker} className="p-2 hover:bg-white/20 rounded-full transition-colors" title="Toggle Voice">
                 {isSpeakerOn ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5 opacity-70" />}
               </button>
               <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/20 rounded-full transition-colors bg-black/10 ml-1" title="Close Chat">
