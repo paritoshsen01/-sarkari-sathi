@@ -19,7 +19,7 @@ export async function generateLivelihoodAnalysis(
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   // List available pathways to the AI
   const availablePathways = nsqfPathways.map(p => ({
@@ -59,7 +59,7 @@ JSON Structure:
   "recommendedPathways": [
     {
       "id": "must exactly match one of the available pathway IDs provided above",
-      "matchScore": <a number between 75 and 99 indicating how good this fit is>,
+      "matchScore": 85,
       "aiReasoning": "1-2 sentences explaining exactly why this specific PM-AJAY course is the perfect fit for their existing skills, interests, and mobility."
     }
   ]
@@ -71,9 +71,15 @@ JSON Structure:
     const response = await result.response;
     const text = response.text().trim();
     
-    // Clean up if it returned markdown
-    const cleanedText = text.replace(/```json/gi, '').replace(/```/gi, '').trim();
-    const parsedData = JSON.parse(cleanedText);
+    let parsedData;
+    try {
+      // Clean up if it returned markdown
+      const cleanedText = text.replace(/```json/gi, '').replace(/```/gi, '').trim();
+      parsedData = JSON.parse(cleanedText);
+    } catch (parseErr: any) {
+      console.error("Failed to parse AI JSON response:", text);
+      throw new Error(`AI returned invalid format. Parse error: ${parseErr.message}`);
+    }
 
     // Merge the AI's recommendations with the full pathway data
     const finalPathways = parsedData.recommendedPathways.map((rec: any) => {
@@ -105,6 +111,6 @@ JSON Structure:
     };
   } catch (error: any) {
     console.error("Gemini API Error:", error);
-    throw new Error(`Failed to generate AI analysis. Details: ${error.message || "Unknown error"}. Please check your API key or try again.`);
+    throw new Error(`[AI Analysis Failed]: ${error.message || "Unknown error"}`);
   }
 }
