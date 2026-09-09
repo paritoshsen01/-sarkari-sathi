@@ -13,6 +13,7 @@ import {
   calculateDynamicScores
 } from '../data/sihSkillingData';
 import { type LanguageCode, languages } from '../data/languages';
+import { PortalApplicationGuide } from './PortalApplicationGuide';
 
 interface SihSkillingPortalProps {
   lang?: LanguageCode;
@@ -62,6 +63,7 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [selectedPathway, setSelectedPathway] = useState<NsqfPathway | null>(null);
+  const [showGuidanceModal, setShowGuidanceModal] = useState(false);
 
   const recognitionRef = useRef<any>(null);
 
@@ -921,8 +923,7 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
               </span>
               <button 
                 onClick={() => {
-                  alert(pt.guidanceAlert);
-                  setSelectedPathway(null);
+                  setShowGuidanceModal(true);
                 }}
                 className="bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-md w-full sm:w-auto"
               >
@@ -932,6 +933,14 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
 
           </div>
         </div>
+      )}
+      {/* Portal Application Guide Modal */}
+      {showGuidanceModal && pt.applicationGuideSteps && (
+        <PortalApplicationGuide 
+          steps={pt.applicationGuideSteps} 
+          lang={selectedLang} 
+          onClose={() => setShowGuidanceModal(false)} 
+        />
       )}
 
     </div>
