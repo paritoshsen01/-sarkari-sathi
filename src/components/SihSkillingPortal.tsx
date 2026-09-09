@@ -12,7 +12,7 @@ import {
   skillingQuestions, 
   calculateDynamicScores
 } from '../data/sihSkillingData';
-import { type LanguageCode } from '../data/languages';
+import { type LanguageCode, languages } from '../data/languages';
 
 interface SihSkillingPortalProps {
   lang?: LanguageCode;
@@ -203,19 +203,21 @@ export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPort
           {/* Nav Tabs & Language Toggle */}
           <div className="flex items-center gap-2">
             
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-bold mr-1">
-              <button 
-                onClick={() => setSelectedLang('hi')}
-                className={`px-2.5 py-1 rounded-full transition-all ${selectedLang === 'hi' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+            <div className="relative flex items-center bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-bold mr-1">
+              <select 
+                value={selectedLang}
+                onChange={(e) => setSelectedLang(e.target.value as LanguageCode)}
+                className="bg-transparent border-none focus:outline-none text-xs font-bold text-slate-700 cursor-pointer appearance-none px-3 py-1 pr-6"
               >
-                हिंदी
-              </button>
-              <button 
-                onClick={() => setSelectedLang('en')}
-                className={`px-2.5 py-1 rounded-full transition-all ${selectedLang === 'en' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
-              >
-                English
-              </button>
+                {Object.values(languages).map((l) => (
+                  <option key={l.code} value={l.code}>
+                    {l.name}
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-slate-500">
+                <svg className="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
             </div>
 
             <button 
