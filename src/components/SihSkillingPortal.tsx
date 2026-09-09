@@ -2,18 +2,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Mic, ArrowRight, ArrowLeft, Volume2, Sparkles, CheckCircle2, 
   AlertCircle, ShieldCheck, Zap, ChevronRight, Edit3, Lock, 
-  PhoneCall, Radio, Smartphone, Building2, RefreshCw, CheckCircle, Award, Briefcase
+  PhoneCall, Radio, Smartphone, Building2, RefreshCw, CheckCircle, Award, Briefcase,
+  Settings, Key, X
 } from 'lucide-react';
 
 import { 
   type BeneficiaryProfile, 
   type NsqfPathway, 
+  nsqfPathways,
   samplePresets, 
   skillingQuestions, 
   calculateDynamicScores
 } from '../data/sihSkillingData';
 import { type LanguageCode, languages } from '../data/languages';
 import { PortalApplicationGuide } from './PortalApplicationGuide';
+import { generateLivelihoodAnalysis, type AiLivelihoodAnalysis } from '../utils/geminiAiAnalysis';
 
 interface SihSkillingPortalProps {
   lang?: LanguageCode;
@@ -26,6 +29,13 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
   // Active Navigation View State
   const [activeTab, setActiveTab] = useState<'interview' | 'profile' | 'results' | 'roadmap'>('interview');
   
+  // Voice & Input State
+  const [isListening, setIsListening] = useState(false);
+  const [speechText, setSpeechText] = useState('');
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showManualInput, setShowManualInput] = useState(false);
+  const [manualInput, setManualInput] = useState('');
+  
   // Language Selection (syncs with global site language)
   const [selectedLang, setSelectedLang] = useState<LanguageCode>(lang);
   const [langConfirmed, setLangConfirmed] = useState(false);
@@ -36,17 +46,10 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
 
   const pt = portalText[selectedLang] || portalText.hi;
 
-  // Voice Interview State
+  // Interview Flow State
   const [currentQIndex, setCurrentQIndex] = useState(0);
-  const [isListening, setIsListening] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speechText, setSpeechText] = useState('');
   const [answers, setAnswers] = useState<Record<string, string>>({});
   
-  // Text fallback input
-  const [manualInput, setManualInput] = useState('');
-  const [showManual, setShowManual] = useState(false);
-
   // Beneficiary Profile State
   const [profile, setProfile] = useState<BeneficiaryProfile>({
     education: "Class 12th Pass",
@@ -62,6 +65,13 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
   });
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  
+  // AI Analysis State
+  const [aiAnalysis, setAiAnalysis] = useState<AiLivelihoodAnalysis | null>(null);
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [geminiApiKey, setGeminiApiKey] = useState(localStorage.getItem('VITE_GEMINI_API_KEY') || import.meta.env.VITE_GEMINI_API_KEY || '');
+  const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+  
   const [selectedPathway, setSelectedPathway] = useState<NsqfPathway | null>(null);
   const [showGuidanceModal, setShowGuidanceModal] = useState(false);
 
@@ -139,16 +149,35 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
     }
   };
 
+  const runAiAnalysis = async (finalProfile: BeneficiaryProfile) => {
+    setActiveTab('profile');
+    if (!geminiApiKey) {
+      setShowApiKeyModal(true);
+      return;
+    }
+    
+    setIsAiLoading(true);
+    try {
+      const analysis = await generateLivelihoodAnalysis(finalProfile, selectedLang, geminiApiKey);
+      setAiAnalysis(analysis);
+    } catch (error: any) {
+      alert("AI Analysis Error: " + error.message);
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
+
   // Submit Answer for current question
   const handleSaveAnswer = (answerValue: string) => {
     const q = skillingQuestions[currentQIndex];
     const newAnswers = { ...answers, [q.id]: answerValue };
     setAnswers(newAnswers);
 
-    setProfile(prev => ({
-      ...prev,
+    const updatedProfile = {
+      ...profile,
       [q.id]: answerValue
-    }));
+    };
+    setProfile(updatedProfile);
 
     setSpeechText('');
     setManualInput('');
@@ -156,7 +185,7 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
     if (currentQIndex < skillingQuestions.length - 1) {
       setCurrentQIndex(prev => prev + 1);
     } else {
-      setActiveTab('profile');
+      runAiAnalysis(updatedProfile);
     }
   };
 
@@ -175,7 +204,7 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
     };
     setAnswers(answersMap);
     setLangConfirmed(true);
-    setActiveTab('profile');
+    runAiAnalysis(presetProfile);
   };
 
   // Calculate scores
@@ -206,6 +235,15 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
           {/* Nav Tabs & Language Toggle */}
           <div className="flex items-center gap-2">
             
+            <button 
+              onClick={() => setShowApiKeyModal(true)}
+              className="p-2 text-slate-400 hover:text-primary-600 hover:bg-primary-50 rounded-full transition-colors relative group"
+              title="AI Settings"
+            >
+              <Settings className="w-5 h-5" />
+              {!geminiApiKey && <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>}
+            </button>
+
             <div className="relative flex items-center bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-bold mr-1">
               <select 
                 value={selectedLang}
@@ -488,14 +526,14 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-500 font-semibold">{pt.micIssue}</span>
                   <button 
-                    onClick={() => setShowManual(!showManual)}
+                    onClick={() => setShowManualInput(!showManualInput)}
                     className="text-xs text-primary-700 hover:text-primary-800 underline font-bold"
                   >
-                    {showManual ? pt.hideTyping : pt.typeAnswer}
+                    {showManualInput ? pt.hideTyping : pt.typeAnswer}
                   </button>
                 </div>
 
-                {showManual && (
+                {showManualInput && (
                   <div className="flex gap-2">
                     <input 
                       type="text" 
@@ -600,7 +638,14 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
             </div>
 
             {/* SKILL GAP ANALYSIS */}
-            <div className="glass-panel rounded-3xl p-6 md:p-8">
+            <div className="glass-panel rounded-3xl p-6 md:p-8 relative overflow-hidden">
+              {isAiLoading && (
+                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                  <RefreshCw className="w-10 h-10 text-primary-600 animate-spin mb-4" />
+                  <p className="text-lg font-bold text-slate-800">Sarkari Sathi AI is analyzing your profile...</p>
+                  <p className="text-sm text-slate-500">Mapping your skills to PM-AJAY NSQF Pathways</p>
+                </div>
+              )}
               
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center font-bold">
@@ -616,55 +661,23 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
                 
                 <div className="bg-slate-50 border-2 border-slate-200 p-5 rounded-2xl">
                   <p className="text-xs uppercase font-mono text-primary-700 font-bold mb-2">{pt.currentSit}</p>
-                  <p className="text-sm text-slate-800 font-bold mb-3">
-                    {profile.currentOccupation} with practical experience in {profile.existingSkills}.
-                  </p>
-                  <p className="text-xs text-slate-600">
-                    Traditional background in {profile.traditionalOccupation} provides strong physical & practical adaptability.
+                  <p className="text-sm text-slate-800 font-medium leading-relaxed">
+                    {aiAnalysis ? aiAnalysis.currentSituation : `${profile.currentOccupation} with practical experience in ${profile.existingSkills}.`}
                   </p>
                 </div>
 
                 <div className="bg-slate-50 border-2 border-slate-200 p-5 rounded-2xl">
                   <p className="text-xs uppercase font-mono text-emerald-700 font-bold mb-2">{pt.keyStrengths}</p>
-                  <ul className="space-y-2 text-xs text-slate-700 font-semibold">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary-600 flex-shrink-0" />
-                      <span>Existing practical hands-on experience in basic repair</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary-600 flex-shrink-0" />
-                      <span>High motivation for technical & solar field learning</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary-600 flex-shrink-0" />
-                      <span>Willingness to commute up to {profile.mobility}</span>
-                    </li>
-                  </ul>
+                  <p className="text-sm text-slate-800 font-medium leading-relaxed">
+                    {aiAnalysis ? aiAnalysis.keyStrengths : `Traditional background in ${profile.traditionalOccupation} provides strong physical & practical adaptability.`}
+                  </p>
                 </div>
 
                 <div className="bg-slate-50 border-2 border-slate-200 p-5 rounded-2xl">
                   <p className="text-xs uppercase font-mono text-amber-700 font-bold mb-2">{pt.identifiedGaps}</p>
-                  <div className="space-y-3">
-                    <div>
-                      <div className="flex justify-between text-xs mb-1 font-bold">
-                        <span className="text-slate-800">Industrial Safety Standards</span>
-                        <span className="text-amber-700">Needs Certification</span>
-                      </div>
-                      <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-                        <div className="bg-amber-500 h-full w-[45%]"></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between text-xs mb-1 font-bold">
-                        <span className="text-slate-800">Technical Equipment Lab</span>
-                        <span className="text-amber-700">Needs Practical Lab</span>
-                      </div>
-                      <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
-                        <div className="bg-amber-500 h-full w-[35%]"></div>
-                      </div>
-                    </div>
-                  </div>
+                  <p className="text-sm text-slate-800 font-medium leading-relaxed">
+                    {aiAnalysis ? aiAnalysis.skillGaps : "Needs certification and industrial safety training."}
+                  </p>
                 </div>
 
               </div>
@@ -686,8 +699,11 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
               </div>
 
               {/* Pathway Cards Grid */}
-              <div className="grid md:grid-cols-2 gap-6">
-                {recommendations.map((pathway) => (
+              <div className="grid md:grid-cols-2 gap-6 relative">
+                {isAiLoading && (
+                  <div className="absolute inset-0 bg-slate-50/50 backdrop-blur-[2px] z-10 rounded-3xl"></div>
+                )}
+                {(aiAnalysis ? aiAnalysis.recommendedPathways : recommendations).map((pathway) => (
                   <div 
                     key={pathway.id}
                     className="glass-panel rounded-3xl p-6 hover-lift flex flex-col justify-between"
@@ -718,7 +734,9 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
 
                       <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
                         <p className="text-xs font-bold text-primary-800 mb-1">{pt.whyRecommended}</p>
-                        <p className="text-xs text-slate-700">{pathway.whyRecommended}</p>
+                        <p className="text-xs text-slate-700">
+                          {((pathway as any).aiReasoning) || pathway.whyRecommended}
+                        </p>
                       </div>
 
                       <div className="space-y-2 mb-6">
@@ -941,6 +959,45 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
           lang={selectedLang} 
           onClose={() => setShowGuidanceModal(false)} 
         />
+      )}
+
+      {/* Gemini API Key Modal */}
+      {showApiKeyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in-up">
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden relative">
+            <div className="bg-primary-600 p-4 text-white flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <Key className="w-5 h-5" />
+                <h2 className="text-lg font-bold">Sarkari Sathi AI Activation</h2>
+              </div>
+              <button onClick={() => setShowApiKeyModal(false)} className="p-2 hover:bg-white/20 rounded-full transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6">
+              <p className="text-sm text-slate-600 mb-4">
+                To enable dynamic Skill Gap analysis and Livelihood mapping, please enter a valid Gemini API Key. (This is for the prototype demo).
+              </p>
+              <input 
+                type="password" 
+                value={geminiApiKey}
+                onChange={(e) => setGeminiApiKey(e.target.value)}
+                placeholder="Enter Gemini API Key..."
+                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 transition-all text-sm font-medium mb-4"
+              />
+              <button 
+                onClick={() => {
+                  localStorage.setItem('VITE_GEMINI_API_KEY', geminiApiKey);
+                  setShowApiKeyModal(false);
+                  if (profile) runAiAnalysis(profile);
+                }}
+                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-[0.98]"
+              >
+                Save & Analyze
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
     </div>
