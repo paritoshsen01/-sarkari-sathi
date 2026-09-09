@@ -90,7 +90,7 @@ function App() {
             {/* PM-AJAY Skilling Navigation Badge */}
             <button 
               onClick={handleStartSihSkilling}
-              className="flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md shadow-orange-500/20 transition-all hover:scale-105"
+              className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-md shadow-emerald-600/20 transition-all hover:scale-105"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>PM-AJAY Skilling 🎙️</span>

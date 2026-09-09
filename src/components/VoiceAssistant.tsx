@@ -207,7 +207,7 @@ export function VoiceAssistant({ lang, onComplete }: VoiceAssistantProps) {
               <button
                 onClick={() => handleAnswer(textInput)}
                 disabled={!textInput.trim()}
-                className="bg-slate-900 text-white px-6 py-3 rounded-xl hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                className="bg-emerald-600 text-white px-6 py-3 rounded-xl hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 shadow-md shadow-emerald-600/20"
               >
                 <Send className="w-5 h-5" />
                 <span className="hidden sm:inline">{content.send}</span>

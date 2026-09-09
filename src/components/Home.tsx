@@ -21,31 +21,31 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
       {/* PM-AJAY GIA Special Feature Banner */}
       <div 
         onClick={onStartSihSkilling}
-        className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-2 border-orange-500/50 rounded-3xl p-6 md:p-8 mb-10 cursor-pointer shadow-xl hover:border-orange-400 transition-all hover-lift relative overflow-hidden group"
+        className="glass-panel border-2 border-emerald-300/80 bg-gradient-to-br from-emerald-50/90 via-teal-50/50 to-white rounded-3xl p-6 md:p-8 mb-10 cursor-pointer shadow-lg hover:shadow-xl hover:border-emerald-400 transition-all hover-lift relative overflow-hidden group"
       >
-        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-orange-500/30 group-hover:scale-105 transition-transform">
-              🏆
+            <div className="w-14 h-14 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-emerald-600/20 group-hover:scale-105 transition-transform">
+              🎙️
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="bg-orange-500/20 text-orange-300 border border-orange-500/40 text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded">
+                <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full">
                   PM-AJAY Special Feature
                 </span>
-                <span className="text-xs text-amber-300 font-semibold">GIA Component Skilling</span>
+                <span className="text-xs text-teal-700 font-semibold">GIA Component Skilling</span>
               </div>
-              <h2 className="text-2xl font-bold text-white group-hover:text-orange-300 transition-colors">
+              <h2 className="text-2xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
                 AI Voice Assistant for Livelihood & NSQF Skilling
               </h2>
-              <p className="text-sm text-slate-300 mt-1 max-w-xl">
+              <p className="text-sm text-slate-600 mt-1 max-w-xl">
                 “Your Voice. Your Skills. Your Opportunity.” — Voice-first livelihood mapping for SC beneficiaries.
               </p>
             </div>
           </div>
 
-          <button className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold px-6 py-3 rounded-full text-sm whitespace-nowrap shadow-lg shadow-orange-500/25 flex items-center gap-2 group-hover:translate-x-1 transition-all">
+          <button className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold px-6 py-3 rounded-full text-sm whitespace-nowrap shadow-lg shadow-emerald-600/20 flex items-center gap-2 group-hover:translate-x-1 transition-all">
             <span>PM-AJAY Voice Assistant 🎙️</span>
           </button>
         </div>
