@@ -25,6 +25,8 @@ interface SihSkillingPortalProps {
 }
 import { portalText } from '../data/portalText';
 
+import logoImg from '../assets/logo.png';
+
 export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: SihSkillingPortalProps) {
   // Active Navigation View State
   const [activeTab, setActiveTab] = useState<'interview' | 'profile' | 'results' | 'roadmap'>('interview');
@@ -218,8 +220,8 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           
           <div className="flex items-center gap-3 cursor-pointer" onClick={onBackToHome}>
-            <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-md text-white font-bold text-lg">
-              S
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md overflow-hidden border border-slate-100">
+              <img src={logoImg} alt="Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center gap-2">

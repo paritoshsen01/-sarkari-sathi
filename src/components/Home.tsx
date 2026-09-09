@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mic, FileSearch, HelpCircle, ShieldAlert } from 'lucide-react';
 import { type LanguageCode, getTranslation } from '../data/languages';
+import logoImg from '../assets/logo.png';
 
 interface HomeProps {
   lang: LanguageCode;
@@ -21,39 +22,44 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
       {/* PM-AJAY GIA Special Feature Banner */}
       <div 
         onClick={onStartSihSkilling}
-        className="glass-panel border-2 border-emerald-300/80 bg-gradient-to-br from-emerald-50/90 via-teal-50/50 to-white rounded-3xl p-6 md:p-8 mb-10 cursor-pointer shadow-lg hover:shadow-xl hover:border-emerald-400 transition-all hover-lift relative overflow-hidden group"
+        className="mb-12 bg-white rounded-3xl p-2 pr-6 border-2 border-emerald-100 shadow-xl shadow-emerald-500/5 cursor-pointer hover:-translate-y-1 transition-all duration-300 group flex items-center justify-between overflow-hidden relative"
       >
-        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
-          <div className="flex items-start gap-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0 shadow-lg shadow-emerald-600/20 group-hover:scale-105 transition-transform">
-              🎙️
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] uppercase font-mono font-bold px-2.5 py-0.5 rounded-full">
-                  {(content as any).pmAjayBanner?.badge || 'PM-AJAY Special Feature'}
-                </span>
-                <span className="text-xs text-teal-700 font-semibold">
-                  {(content as any).pmAjayBanner?.subBadge || 'GIA Component Skilling'}
-                </span>
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                {(content as any).pmAjayBanner?.title || 'AI Voice Assistant for Livelihood & NSQF Skilling'}
-              </h2>
-              <p className="text-sm text-slate-600 mt-1 max-w-xl">
-                {(content as any).pmAjayBanner?.desc || '“Your Voice. Your Skills. Your Opportunity.” — Voice-first livelihood mapping for SC beneficiaries.'}
-              </p>
-            </div>
+        {/* Glow effect behind banner */}
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-50 to-teal-50 opacity-50 group-hover:opacity-100 transition-opacity"></div>
+        
+        <div className="flex items-center gap-4 relative z-10">
+          <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white shadow-inner m-1 shrink-0">
+            <Mic className="w-8 h-8" />
           </div>
-
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="bg-emerald-100 text-emerald-800 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">
+                {(content as any).pmAjayBanner?.badge || 'PM-AJAY Special Feature'}
+              </span>
+              <span className="bg-amber-100 text-amber-800 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">
+                {(content as any).pmAjayBanner?.subBadge || 'GIA Component Skilling'}
+              </span>
+            </div>
+            <h3 className="text-lg md:text-xl font-bold text-slate-800 group-hover:text-emerald-700 transition-colors">
+              {(content as any).pmAjayBanner?.title || 'AI Voice Assistant for Livelihood & NSQF Skilling'}
+            </h3>
+            <p className="text-sm text-slate-500 font-medium hidden md:block">
+              {(content as any).pmAjayBanner?.desc || '“Your Voice. Your Skills. Your Opportunity.” — Voice-first livelihood mapping for SC beneficiaries.'}
+            </p>
+          </div>
+        </div>
+        
+        <div className="relative z-10 hidden sm:block">
           <button className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold px-6 py-3 rounded-full text-sm whitespace-nowrap shadow-lg shadow-emerald-600/20 flex items-center gap-2 group-hover:translate-x-1 transition-all">
             <span>{(content as any).pmAjayBanner?.cta || 'PM-AJAY Voice Assistant 🎙️'}</span>
           </button>
         </div>
       </div>
 
-      <div className="text-center mb-16 mt-8 animate-fade-in-up">
+      <div className="text-center mb-16 mt-8 animate-fade-in-up flex flex-col items-center">
+        <div className="w-24 h-24 mb-6 shadow-2xl rounded-3xl overflow-hidden bg-white border border-slate-100">
+          <img src={logoImg} alt="AJAY Sathi Logo" className="w-full h-full object-cover" />
+        </div>
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight gradient-text">
           AJAY Sathi
         </h1>
