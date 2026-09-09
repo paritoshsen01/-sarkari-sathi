@@ -64,7 +64,7 @@ function App() {
   const navigateHome = () => setCurrentView('home');
 
   if (currentView === 'sih-skilling') {
-    return <SihSkillingPortal lang={lang} onBackToHome={navigateHome} />;
+    return <SihSkillingPortal lang={lang} onChangeLang={setLang} onBackToHome={navigateHome} />;
   }
 
   return (

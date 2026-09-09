@@ -16,11 +16,12 @@ import { type LanguageCode, languages } from '../data/languages';
 
 interface SihSkillingPortalProps {
   lang?: LanguageCode;
+  onChangeLang?: (lang: LanguageCode) => void;
   onBackToHome: () => void;
 }
 import { portalText } from '../data/portalText';
 
-export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPortalProps) {
+export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: SihSkillingPortalProps) {
   // Active Navigation View State
   const [activeTab, setActiveTab] = useState<'interview' | 'profile' | 'results' | 'roadmap'>('interview');
   
@@ -116,7 +117,7 @@ export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPort
     if (langConfirmed && activeTab === 'interview') {
       const q = skillingQuestions[currentQIndex];
       if (q) {
-        const textToRead = selectedLang === 'hi' ? q.promptHi : q.promptEn;
+        const textToRead = pt.questions?.[currentQIndex]?.prompt || (selectedLang === 'en' ? q.promptEn : q.promptHi);
         readQuestionTTS(textToRead);
       }
     }
@@ -206,7 +207,11 @@ export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPort
             <div className="relative flex items-center bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-bold mr-1">
               <select 
                 value={selectedLang}
-                onChange={(e) => setSelectedLang(e.target.value as LanguageCode)}
+                onChange={(e) => {
+                  const newLang = e.target.value as LanguageCode;
+                  setSelectedLang(newLang);
+                  if (onChangeLang) onChangeLang(newLang);
+                }}
                 className="bg-transparent border-none focus:outline-none text-xs font-bold text-slate-700 cursor-pointer appearance-none px-3 py-1 pr-6"
               >
                 {Object.values(languages).map((l) => (
@@ -392,7 +397,7 @@ export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPort
                     {pt.qProgress} #{skillingQuestions[currentQIndex].num}
                   </span>
                   <button 
-                    onClick={() => readQuestionTTS(selectedLang === 'hi' ? skillingQuestions[currentQIndex].promptHi : skillingQuestions[currentQIndex].promptEn)}
+                    onClick={() => readQuestionTTS(pt.questions?.[currentQIndex]?.prompt || (selectedLang === 'en' ? skillingQuestions[currentQIndex].promptEn : skillingQuestions[currentQIndex].promptHi))}
                     className="text-xs bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 px-2.5 py-1 rounded-lg flex items-center gap-1 font-semibold"
                   >
                     <Volume2 className="w-3.5 h-3.5" /> {pt.repeatVoice}
@@ -400,11 +405,11 @@ export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPort
                 </div>
 
                 <h3 className="text-2xl font-extrabold text-slate-900 mb-2">
-                  {selectedLang === 'hi' ? skillingQuestions[currentQIndex].promptHi : skillingQuestions[currentQIndex].promptEn}
+                  {pt.questions?.[currentQIndex]?.prompt || (selectedLang === 'en' ? skillingQuestions[currentQIndex].promptEn : skillingQuestions[currentQIndex].promptHi)}
                 </h3>
                 
                 <p className="text-sm text-slate-600 font-medium">
-                  {skillingQuestions[currentQIndex].subtextHi}
+                  {pt.questions?.[currentQIndex]?.subtext || (selectedLang === 'en' ? "" : skillingQuestions[currentQIndex].subtextHi)}
                 </p>
               </div>
 
