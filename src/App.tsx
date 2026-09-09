@@ -7,6 +7,7 @@ import { Results } from './components/Results';
 import { SchemeDetails } from './components/SchemeDetails';
 import { ScamVerification } from './components/ScamVerification';
 import { SihSkillingPortal } from './components/SihSkillingPortal';
+import { SchemeChatbot } from './components/SchemeChatbot';
 import { type LanguageCode, languages } from './data/languages';
 import { type Scheme } from './data/schemes';
 import { Globe, Menu, Sparkles } from 'lucide-react';
@@ -168,6 +169,7 @@ function App() {
         )}
       </main>
 
+      <SchemeChatbot lang={lang} />
     </div>
   );
 }
