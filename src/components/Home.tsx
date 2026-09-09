@@ -57,9 +57,6 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
       </div>
 
       <div className="text-center mb-16 mt-8 animate-fade-in-up flex flex-col items-center">
-        <div className="w-24 h-24 mb-6 shadow-2xl rounded-3xl overflow-hidden bg-white border border-slate-100">
-          <img src={logoImg} alt="AJAY Sathi Logo" className="w-full h-full object-cover" />
-        </div>
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight gradient-text">
           AJAY Sathi
         </h1>

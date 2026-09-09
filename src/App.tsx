@@ -77,8 +77,8 @@ function App() {
             className="flex items-center gap-2 cursor-pointer hover-lift" 
             onClick={navigateHome}
           >
-            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">S</span>
+            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-slate-100">
+              <img src={logoImg} alt="Logo" className="w-full h-full object-cover" />
             </div>
             <span className="text-xl font-bold text-slate-900 hidden sm:block">
               AJAY Sathi
