@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ShieldAlert, CheckCircle, AlertTriangle, XCircle, Search, Upload, ArrowLeft } from 'lucide-react';
 import { verifyScheme, type VerificationResponse } from '../utils/scamVerification';
-import { type LanguageCode, languages } from '../data/languages';
+import { type LanguageCode, getTranslation } from '../data/languages';
 
 interface ScamVerificationProps {
   lang: LanguageCode;
@@ -9,7 +9,8 @@ interface ScamVerificationProps {
 }
 
 export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
-  const content = languages[lang].home; 
+  const t = getTranslation(lang);
+  const content = t.scamVerification;
 
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
@@ -48,58 +49,58 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
     <div className="max-w-2xl mx-auto px-4 py-8 animate-fade-in-up">
       <button 
         onClick={onBack}
-        className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors mb-6"
+        className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors mb-6 font-medium"
       >
         <ArrowLeft className="w-5 h-5" />
-        Back to Home
+        {content.backToHome}
       </button>
 
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-red-600 mb-4 shadow-sm">
           <ShieldAlert className="w-8 h-8" />
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">Scam / Fake Scheme Check</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">{content.title}</h2>
         <p className="text-slate-600">
-          Received a suspicious WhatsApp forward or SMS about free government money? Paste it below to verify if it's a real scheme or a scam.
+          {content.subtitle}
         </p>
       </div>
 
       <form onSubmit={handleVerify} className="glass-panel p-6 md:p-8 rounded-3xl space-y-6">
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">Scheme Name (if mentioned)</label>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">{content.schemeNameLabel}</label>
           <input 
             type="text" 
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
-            placeholder="e.g. PM Kisan Yojana"
+            placeholder={content.schemeNamePlaceholder}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">Website Link / URL</label>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">{content.urlLabel}</label>
           <input 
             type="text" 
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
-            placeholder="e.g. bit.ly/free-money or pmkisan.gov.in"
+            placeholder={content.urlPlaceholder}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">Message Received (WhatsApp/SMS)</label>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">{content.messageLabel}</label>
           <textarea 
             rows={3}
             value={msg}
             onChange={(e) => setMsg(e.target.value)}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white resize-none"
-            placeholder="Paste the full message here..."
+            placeholder={content.messagePlaceholder}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">Upload Screenshot (Optional)</label>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">{content.uploadLabel}</label>
           <div className="flex items-center justify-center w-full">
             <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors relative overflow-hidden">
               {imagePreview ? (
@@ -107,7 +108,7 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
               ) : (
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <Upload className="w-8 h-8 text-slate-400 mb-2" />
-                  <p className="text-sm text-slate-500 font-medium">Click to upload screenshot</p>
+                  <p className="text-sm text-slate-500 font-medium">{content.clickToUpload}</p>
                 </div>
               )}
               <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
@@ -123,12 +124,12 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
           {isVerifying ? (
             <>
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Verifying against databases...
+              {content.verifying}
             </>
           ) : (
             <>
               <Search className="w-5 h-5" />
-              Verify Now
+              {content.verifyNow}
             </>
           )}
         </button>
@@ -156,9 +157,9 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
                   result.status === 'suspicious' ? 'text-red-800' :
                   'text-amber-800'
                 )}>
-                  {result.status === 'verified' ? 'Verified Official Scheme' :
-                   result.status === 'suspicious' ? 'Suspicious / Fake Scheme Detected!' :
-                   'Could Not Fully Verify'}
+                  {result.status === 'verified' ? content.verifiedTitle :
+                   result.status === 'suspicious' ? content.suspiciousTitle :
+                   content.unknownTitle}
                 </h3>
                 
                 <p className={"text-base leading-relaxed " + (
@@ -171,11 +172,11 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
 
                 {result.matchedScheme && (
                   <div className="mt-4 pt-4 border-t border-black/10">
-                    <p className="text-sm font-semibold mb-1 opacity-80">Matched Official Database Entry:</p>
+                    <p className="text-sm font-semibold mb-1 opacity-80">{content.matchedEntry}</p>
                     <p className="font-bold">{result.matchedScheme}</p>
                     {result.officialUrl && (
                       <p className="text-sm font-medium mt-1 text-slate-700 bg-white/50 px-3 py-1 rounded inline-block">
-                        Official Website: <strong>{result.officialUrl}</strong>
+                        {content.officialWebsite} <strong>{result.officialUrl}</strong>
                       </p>
                     )}
                   </div>
@@ -189,3 +190,4 @@ export function ScamVerification({ lang, onBack }: ScamVerificationProps) {
     </div>
   );
 }
+

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mic, FileSearch, HelpCircle, ShieldAlert } from 'lucide-react';
-import { type LanguageCode, languages } from '../data/languages';
+import { type LanguageCode, getTranslation } from '../data/languages';
 
 interface HomeProps {
   lang: LanguageCode;
@@ -11,7 +11,8 @@ interface HomeProps {
 }
 
 export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, onStartScamVerification }: HomeProps) {
-  const content = languages[lang].home;
+  const t = getTranslation(lang);
+  const content = t.home;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -48,9 +49,9 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary-200/30 rounded-full blur-3xl -mr-20 -mt-20"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary-200/30 rounded-full blur-3xl -ml-20 -mb-20"></div>
         
-        <h2 className="text-3xl font-bold text-slate-800 mb-4 relative z-10">Looking for something specific?</h2>
+        <h2 className="text-3xl font-bold text-slate-800 mb-4 relative z-10">{content.needTitle}</h2>
         <p className="text-lg text-slate-600 mb-8 relative z-10 max-w-2xl mx-auto">
-          Just say what facility you need (e.g. <strong>Water, Electricity, Food, Housing, Healthcare, or Money</strong>) and we'll instantly show you relevant schemes.
+          {content.needSubtitle}
         </p>
         
         <button 
@@ -60,7 +61,7 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
           <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
             <Mic className="w-5 h-5 text-primary-600" />
           </div>
-          Tell us your need
+          {content.needCTA}
         </button>
       </div>
 
@@ -69,11 +70,11 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
           <ShieldAlert className="w-8 h-8" />
         </div>
         <div className="text-center sm:text-left flex-1">
-          <h2 className="text-2xl font-bold text-red-800 mb-2">Fake Scheme Check</h2>
-          <p className="text-red-700 font-medium">Received a suspicious WhatsApp message about free government money? Verify it here.</p>
+          <h2 className="text-2xl font-bold text-red-800 mb-2">{content.scamCheckTitle}</h2>
+          <p className="text-red-700 font-medium">{content.scamCheckDesc}</p>
         </div>
         <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-bold whitespace-nowrap shadow-md transition-colors">
-          Verify Now
+          {content.scamCheckCTA}
         </button>
       </div>
 

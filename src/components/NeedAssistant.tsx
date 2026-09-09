@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, Droplet, Zap, Wheat, Home, IndianRupee, Heart } from 'lucide-react';
-import { type LanguageCode } from '../data/languages';
+import { type LanguageCode, getTranslation } from '../data/languages';
 import { prototypeSchemes, type Scheme } from '../data/schemes';
 import { findSchemesByNeed } from '../utils/aiMatching';
 
@@ -10,22 +10,24 @@ interface NeedAssistantProps {
 }
 
 export function NeedAssistant({ lang, onComplete }: NeedAssistantProps) {
+  const t = getTranslation(lang);
+  const content = t.needAssistant;
+
   const [isListening, setIsListening] = useState(false);
   const [transcriptText, setTranscriptText] = useState('');
   const [status, setStatus] = useState<'Ready' | 'Listening' | 'Speaking' | 'Processing'>('Ready');
   const recognitionRef = useRef<any>(null);
 
-  // Simple hardcoded translations for the question to avoid bloating languages.ts right now
-  const prompts: Record<string, string> = {
-    en: "What specific facility do you need? For example: Water, Electricity, Food, Housing, Healthcare, or Money.",
-    hi: "आपको किस विशेष सुविधा की आवश्यकता है? उदाहरण के लिए: पानी, बिजली, राशन, घर, स्वास्थ्य, या पैसा।",
-    bun: "तुम खों का चीज की जरूरत है? जइसे: पानी, बिजली, राशन, मकान, दवाई या पईसा।",
-    cg: "आप ला का चीज के जरूरत हे? जइसे: पानी, बिजली, राशन, घर, इलाज, या पईसा।",
-    bho: "राउर का चीज के जरूरत बा? जइसे: पानी, बिजली, राशन, घर, इलाज, या पईसा।",
-    mai: "अहाँ क की चीज क जरूरत अछि? जइसे: पानी, बिजली, राशन, घर, इलाज, या पैसा।"
-  };
+  const currentPrompt = content.prompt;
 
-  const currentPrompt = prompts[lang] || prompts['en'];
+  const getStatusLabel = () => {
+    switch (status) {
+      case 'Listening': return content.statusListening;
+      case 'Speaking': return content.statusSpeaking;
+      case 'Processing': return content.statusProcessing;
+      default: return content.statusReady;
+    }
+  };
 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -129,7 +131,7 @@ export function NeedAssistant({ lang, onComplete }: NeedAssistantProps) {
             <div className="w-8 h-8 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
           </div>
           <h2 className="text-2xl font-semibold text-slate-800 mb-2">
-            Finding schemes for your need...
+            {content.findingSchemes}
           </h2>
         </div>
       </div>
@@ -143,7 +145,7 @@ export function NeedAssistant({ lang, onComplete }: NeedAssistantProps) {
         <div className="text-center mb-8 pt-4">
           <div className="inline-flex items-center justify-center space-x-2 bg-slate-50 px-4 py-2 rounded-full mb-6">
             <div className={`w-2 h-2 rounded-full ${status === 'Listening' ? 'bg-red-500 animate-pulse' : status === 'Speaking' ? 'bg-blue-500' : 'bg-green-500'}`}></div>
-            <span className="text-sm font-medium text-slate-600">{status}</span>
+            <span className="text-sm font-medium text-slate-600">{getStatusLabel()}</span>
           </div>
           
           <h2 className="text-2xl md:text-3xl font-semibold text-slate-800 mb-8">

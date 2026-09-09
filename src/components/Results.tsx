@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowRight, AlertCircle, Volume2, Square } from 'lucide-react';
-import { type LanguageCode, languages } from '../data/languages';
+import { type LanguageCode, getTranslation } from '../data/languages';
 import { prototypeSchemes, type Scheme } from '../data/schemes';
 import { calculateDetailedScores } from '../utils/aiMatching';
 
@@ -12,7 +12,8 @@ interface ResultsProps {
 }
 
 export function Results({ lang, answers, forcedSchemes, onSelectScheme }: ResultsProps) {
-  const content = languages[lang].results;
+  const t = getTranslation(lang);
+  const content = t.results;
   const [isReading, setIsReading] = useState(false);
   
   const matchedSchemes = useMemo(() => {
@@ -74,12 +75,12 @@ export function Results({ lang, answers, forcedSchemes, onSelectScheme }: Result
           {isReading ? (
             <>
               <Square className="w-5 h-5 fill-current" />
-              Stop Reading
+              {content.stopReading}
             </>
           ) : (
             <>
               <Volume2 className="w-5 h-5" />
-              Listen to Results
+              {content.listenResults}
             </>
           )}
         </button>
@@ -88,15 +89,15 @@ export function Results({ lang, answers, forcedSchemes, onSelectScheme }: Result
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 flex items-start gap-3">
         <AlertCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
         <p className="text-amber-800 text-sm md:text-base">
-          <strong>Disclaimer:</strong> {content.disclaimer}
+          <strong>{content.disclaimerLabel}</strong> {content.disclaimer}
         </p>
       </div>
 
       <div className="space-y-4">
         {matchedSchemes.length === 0 ? (
           <div className="glass-panel p-12 text-center rounded-3xl">
-            <h3 className="text-xl font-semibold text-slate-800 mb-2">No exact schemes found</h3>
-            <p className="text-slate-600">Try searching with a different keyword or use our main Voice Assistant.</p>
+            <h3 className="text-xl font-semibold text-slate-800 mb-2">{content.noSchemesFound}</h3>
+            <p className="text-slate-600">{content.tryDifferent}</p>
           </div>
         ) : (
           matchedSchemes.map((scheme) => (

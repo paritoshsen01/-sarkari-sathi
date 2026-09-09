@@ -782,3 +782,228 @@ export const languages = {
     }
   }
 };
+
+export interface ExtraTranslations {
+  home: {
+    needTitle: string;
+    needSubtitle: string;
+    needCTA: string;
+    scamCheckTitle: string;
+    scamCheckDesc: string;
+    scamCheckCTA: string;
+  };
+  needAssistant: {
+    prompt: string;
+    statusReady: string;
+    statusListening: string;
+    statusSpeaking: string;
+    statusProcessing: string;
+    findingSchemes: string;
+  };
+  scamVerification: {
+    backToHome: string;
+    title: string;
+    subtitle: string;
+    schemeNameLabel: string;
+    schemeNamePlaceholder: string;
+    urlLabel: string;
+    urlPlaceholder: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    uploadLabel: string;
+    clickToUpload: string;
+    verifyNow: string;
+    verifying: string;
+    verifiedTitle: string;
+    suspiciousTitle: string;
+    unknownTitle: string;
+    matchedEntry: string;
+    officialWebsite: string;
+  };
+  results: {
+    listenResults: string;
+    stopReading: string;
+    noSchemesFound: string;
+    tryDifferent: string;
+    disclaimerLabel: string;
+  };
+  details: {
+    listenDetails: string;
+    stopReading: string;
+  };
+}
+
+const extras: Record<string, ExtraTranslations> = {
+  en: {
+    home: {
+      needTitle: 'Looking for something specific?',
+      needSubtitle: "Just say what facility you need (e.g. Water, Electricity, Food, Housing, Healthcare, or Money) and we'll instantly show you relevant schemes.",
+      needCTA: 'Tell us your need',
+      scamCheckTitle: 'Fake Scheme Check',
+      scamCheckDesc: 'Received a suspicious WhatsApp message about free government money? Verify it here.',
+      scamCheckCTA: 'Verify Now'
+    },
+    needAssistant: {
+      prompt: 'What specific facility do you need? For example: Water, Electricity, Food, Housing, Healthcare, or Money.',
+      statusReady: 'Ready',
+      statusListening: 'Listening...',
+      statusSpeaking: 'Speaking...',
+      statusProcessing: 'Processing...',
+      findingSchemes: 'Finding schemes for your need...'
+    },
+    scamVerification: {
+      backToHome: 'Back to Home',
+      title: 'Scam / Fake Scheme Check',
+      subtitle: "Received a suspicious WhatsApp forward or SMS about free government money? Paste it below to verify if it's a real scheme or a scam.",
+      schemeNameLabel: 'Scheme Name (if mentioned)',
+      schemeNamePlaceholder: 'e.g. PM Kisan Yojana',
+      urlLabel: 'Website Link / URL',
+      urlPlaceholder: 'e.g. bit.ly/free-money or pmkisan.gov.in',
+      messageLabel: 'Message Received (WhatsApp/SMS)',
+      messagePlaceholder: 'Paste the full message here...',
+      uploadLabel: 'Upload Screenshot (Optional)',
+      clickToUpload: 'Click to upload screenshot',
+      verifyNow: 'Verify Now',
+      verifying: 'Verifying against databases...',
+      verifiedTitle: 'Verified Official Scheme',
+      suspiciousTitle: 'Suspicious / Fake Scheme Detected!',
+      unknownTitle: 'Could Not Fully Verify',
+      matchedEntry: 'Matched Official Database Entry:',
+      officialWebsite: 'Official Website:'
+    },
+    results: {
+      listenResults: 'Listen to Results',
+      stopReading: 'Stop Reading',
+      noSchemesFound: 'No exact schemes found',
+      tryDifferent: 'Try searching with a different keyword or use our main Voice Assistant.',
+      disclaimerLabel: 'Disclaimer:'
+    },
+    details: {
+      listenDetails: 'Listen to Details',
+      stopReading: 'Stop Reading'
+    }
+  },
+  hi: {
+    home: {
+      needTitle: 'क्या आप किसी विशेष सुविधा की तलाश में हैं?',
+      needSubtitle: 'बस अपनी आवश्यकता बताएं (जैसे: पानी, बिजली, राशन, मकान, इलाज, या पैसा) और हम तुरंत उपयुक्त योजनाएं दिखाएंगे।',
+      needCTA: 'अपनी आवश्यकता बताएं',
+      scamCheckTitle: 'फर्जी / धोखाधड़ी योजना जांच',
+      scamCheckDesc: 'क्या आपको मुफ्त सरकारी पैसे के बारे में कोई संदिग्ध WhatsApp या SMS संदेश मिला है? यहां जांचें।',
+      scamCheckCTA: 'अभी जांच करें'
+    },
+    needAssistant: {
+      prompt: 'आपको किस विशेष सुविधा की आवश्यकता है? उदाहरण के लिए: पानी, बिजली, राशन, घर, स्वास्थ्य, या पैसा।',
+      statusReady: 'तैयार',
+      statusListening: 'सुन रहा हूँ...',
+      statusSpeaking: 'बोल रहा हूँ...',
+      statusProcessing: 'जांच जारी...',
+      findingSchemes: 'आपकी आवश्यकता के अनुसार योजनाएं खोजी जा रही हैं...'
+    },
+    scamVerification: {
+      backToHome: 'मुख्य पृष्ठ पर वापस जाएं',
+      title: 'फर्जी / धोखाधड़ी योजना जांच',
+      subtitle: 'क्या आपको मुफ्त सरकारी पैसे या योजना का कोई संदेश मिला है? नीचे विवरण दर्ज करके जांचें कि योजना असली है या फर्जी।',
+      schemeNameLabel: 'योजना का नाम (यदि उल्लेखित हो)',
+      schemeNamePlaceholder: 'जैसे: पीएम किसान योजना',
+      urlLabel: 'वेबसाइट लिंक / URL',
+      urlPlaceholder: 'जैसे: bit.ly/free-money या pmkisan.gov.in',
+      messageLabel: 'प्राप्त संदेश (WhatsApp/SMS)',
+      messagePlaceholder: 'पूरा संदेश यहां पेस्ट करें...',
+      uploadLabel: 'स्क्रीनशॉट अपलोड करें (वैकल्पिक)',
+      clickToUpload: 'स्क्रीनशॉट अपलोड करने के लिए क्लिक करें',
+      verifyNow: 'अभी सत्यापित करें',
+      verifying: 'सरकारी डेटाबेस से जांच की जा रही है...',
+      verifiedTitle: 'सत्यापित आधिकारिक योजना',
+      suspiciousTitle: 'सावधान! संदिग्ध / फर्जी योजना पाई गई!',
+      unknownTitle: 'पूर्णतः सत्यापित नहीं हो सका',
+      matchedEntry: 'आधिकारिक डेटाबेस प्रविष्टि:',
+      officialWebsite: 'आधिकारिक वेबसाइट:'
+    },
+    results: {
+      listenResults: 'परिणाम सुनें',
+      stopReading: 'पढ़ना बंद करें',
+      noSchemesFound: 'कोई सटीक योजना नहीं मिली',
+      tryDifferent: 'किसी अन्य शब्द से खोजें या हमारे मुख्य वॉइस असिस्टेंट का उपयोग करें।',
+      disclaimerLabel: 'अस्वीकरण:'
+    },
+    details: {
+      listenDetails: 'विवरण सुनें',
+      stopReading: 'पढ़ना बंद करें'
+    }
+  },
+  bun: {
+    home: {
+      needTitle: 'का तुम कछू खास सुविधा खोज रहे हो?',
+      needSubtitle: 'बस बताओ के तुम का चाहत हो (जइसे: पानी, बिजली, राशन, मकान, दवाई या पईसा) और हम तुरंत योजना दिखाउब।',
+      needCTA: 'अपनई जरूरत बताओ',
+      scamCheckTitle: 'फर्जी योजना की जांच',
+      scamCheckDesc: 'का तुमाओ WhatsApp पर सरकारी पैसा को कोई संदिग्ध मैसेज आओ है? इते जांच करो।',
+      scamCheckCTA: 'अभी जांच करो'
+    },
+    needAssistant: {
+      prompt: 'तुम खों का चीज की जरूरत है? जइसे: पानी, बिजली, राशन, मकान, दवाई या पईसा।',
+      statusReady: 'तैयार',
+      statusListening: 'सुन रहे...',
+      statusSpeaking: 'बोल रहे...',
+      statusProcessing: 'खोज रहे...',
+      findingSchemes: 'तुमाई जरूरत के हिसाब से योजना खोजी जा रही...'
+    },
+    scamVerification: {
+      backToHome: 'घर वापस जाओ',
+      title: 'फर्जी योजना जांच',
+      subtitle: 'का तुमाओ फर्जी मैसेज आओ है? नीचे जानकारी भरके चेक करो।',
+      schemeNameLabel: 'योजना का नाम',
+      schemeNamePlaceholder: 'जइसे: पीएम किसान योजना',
+      urlLabel: 'वेबसाइट लिंक',
+      urlPlaceholder: 'जइसे: bit.ly/free-money या pmkisan.gov.in',
+      messageLabel: 'आओ मैसेज',
+      messagePlaceholder: 'पूरा मैसेज इते लिखो...',
+      uploadLabel: 'फोटो/स्क्रीनशॉट डालो',
+      clickToUpload: 'फोटो अपलोड करो',
+      verifyNow: 'जांच करो',
+      verifying: 'जांच चल रही...',
+      verifiedTitle: 'सच्ची सरकारी योजना',
+      suspiciousTitle: 'सावधान! फर्जी मैसेज!',
+      unknownTitle: 'पूरी जांच नहीं हो पाई',
+      matchedEntry: 'सरकारी रिकॉर्ड:',
+      officialWebsite: 'सरकारी वेबसाइट:'
+    },
+    results: {
+      listenResults: 'रिजल्ट सुनो',
+      stopReading: 'पढ़ना बंद करो',
+      noSchemesFound: 'कोई पक्की योजना नहीं मिली',
+      tryDifferent: 'दूसरे शब्द से खोजो या आवाज से बताओ।',
+      disclaimerLabel: 'ध्यान देवो:'
+    },
+    details: {
+      listenDetails: 'विवरण सुनो',
+      stopReading: 'पढ़ना बंद करो'
+    }
+  }
+};
+
+export function getTranslation(lang: LanguageCode) {
+  const base = languages[lang] || languages['en'];
+  const extra = extras[lang] || (lang !== 'en' ? extras['hi'] : extras['en']);
+  
+  return {
+    ...base,
+    home: {
+      ...base.home,
+      ...extra.home
+    },
+    assistant: base.assistant,
+    needAssistant: extra.needAssistant,
+    scamVerification: extra.scamVerification,
+    results: {
+      ...base.results,
+      ...extra.results
+    },
+    details: {
+      ...base.details,
+      ...extra.details
+    }
+  };
+}
+

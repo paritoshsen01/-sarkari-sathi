@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ExternalLink, CheckCircle2, FileText, Info, Users, Mic, Volume2, Square } from 'lucide-react';
-import { type LanguageCode, languages } from '../data/languages';
+import { type LanguageCode, getTranslation } from '../data/languages';
 import { type Scheme } from '../data/schemes';
 import { SchemeGuide } from './SchemeGuide';
 
@@ -11,7 +11,8 @@ interface SchemeDetailsProps {
 }
 
 export function SchemeDetails({ lang, scheme, onBack }: SchemeDetailsProps) {
-  const content = languages[lang].details;
+  const t = getTranslation(lang);
+  const content = t.details;
   const [showGuide, setShowGuide] = useState(false);
   const [isReading, setIsReading] = useState(false);
   const [checkedDocs, setCheckedDocs] = useState<number[]>([]);
@@ -79,12 +80,12 @@ export function SchemeDetails({ lang, scheme, onBack }: SchemeDetailsProps) {
           {isReading ? (
             <>
               <Square className="w-4 h-4 fill-current" />
-              Stop Reading
+              {content.stopReading}
             </>
           ) : (
             <>
               <Volume2 className="w-4 h-4" />
-              Listen to Details
+              {content.listenDetails}
             </>
           )}
         </button>
