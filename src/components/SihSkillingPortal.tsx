@@ -12,18 +12,185 @@ import {
   skillingQuestions, 
   calculateDynamicScores
 } from '../data/sihSkillingData';
+import { type LanguageCode } from '../data/languages';
 
 interface SihSkillingPortalProps {
+  lang?: LanguageCode;
   onBackToHome: () => void;
 }
 
-export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
+const portalText = {
+  hi: {
+    navVoice: "🎙️ वॉयस इंटरव्यू",
+    navProfile: "📊 प्रोफाइल एवं सिफारिशें",
+    navBack: "मुख्य साइट पर वापस",
+    bannerTitle: "“आपकी आवाज़। आपके कौशल। आपका अवसर।”",
+    bannerSub: "PM-AJAY के तहत SC लाभार्थियों के लिए AI-संचालित वॉयस आजीविका एवं कौशल मार्गदर्शन।",
+    bannerDesc: "सरकारी साथी से अपनी पसंद की भाषा में बात करें। AI सहायक आपकी पृष्ठभूमि, मौजूदा कौशल और रुचियों को समझकर आपके लिए उपयुक्त NSQF-अनुशंसित प्रशिक्षण और स्थानीय रोजगार खोजने में मदद करता है।",
+    journeyTitle: "संपूर्ण आजीविका प्रक्रिया:",
+    journeyCitizen: "👤 नागरिक",
+    journeyVoice: "🎙️ वॉयस AI",
+    journeyGap: "⚡ कौशल अंतर",
+    journeyTraining: "🎓 NSQF प्रशिक्षण",
+    journeyLivelihood: "💼 आजीविका",
+    talkCTA: "🎙️ सरकारी साथी से बात करें",
+    sampleHeader: "नमूना नागरिक प्रोफाइल (त्वरित मूल्यांकन)",
+    sampleDesc: "अनुशंसा इंजन का तुरंत परीक्षण करने के लिए किसी एक प्रोफाइल को चुनें:",
+    qProgress: "प्रश्न",
+    of: "का",
+    voiceGuide: "सरकारी साथी वॉयस गाइड",
+    speaking: "बोल रहा हूँ...",
+    noTyping: "टाइप करने की आवश्यकता नहीं है। बस स्वाभाविक रूप से बोलें।",
+    repeatVoice: "🔊 आवाज दोहराएं",
+    micListening: "🔴 सुन रहा हूँ... अपने माइक में स्पष्ट बोलें",
+    micTapToSpeak: "उत्तर बोलने के लिए माइक पर क्लिक करें",
+    speechRecognized: "पहचाना गया उत्तर:",
+    confirmNext: "उत्तर की पुष्टि करें और आगे बढ़ें →",
+    orClick: "या उत्तर चुनें:",
+    micIssue: "माइक में समस्या है?",
+    hideTyping: "टाइपिंग बॉक्स छिपाएं",
+    typeAnswer: "⌨️ इसके बजाय अपना उत्तर टाइप करें",
+    typePlaceholder: "अपना उत्तर टाइप करें...",
+    next: "आगे बढ़ें",
+    profileTitle: "आपकी आजीविका प्रोफाइल",
+    profileSub: "आपके AI वॉयस मूल्यांकन और पृष्ठभूमि से निर्मित",
+    editProfile: "प्रोफाइल संपादित करें",
+    saveProfile: "प्रोफाइल सहेजें",
+    retakeInterview: "🔄 वॉयस इंटरव्यू दोबारा दें",
+    education: "शिक्षा",
+    currentWork: "वर्तमान कार्य",
+    traditionalWork: "पारंपरिक कार्य",
+    existingSkills: "मौजूदा कौशल",
+    careerInterest: "करियर रुचि",
+    workPref: "रोजगार प्राथमिकता",
+    mobilityLimit: "आवागमन सीमा",
+    location: "स्थान",
+    skillGapTitle: "आपकी आजीविका और कौशल अंतर (Skill Gap) को समझें",
+    skillGapSub: "प्रायोगिक क्षमताओं बनाम कौशल मानकों का विश्लेषणात्मक मूल्यांकन",
+    currentSit: "1. वर्तमान स्थिति",
+    keyStrengths: "2. मुख्य क्षमताएं",
+    identifiedGaps: "3. पहचाने गए कौशल अंतर",
+    recTitle: "अनुशंसित कौशल मार्ग (NSQF Pathways)",
+    recSub: "आपकी प्रोफाइल और स्थानीय PM-AJAY GIA केंद्रों के अनुसार",
+    potentialMatch: "संभावित मैच — अंतिम पात्रता आधिकारिक PM-AJAY दिशानिर्देशों के अनुसार सत्यापित होगी",
+    matchScore: "मैच स्कोर",
+    whyRecommended: "क्यों अनुशंसित?",
+    outcomes: "आजीविका परिणाम:",
+    viewDetailsDoc: "आजीविका विवरण और दस्तावेज़ देखें →",
+    roadmapTag: "रणनीतिक करियर समयरेखा",
+    roadmapTitle: "आपकी अनुशंसित आजीविका रोडमैप",
+    roadmapSub: "मौजूदा कौशल से स्थाई व्यवसाय तक चरणबद्ध मार्ग",
+    roadmapSteps: [
+      { step: "1", title: "मौजूदा कौशल", desc: "प्रायोगिक अनुभव की पहचान" },
+      { step: "2", title: "कौशल अंतर", desc: "सुरक्षा और तकनीकी अंतर की पहचान" },
+      { step: "3", title: "NSQF प्रशिक्षण", desc: "मुफ़्त 3-महीने का PM-AJAY GIA कोर्स" },
+      { step: "4", title: "प्रमाणन", desc: "सेक्टर स्किल काउंसिल सर्टिफिकेट" },
+      { step: "5", title: "स्थानीय रोजगार", desc: "अप्रेंटिसशिप या नौकरी" },
+      { step: "6", title: "स्वरोजगार", desc: "मुद्रा ऋण और व्यापार स्थापना" }
+    ],
+    ruralTitle: "ग्रामीण और कम-कनेक्टिविटी क्षेत्रों के लिए निर्मित",
+    ruralSub: "ग्राम पंचायतों में बिना किसी रुकावट के पहुंच",
+    modalDuration: "अवधि:",
+    modalEdu: "शिक्षा:",
+    modalBenefits: "PM-AJAY GIA घटक के लाभ",
+    modalDocs: "आवश्यक दस्तावेज़ों की सूची",
+    modalOpp: "आपके निकटतम अवसर",
+    getGuidance: "आवेदन मार्गदर्शन प्राप्त करें →",
+    guidanceAlert: "आवेदन मार्गदर्शन तैयार! आपकी दस्तावेज़ सूची और नजदीकी प्रशिक्षण केंद्र के संपर्क विवरण तैयार कर लिए गए हैं।"
+  },
+  en: {
+    navVoice: "🎙️ Voice Interview",
+    navProfile: "📊 Profile & Recommendations",
+    navBack: "Back to Main Site",
+    bannerTitle: "“Your Voice. Your Skills. Your Opportunity.”",
+    bannerSub: "AI-powered livelihood mapping and skilling guidance for SC beneficiaries under PM-AJAY.",
+    bannerDesc: "Talk to Sarkari Sathi in your preferred language. The AI assistant understands your background, existing skills, and interests to help you discover suitable NSQF-aligned training and local livelihood opportunities.",
+    journeyTitle: "End-to-End Livelihood Journey:",
+    journeyCitizen: "👤 Citizen",
+    journeyVoice: "🎙️ Voice AI",
+    journeyGap: "⚡ Skill Gap",
+    journeyTraining: "🎓 NSQF Training",
+    journeyLivelihood: "💼 Livelihood",
+    talkCTA: "🎙️ Talk to Sarkari Sathi",
+    sampleHeader: "Sample Citizen Profiles (Quick Assessment)",
+    sampleDesc: "Select a sample profile to instantly evaluate the recommendation engine:",
+    qProgress: "Question",
+    of: "of",
+    voiceGuide: "Sarkari Sathi Voice Guide",
+    speaking: "Speaking...",
+    noTyping: "No typing required. Just speak naturally.",
+    repeatVoice: "🔊 Repeat Voice",
+    micListening: "🔴 Listening... Speak clearly into your mic",
+    micTapToSpeak: "Click Microphone to Speak Answer",
+    speechRecognized: "Recognized Speech:",
+    confirmNext: "Confirm Answer & Next →",
+    orClick: "Or click an answer:",
+    micIssue: "Microphone issue?",
+    hideTyping: "Hide Typing Box",
+    typeAnswer: "⌨️ Type your answer instead",
+    typePlaceholder: "Type your answer here...",
+    next: "Next",
+    profileTitle: "Your Livelihood Profile",
+    profileSub: "Generated from your AI voice assessment & background",
+    editProfile: "Edit Profile",
+    saveProfile: "Save Profile",
+    retakeInterview: "🔄 Re-take Interview",
+    education: "Education",
+    currentWork: "Current Work",
+    traditionalWork: "Traditional Work",
+    existingSkills: "Existing Skills",
+    careerInterest: "Career Interest",
+    workPref: "Work Preference",
+    mobilityLimit: "Mobility Limit",
+    location: "Location",
+    skillGapTitle: "Understanding Your Livelihood & Skill Gaps",
+    skillGapSub: "Diagnostic analysis of existing practical abilities vs required skill standards",
+    currentSit: "1. Current Situation",
+    keyStrengths: "2. Key Strengths",
+    identifiedGaps: "3. Identified Skill Gaps",
+    recTitle: "Recommended Skill Pathways",
+    recSub: "Matched to your profile & local PM-AJAY GIA training centers",
+    potentialMatch: "Potential Match — Final eligibility verified per official PM-AJAY guidelines",
+    matchScore: "Match Score",
+    whyRecommended: "Why Recommended?",
+    outcomes: "Livelihood Outcomes:",
+    viewDetailsDoc: "View Livelihood Details & Documents →",
+    roadmapTag: "Strategic Career Timeline",
+    roadmapTitle: "Your Suggested Livelihood Roadmap",
+    roadmapSub: "A step-by-step pathway from your existing skills to sustained enterprise & employment",
+    roadmapSteps: [
+      { step: "1", title: "Current Skills", desc: "Recognize existing experience" },
+      { step: "2", title: "Skill Gap", desc: "Identify safety & technical gaps" },
+      { step: "3", title: "NSQF Training", desc: "Free 3-month PM-AJAY GIA course" },
+      { step: "4", title: "Certification", desc: "Sector Skill Council Certificate" },
+      { step: "5", title: "Local Job", desc: "Apprenticeship or employment" },
+      { step: "6", title: "Self Enterprise", desc: "Mudra loan & business setup" }
+    ],
+    ruralTitle: "Built for Rural & Low-Connectivity Environments",
+    ruralSub: "Access channels ensuring zero-barrier entry across Gram Panchayats",
+    modalDuration: "Duration:",
+    modalEdu: "Education:",
+    modalBenefits: "PM-AJAY GIA Component Benefits",
+    modalDocs: "Required Documents Checklist",
+    modalOpp: "Opportunities Near You",
+    getGuidance: "Get Application Guidance →",
+    guidanceAlert: "Application Guidance Generated! Your document checklist and nearby training center contact details have been prepared."
+  }
+};
+
+export function SihSkillingPortal({ lang = 'hi', onBackToHome }: SihSkillingPortalProps) {
   // Active Navigation View State
   const [activeTab, setActiveTab] = useState<'interview' | 'profile' | 'results' | 'roadmap'>('interview');
   
-  // Language Selection
-  const [selectedLang, setSelectedLang] = useState<'hi' | 'en'>('hi');
+  // Language Selection (syncs with global site language)
+  const [selectedLang, setSelectedLang] = useState<'hi' | 'en'>(lang === 'en' ? 'en' : 'hi');
   const [langConfirmed, setLangConfirmed] = useState(false);
+
+  useEffect(() => {
+    setSelectedLang(lang === 'en' ? 'en' : 'hi');
+  }, [lang]);
+
+  const pt = selectedLang === 'en' ? portalText.en : portalText.hi;
 
   // Voice Interview State
   const [currentQIndex, setCurrentQIndex] = useState(0);
@@ -191,15 +358,31 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
             </div>
           </div>
 
-          {/* Nav Tabs */}
+          {/* Nav Tabs & Language Toggle */}
           <div className="flex items-center gap-2">
+            
+            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-bold mr-1">
+              <button 
+                onClick={() => setSelectedLang('hi')}
+                className={`px-2.5 py-1 rounded-full transition-all ${selectedLang === 'hi' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              >
+                हिंदी
+              </button>
+              <button 
+                onClick={() => setSelectedLang('en')}
+                className={`px-2.5 py-1 rounded-full transition-all ${selectedLang === 'en' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+              >
+                English
+              </button>
+            </div>
+
             <button 
               onClick={() => setActiveTab('interview')}
               className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
                 activeTab === 'interview' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-100'
               }`}
             >
-              🎙️ Voice Interview
+              {pt.navVoice}
             </button>
             <button 
               onClick={() => setActiveTab('profile')}
@@ -207,13 +390,13 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 activeTab === 'profile' || activeTab === 'results' ? 'bg-primary-600 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-100'
               }`}
             >
-              📊 Profile & Recommendations
+              {pt.navProfile}
             </button>
             <button 
               onClick={onBackToHome}
               className="hidden sm:flex items-center gap-1 text-slate-500 hover:text-slate-800 text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-200"
             >
-              <ArrowLeft className="w-3.5 h-3.5" /> Back to Main Site
+              <ArrowLeft className="w-3.5 h-3.5" /> {pt.navBack}
             </button>
           </div>
 
@@ -239,32 +422,34 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-                  “Your Voice. Your Skills. <br />
-                  <span className="gradient-text">Your Opportunity.”</span>
+                  {selectedLang === 'hi' ? (
+                    <>“आपकी आवाज़। आपके कौशल। <br /><span className="gradient-text">आपका अवसर।”</span></>
+                  ) : (
+                    <>“Your Voice. Your Skills. <br /><span className="gradient-text">Your Opportunity.”</span></>
+                  )}
                 </h1>
 
                 <p className="text-xl font-bold text-primary-700 mb-4">
-                  AI-powered livelihood mapping and skilling guidance for SC beneficiaries under PM-AJAY.
+                  {pt.bannerSub}
                 </p>
 
                 <p className="text-base text-slate-600 leading-relaxed mb-8 max-w-2xl mx-auto">
-                  Talk to Sarkari Sathi in your preferred language. The AI assistant understands your background, 
-                  existing skills, and interests to help you discover suitable NSQF-aligned training and local livelihood opportunities.
+                  {pt.bannerDesc}
                 </p>
 
                 {/* Workflow Diagram */}
                 <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 md:p-5 mb-8 max-w-2xl mx-auto">
-                  <p className="text-xs uppercase font-mono text-slate-500 mb-3 font-bold">End-to-End Livelihood Journey:</p>
+                  <p className="text-xs uppercase font-mono text-slate-500 mb-3 font-bold">{pt.journeyTitle}</p>
                   <div className="flex flex-wrap items-center justify-between gap-2 text-xs md:text-sm font-semibold text-slate-800">
-                    <div className="bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">👤 Citizen</div>
+                    <div className="bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">{pt.journeyCitizen}</div>
                     <ChevronRight className="w-4 h-4 text-primary-600" />
-                    <div className="bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">🎙️ Voice AI</div>
+                    <div className="bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">{pt.journeyVoice}</div>
                     <ChevronRight className="w-4 h-4 text-primary-600" />
-                    <div className="bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">⚡ Skill Gap</div>
+                    <div className="bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">{pt.journeyGap}</div>
                     <ChevronRight className="w-4 h-4 text-primary-600" />
-                    <div className="bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">🎓 NSQF Training</div>
+                    <div className="bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">{pt.journeyTraining}</div>
                     <ChevronRight className="w-4 h-4 text-primary-600" />
-                    <div className="bg-primary-600 text-white px-3 py-2 rounded-xl font-bold shadow-md">💼 Livelihood</div>
+                    <div className="bg-primary-600 text-white px-3 py-2 rounded-xl font-bold shadow-md">{pt.journeyLivelihood}</div>
                   </div>
                 </div>
 
@@ -275,7 +460,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                     className="w-full sm:w-auto bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-extrabold px-8 py-4 rounded-full text-lg shadow-xl shadow-primary-500/25 transition-all hover-lift flex items-center justify-center gap-3"
                   >
                     <Mic className="w-6 h-6 animate-pulse" />
-                    🎙️ Talk to Sarkari Sathi
+                    {pt.talkCTA}
                   </button>
                 </div>
 
@@ -287,10 +472,10 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
             <div className="bg-white border-2 border-slate-200 rounded-3xl p-6 mb-12 shadow-sm">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="w-5 h-5 text-primary-600" />
-                <h3 className="text-base font-bold text-slate-900">Sample Citizen Profiles (Quick Assessment)</h3>
+                <h3 className="text-base font-bold text-slate-900">{pt.sampleHeader}</h3>
               </div>
               <p className="text-xs text-slate-600 mb-4">
-                Select a sample profile to instantly evaluate the recommendation engine:
+                {pt.sampleDesc}
               </p>
 
               <div className="grid md:grid-cols-3 gap-3">
@@ -321,7 +506,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                   {currentQIndex + 1}
                 </span>
                 <span className="text-sm font-bold text-slate-800">
-                  Question {currentQIndex + 1} of {skillingQuestions.length} — {skillingQuestions[currentQIndex].title}
+                  {pt.qProgress} {currentQIndex + 1} {pt.of} {skillingQuestions.length} — {skillingQuestions[currentQIndex].title}
                 </span>
               </div>
               
@@ -343,15 +528,15 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 </div>
                 <div>
                   <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                    Sarkari Sathi Voice Guide
+                    {pt.voiceGuide}
                     {isSpeaking && (
                       <span className="text-xs bg-blue-100 text-blue-700 border border-blue-300 px-2 py-0.5 rounded-full flex items-center gap-1 font-semibold">
-                        <Volume2 className="w-3 h-3 animate-pulse" /> Speaking...
+                        <Volume2 className="w-3 h-3 animate-pulse" /> {pt.speaking}
                       </span>
                     )}
                   </h2>
                   <p className="text-xs text-primary-700 font-semibold mt-0.5">
-                    "No typing required. Just speak naturally."
+                    "{pt.noTyping}"
                   </p>
                 </div>
               </div>
@@ -360,13 +545,13 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-6 mb-8">
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-xs uppercase font-mono text-primary-700 font-bold tracking-wider">
-                    Question #{skillingQuestions[currentQIndex].num}
+                    {pt.qProgress} #{skillingQuestions[currentQIndex].num}
                   </span>
                   <button 
                     onClick={() => readQuestionTTS(selectedLang === 'hi' ? skillingQuestions[currentQIndex].promptHi : skillingQuestions[currentQIndex].promptEn)}
                     className="text-xs bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 px-2.5 py-1 rounded-lg flex items-center gap-1 font-semibold"
                   >
-                    <Volume2 className="w-3.5 h-3.5" /> Repeat Voice
+                    <Volume2 className="w-3.5 h-3.5" /> {pt.repeatVoice}
                   </button>
                 </div>
 
@@ -412,18 +597,18 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 </div>
 
                 <p className="mt-3 text-sm font-bold text-slate-800">
-                  {isListening ? "🔴 Listening... Speak clearly into your mic" : "Click Microphone to Speak Answer"}
+                  {isListening ? pt.micListening : pt.micTapToSpeak}
                 </p>
 
                 {speechText && (
                   <div className="mt-4 bg-primary-50 border-2 border-primary-200 p-4 rounded-2xl max-w-md text-center">
-                    <p className="text-xs text-primary-800 font-mono mb-1 font-semibold">Recognized Speech:</p>
+                    <p className="text-xs text-primary-800 font-mono mb-1 font-semibold">{pt.speechRecognized}</p>
                     <p className="text-base text-slate-900 font-extrabold">"{speechText}"</p>
                     <button
                       onClick={() => handleSaveAnswer(speechText)}
                       className="mt-3 bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs px-5 py-2 rounded-xl transition-colors shadow-sm"
                     >
-                      Confirm Answer & Next →
+                      {pt.confirmNext}
                     </button>
                   </div>
                 )}
@@ -432,7 +617,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               {/* Sample Quick Chips */}
               <div className="mb-6">
                 <p className="text-xs uppercase font-mono text-slate-500 mb-3 font-bold">
-                  Or click an answer:
+                  {pt.orClick}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {skillingQuestions[currentQIndex].optionsHi.map((opt, idx) => (
@@ -450,12 +635,12 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               {/* Typing Fallback */}
               <div className="pt-4 border-t border-slate-200 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-500 font-semibold">Microphone issue?</span>
+                  <span className="text-xs text-slate-500 font-semibold">{pt.micIssue}</span>
                   <button 
                     onClick={() => setShowManual(!showManual)}
                     className="text-xs text-primary-700 hover:text-primary-800 underline font-bold"
                   >
-                    {showManual ? "Hide Typing Box" : "⌨️ Type your answer instead"}
+                    {showManual ? pt.hideTyping : pt.typeAnswer}
                   </button>
                 </div>
 
@@ -465,7 +650,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                       type="text" 
                       value={manualInput}
                       onChange={(e) => setManualInput(e.target.value)}
-                      placeholder="Type your answer here..."
+                      placeholder={pt.typePlaceholder}
                       className="flex-1 bg-white border-2 border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-primary-500"
                     />
                     <button
@@ -473,7 +658,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                       onClick={() => handleSaveAnswer(manualInput)}
                       className="bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-colors shadow-sm"
                     >
-                      Next
+                      {pt.next}
                     </button>
                   </div>
                 )}
@@ -494,8 +679,8 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 <div className="inline-flex items-center gap-2 bg-primary-100 text-primary-800 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider mb-2">
                   PM-AJAY GIA Component Livelihood Profile
                 </div>
-                <h2 className="text-3xl font-extrabold text-slate-900">Your Livelihood Profile</h2>
-                <p className="text-sm text-slate-600 mt-1">Generated from your AI voice assessment & background</p>
+                <h2 className="text-3xl font-extrabold text-slate-900">{pt.profileTitle}</h2>
+                <p className="text-sm text-slate-600 mt-1">{pt.profileSub}</p>
               </div>
 
               <div className="flex items-center gap-3">
@@ -504,7 +689,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                   className="bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold px-4 py-2.5 rounded-xl border-2 border-slate-200 flex items-center gap-2 shadow-sm"
                 >
                   <Edit3 className="w-4 h-4" />
-                  {isEditingProfile ? "Save Profile" : "Edit Profile"}
+                  {isEditingProfile ? pt.saveProfile : pt.editProfile}
                 </button>
 
                 <button
@@ -515,7 +700,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                   }}
                   className="bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-colors flex items-center gap-1.5 shadow-md"
                 >
-                  <RefreshCw className="w-4 h-4" /> Re-take Interview
+                  <RefreshCw className="w-4 h-4" /> {pt.retakeInterview}
                 </button>
               </div>
             </div>
@@ -523,42 +708,42 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
             {/* Profile Grid Cards */}
             <div className="grid md:grid-cols-4 gap-4">
               <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm">
-                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">Education</p>
+                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">{pt.education}</p>
                 <p className="text-base font-extrabold text-slate-900">{profile.education}</p>
               </div>
 
               <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm">
-                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">Current Work</p>
+                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">{pt.currentWork}</p>
                 <p className="text-base font-extrabold text-slate-900">{profile.currentOccupation}</p>
               </div>
 
               <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm">
-                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">Traditional Work</p>
+                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">{pt.traditionalWork}</p>
                 <p className="text-base font-extrabold text-slate-900">{profile.traditionalOccupation}</p>
               </div>
 
               <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm">
-                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">Existing Skills</p>
+                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">{pt.existingSkills}</p>
                 <p className="text-base font-extrabold text-primary-700">{profile.existingSkills}</p>
               </div>
 
               <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm">
-                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">Career Interest</p>
+                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">{pt.careerInterest}</p>
                 <p className="text-base font-extrabold text-emerald-700">{profile.interest}</p>
               </div>
 
               <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm">
-                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">Work Preference</p>
+                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">{pt.workPref}</p>
                 <p className="text-base font-extrabold text-slate-900">{profile.employmentPreference}</p>
               </div>
 
               <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm">
-                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">Mobility Limit</p>
+                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">{pt.mobilityLimit}</p>
                 <p className="text-base font-extrabold text-slate-900">{profile.mobility}</p>
               </div>
 
               <div className="bg-white border-2 border-slate-200 p-5 rounded-2xl shadow-sm">
-                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">Location</p>
+                <p className="text-xs uppercase font-mono text-slate-500 mb-1 font-bold">{pt.location}</p>
                 <p className="text-base font-extrabold text-slate-900">{profile.district}, {profile.state}</p>
               </div>
             </div>
@@ -571,15 +756,15 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                   <Zap className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-extrabold text-slate-900">Understanding Your Livelihood & Skill Gaps</h3>
-                  <p className="text-xs text-slate-600">Diagnostic analysis of existing practical abilities vs required skill standards</p>
+                  <h3 className="text-2xl font-extrabold text-slate-900">{pt.skillGapTitle}</h3>
+                  <p className="text-xs text-slate-600">{pt.skillGapSub}</p>
                 </div>
               </div>
 
               <div className="grid md:grid-cols-3 gap-6">
                 
                 <div className="bg-slate-50 border-2 border-slate-200 p-5 rounded-2xl">
-                  <p className="text-xs uppercase font-mono text-primary-700 font-bold mb-2">1. Current Situation</p>
+                  <p className="text-xs uppercase font-mono text-primary-700 font-bold mb-2">{pt.currentSit}</p>
                   <p className="text-sm text-slate-800 font-bold mb-3">
                     {profile.currentOccupation} with practical experience in {profile.existingSkills}.
                   </p>
@@ -589,7 +774,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 </div>
 
                 <div className="bg-slate-50 border-2 border-slate-200 p-5 rounded-2xl">
-                  <p className="text-xs uppercase font-mono text-emerald-700 font-bold mb-2">2. Key Strengths</p>
+                  <p className="text-xs uppercase font-mono text-emerald-700 font-bold mb-2">{pt.keyStrengths}</p>
                   <ul className="space-y-2 text-xs text-slate-700 font-semibold">
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-primary-600 flex-shrink-0" />
@@ -607,11 +792,11 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 </div>
 
                 <div className="bg-slate-50 border-2 border-slate-200 p-5 rounded-2xl">
-                  <p className="text-xs uppercase font-mono text-amber-700 font-bold mb-2">3. Identified Skill Gaps</p>
+                  <p className="text-xs uppercase font-mono text-amber-700 font-bold mb-2">{pt.identifiedGaps}</p>
                   <div className="space-y-3">
                     <div>
                       <div className="flex justify-between text-xs mb-1 font-bold">
-                        <span className="text-slate-800">Industrial Electrical Safety</span>
+                        <span className="text-slate-800">Industrial Safety Standards</span>
                         <span className="text-amber-700">Needs Certification</span>
                       </div>
                       <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
@@ -621,7 +806,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
 
                     <div>
                       <div className="flex justify-between text-xs mb-1 font-bold">
-                        <span className="text-slate-800">Solar Grid Setup</span>
+                        <span className="text-slate-800">Technical Equipment Lab</span>
                         <span className="text-amber-700">Needs Practical Lab</span>
                       </div>
                       <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
@@ -639,13 +824,13 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-3xl font-extrabold text-slate-900">Recommended Skill Pathways</h3>
-                  <p className="text-sm text-slate-600">Matched to your profile & local PM-AJAY GIA training centers</p>
+                  <h3 className="text-3xl font-extrabold text-slate-900">{pt.recTitle}</h3>
+                  <p className="text-sm text-slate-600">{pt.recSub}</p>
                 </div>
 
                 <div className="hidden lg:flex items-center gap-2 bg-amber-50 border border-amber-300 text-amber-900 text-xs px-4 py-2 rounded-2xl font-medium">
                   <AlertCircle className="w-4 h-4 flex-shrink-0 text-amber-600" />
-                  <span>Potential Match — Final eligibility verified per official PM-AJAY guidelines</span>
+                  <span>{pt.potentialMatch}</span>
                 </div>
               </div>
 
@@ -672,7 +857,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
 
                         <div className="text-right flex-shrink-0">
                           <span className="text-2xl font-black text-primary-600">{pathway.matchScore}%</span>
-                          <p className="text-[10px] text-slate-500 font-bold uppercase">Match Score</p>
+                          <p className="text-[10px] text-slate-500 font-bold uppercase">{pt.matchScore}</p>
                         </div>
                       </div>
 
@@ -681,12 +866,12 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                       </p>
 
                       <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4">
-                        <p className="text-xs font-bold text-primary-800 mb-1">Why Recommended?</p>
+                        <p className="text-xs font-bold text-primary-800 mb-1">{pt.whyRecommended}</p>
                         <p className="text-xs text-slate-700">{pathway.whyRecommended}</p>
                       </div>
 
                       <div className="space-y-2 mb-6">
-                        <p className="text-xs uppercase font-mono text-slate-500 font-bold">Livelihood Outcomes:</p>
+                        <p className="text-xs uppercase font-mono text-slate-500 font-bold">{pt.outcomes}</p>
                         {pathway.livelihoodOutcomes.map((out, oIdx) => (
                           <div key={oIdx} className="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
                             <span className="font-bold text-slate-900">{out.title}</span>
@@ -703,7 +888,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                       onClick={() => setSelectedPathway(pathway)}
                       className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-2xl text-xs transition-colors flex items-center justify-center gap-2 shadow-md"
                     >
-                      View Livelihood Details & Documents →
+                      {pt.viewDetailsDoc}
                     </button>
 
                   </div>
@@ -716,21 +901,14 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               
               <div className="text-center max-w-2xl mx-auto mb-10">
                 <span className="text-xs uppercase font-mono bg-primary-100 text-primary-800 px-3.5 py-1 rounded-full font-bold">
-                  Strategic Career Timeline
+                  {pt.roadmapTag}
                 </span>
-                <h3 className="text-3xl font-extrabold text-slate-900 mt-3">Your Suggested Livelihood Roadmap</h3>
-                <p className="text-xs text-slate-600 mt-1">A step-by-step pathway from your existing skills to sustained enterprise & employment</p>
+                <h3 className="text-3xl font-extrabold text-slate-900 mt-3">{pt.roadmapTitle}</h3>
+                <p className="text-xs text-slate-600 mt-1">{pt.roadmapSub}</p>
               </div>
 
               <div className="grid sm:grid-cols-2 md:grid-cols-6 gap-3">
-                {[
-                  { step: "1", title: "Current Skills", desc: "Recognize existing experience" },
-                  { step: "2", title: "Skill Gap", desc: "Identify safety & technical gaps" },
-                  { step: "3", title: "NSQF Training", desc: "Free 3-month PM-AJAY GIA course" },
-                  { step: "4", title: "Certification", desc: "Sector Skill Council Certificate" },
-                  { step: "5", title: "Local Job", desc: "Apprenticeship or employment" },
-                  { step: "6", title: "Self Enterprise", desc: "Mudra loan & business setup" }
-                ].map((item, index) => (
+                {pt.roadmapSteps.map((item, index) => (
                   <div key={index} className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 text-center hover-lift">
                     <div className="w-8 h-8 rounded-full bg-primary-600 text-white font-extrabold text-sm flex items-center justify-center mx-auto mb-3 shadow-md">
                       {item.step}
@@ -747,8 +925,8 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
             <div className="glass-panel rounded-3xl p-6 md:p-8">
               
               <div className="mb-6">
-                <h3 className="text-2xl font-extrabold text-slate-900">Built for Rural & Low-Connectivity Environments</h3>
-                <p className="text-xs text-slate-600">Access channels ensuring zero-barrier entry across Gram Panchayats</p>
+                <h3 className="text-2xl font-extrabold text-slate-900">{pt.ruralTitle}</h3>
+                <p className="text-xs text-slate-600">{pt.ruralSub}</p>
               </div>
 
               <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -841,12 +1019,12 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               <div>
                 <h4 className="font-bold text-slate-900 uppercase font-mono text-[10px] mb-1">Course Duration & Requirements</h4>
                 <p className="bg-slate-50 p-3 rounded-xl border border-slate-200 font-semibold">
-                  ⏱️ <strong>Duration:</strong> {selectedPathway.duration} | 🎓 <strong>Education:</strong> {selectedPathway.minEducation}
+                  ⏱️ <strong>{pt.modalDuration}</strong> {selectedPathway.duration} | 🎓 <strong>{pt.modalEdu}</strong> {selectedPathway.minEducation}
                 </p>
               </div>
 
               <div>
-                <h4 className="font-bold text-primary-800 uppercase font-mono text-[10px] mb-1">PM-AJAY GIA Component Benefits</h4>
+                <h4 className="font-bold text-primary-800 uppercase font-mono text-[10px] mb-1">{pt.modalBenefits}</h4>
                 <ul className="bg-primary-50 border border-primary-200 p-4 rounded-2xl space-y-1.5 text-slate-800 font-semibold">
                   {selectedPathway.benefits.map((b, idx) => (
                     <li key={idx} className="flex items-start gap-2">
@@ -858,7 +1036,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               </div>
 
               <div>
-                <h4 className="font-bold text-slate-900 uppercase font-mono text-[10px] mb-1">Required Documents Checklist</h4>
+                <h4 className="font-bold text-slate-900 uppercase font-mono text-[10px] mb-1">{pt.modalDocs}</h4>
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-1 font-semibold">
                   {selectedPathway.requiredDocuments.map((doc, dIdx) => (
                     <div key={dIdx} className="flex items-center gap-2 text-slate-800">
@@ -870,7 +1048,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               </div>
 
               <div>
-                <h4 className="font-bold text-slate-900 uppercase font-mono text-[10px] mb-1">Opportunities Near You</h4>
+                <h4 className="font-bold text-slate-900 uppercase font-mono text-[10px] mb-1">{pt.modalOpp}</h4>
                 <div className="space-y-2">
                   {selectedPathway.localOpportunities.map((op, oIdx) => (
                     <div key={oIdx} className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center">
@@ -888,18 +1066,18 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
 
             </div>
 
-            <div className="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between">
+            <div className="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
               <span className="text-[10px] text-slate-500 font-mono">
                 Official Application Channel: PM-AJAY GIA District Officer / State Skill Portal
               </span>
               <button 
                 onClick={() => {
-                  alert("Application Guidance Generated! Your document checklist and nearby training center contact details have been prepared.");
+                  alert(pt.guidanceAlert);
                   setSelectedPathway(null);
                 }}
-                className="bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-md"
+                className="bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-md w-full sm:w-auto"
               >
-                Get Application Guidance →
+                {pt.getGuidance}
               </button>
             </div>
 
