@@ -19,12 +19,11 @@ export async function generateLivelihoodAnalysis(
   }
 
   const modelsToTry = [
+    "gemini-3.6-flash",
+    "gemini-3.8-flash",
+    "gemini-3.5-flash",
     "gemini-2.5-flash",
-    "gemini-1.5-flash-latest",
-    "gemini-1.5-flash",
-    "gemini-1.5-pro",
-    "gemini-pro",
-    "gemini-1.0-pro-latest"
+    "gemini-1.5-flash"
   ];
 
   const genAI = new GoogleGenerativeAI(apiKey);
