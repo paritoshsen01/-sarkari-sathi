@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Mic, Volume2, VolumeX, Settings, Sparkles } from 'lucide-react';
+import { MessageCircle, X, Send, Mic, Volume2, VolumeX, Settings, Bot } from 'lucide-react';
 import { type LanguageCode } from '../data/languages';
 import { chatWithGemini, type ChatMessage } from '../utils/geminiChatbot';
 
@@ -153,7 +153,7 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
           {/* Pulsing rings effect behind icon */}
           <div className="absolute inset-0 rounded-full border-2 border-white/20 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
           
-          <Sparkles className="w-8 h-8 group-hover:rotate-12 transition-transform duration-300" />
+          <Bot className="w-8 h-8 group-hover:rotate-12 transition-transform duration-300" />
           
           {/* Notification Dot */}
           <span className="absolute top-1 right-1 w-4 h-4 bg-amber-400 border-2 border-white rounded-full animate-pulse shadow-sm"></span>
@@ -173,7 +173,7 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
             <div className="flex items-center gap-4 relative z-10">
               <div className="relative">
                 <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner">
-                  <Sparkles className="w-6 h-6 text-emerald-100" />
+                  <Bot className="w-6 h-6 text-emerald-100" />
                 </div>
                 {/* Active indicator */}
                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-emerald-700 rounded-full"></div>
@@ -240,7 +240,7 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
               <div key={idx} className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {msg.role === 'model' && (
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md mr-2 shrink-0 mt-auto mb-1">
-                    <Sparkles className="w-4 h-4 text-white" />
+                    <Bot className="w-4 h-4 text-white" />
                   </div>
                 )}
                 
@@ -259,7 +259,7 @@ export function SchemeChatbot({ lang }: SchemeChatbotProps) {
             {isLoading && (
               <div className="flex justify-start w-full">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md mr-2 shrink-0 mt-auto mb-1">
-                  <Sparkles className="w-4 h-4 text-white animate-pulse" />
+                  <Bot className="w-4 h-4 text-white animate-pulse" />
                 </div>
                 <div className="bg-white p-4 rounded-[20px] rounded-bl-sm border border-slate-100 shadow-sm flex items-center gap-1.5 h-12">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
