@@ -18,7 +18,7 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
 
-      {/* SIH 2026 Special Challenge Banner */}
+      {/* PM-AJAY GIA Special Feature Banner */}
       <div 
         onClick={onStartSihSkilling}
         className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-2 border-orange-500/50 rounded-3xl p-6 md:p-8 mb-10 cursor-pointer shadow-xl hover:border-orange-400 transition-all hover-lift relative overflow-hidden group"
@@ -32,9 +32,9 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="bg-orange-500/20 text-orange-300 border border-orange-500/40 text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded">
-                  SIH 2026 Featured Prototype
+                  PM-AJAY Special Feature
                 </span>
-                <span className="text-xs text-amber-300 font-semibold">PM-AJAY GIA Skilling</span>
+                <span className="text-xs text-amber-300 font-semibold">GIA Component Skilling</span>
               </div>
               <h2 className="text-2xl font-bold text-white group-hover:text-orange-300 transition-colors">
                 AI Voice Assistant for Livelihood & NSQF Skilling
@@ -46,7 +46,7 @@ export function Home({ lang, onStartVoice, onStartManual, onStartNeedAssistant, 
           </div>
 
           <button className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold px-6 py-3 rounded-full text-sm whitespace-nowrap shadow-lg shadow-orange-500/25 flex items-center gap-2 group-hover:translate-x-1 transition-all">
-            <span>Launch SIH Prototype 🎙️</span>
+            <span>PM-AJAY Voice Assistant 🎙️</span>
           </button>
         </div>
       </div>

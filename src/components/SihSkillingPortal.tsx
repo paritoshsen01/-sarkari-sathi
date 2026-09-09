@@ -10,7 +10,7 @@ import {
   type BeneficiaryProfile, 
   type NsqfPathway, 
   samplePresets, 
-  sihQuestions, 
+  skillingQuestions, 
   calculateDynamicScores, 
   giaProblemSolutions 
 } from '../data/sihSkillingData';
@@ -109,7 +109,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
   // Trigger TTS when entering a question
   useEffect(() => {
     if (langConfirmed && activeTab === 'interview') {
-      const q = sihQuestions[currentQIndex];
+      const q = skillingQuestions[currentQIndex];
       if (q) {
         const textToRead = selectedLang === 'hi' ? q.promptHi : q.promptEn;
         readQuestionTTS(textToRead);
@@ -133,7 +133,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
 
   // Submit Answer for current question
   const handleSaveAnswer = (answerValue: string) => {
-    const q = sihQuestions[currentQIndex];
+    const q = skillingQuestions[currentQIndex];
     const newAnswers = { ...answers, [q.id]: answerValue };
     setAnswers(newAnswers);
 
@@ -146,7 +146,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
     setSpeechText('');
     setManualInput('');
 
-    if (currentQIndex < sihQuestions.length - 1) {
+    if (currentQIndex < skillingQuestions.length - 1) {
       setCurrentQIndex(prev => prev + 1);
     } else {
       // Completed all 8 questions! Move to Profile & Recommendations
@@ -183,7 +183,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
         <div className="flex items-center gap-2 max-w-5xl mx-auto w-full justify-between">
           <div className="flex items-center gap-2">
             <span className="bg-white text-orange-700 text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
-              SIH 2026 Prototype
+              PM-AJAY GIA Official Portal
             </span>
             <span className="hidden md:inline text-orange-50 font-medium">
               PM-AJAY (GIA Component) — Voice Livelihood Mapping & NSQF Skilling
@@ -211,7 +211,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               <div className="flex items-center gap-2">
                 <span className="text-xl font-bold tracking-tight text-white">Sarkari Sathi</span>
                 <span className="text-[10px] bg-orange-500/20 text-orange-300 border border-orange-500/40 px-1.5 py-0.5 rounded font-mono">
-                  SIH MVP
+                  PM-AJAY Skilling
                 </span>
               </div>
               <p className="text-xs text-slate-400 hidden sm:block">AI Livelihood & NSQF Recommendation Engine</p>
@@ -242,7 +242,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 activeTab === 'dashboard' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300 hover:bg-slate-800'
               }`}
             >
-              📈 Jury Dashboard
+              📈 Program Dashboard
             </button>
           </div>
 
@@ -335,14 +335,14 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
 
             </div>
 
-            {/* Quick SIH Jury Demo Presets Section */}
+            {/* Quick PM-AJAY Program Demo Presets Section */}
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-6 mb-12">
               <div className="flex items-center gap-3 mb-3">
                 <Sparkles className="w-5 h-5 text-amber-400" />
-                <h3 className="text-lg font-bold text-amber-200">🚀 SIH Jury Instant Demo Presets (1-Click Evaluation)</h3>
+                <h3 className="text-lg font-bold text-amber-200">🚀 Sample Beneficiary Profiles (Quick Assessment)</h3>
               </div>
               <p className="text-xs text-amber-100/80 mb-4">
-                Click any preset below to instantly load a realistic beneficiary profile and skip speech input during live jury testing:
+                Click any preset below to instantly load a realistic beneficiary profile and skip speech input during demonstration:
               </p>
 
               <div className="grid md:grid-cols-3 gap-3">
@@ -373,7 +373,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                   {currentQIndex + 1}
                 </span>
                 <span className="text-sm font-semibold text-slate-200">
-                  Question {currentQIndex + 1} of {sihQuestions.length} — {sihQuestions[currentQIndex].title}
+                  Question {currentQIndex + 1} of {skillingQuestions.length} — {skillingQuestions[currentQIndex].title}
                 </span>
               </div>
               
@@ -381,7 +381,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               <div className="w-24 bg-slate-700 h-2 rounded-full overflow-hidden">
                 <div 
                   className="bg-orange-500 h-full transition-all duration-300"
-                  style={{ width: `${((currentQIndex + 1) / sihQuestions.length) * 100}%` }}
+                  style={{ width: `${((currentQIndex + 1) / skillingQuestions.length) * 100}%` }}
                 ></div>
               </div>
             </div>
@@ -414,10 +414,10 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
               <div className="bg-slate-900/90 border border-orange-500/30 rounded-2xl p-6 mb-8 relative">
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-xs uppercase font-mono text-orange-400 font-bold tracking-wider">
-                    AI Question #{sihQuestions[currentQIndex].num}
+                    AI Question #{skillingQuestions[currentQIndex].num}
                   </span>
                   <button 
-                    onClick={() => readQuestionTTS(selectedLang === 'hi' ? sihQuestions[currentQIndex].promptHi : sihQuestions[currentQIndex].promptEn)}
+                    onClick={() => readQuestionTTS(selectedLang === 'hi' ? skillingQuestions[currentQIndex].promptHi : skillingQuestions[currentQIndex].promptEn)}
                     className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg flex items-center gap-1"
                   >
                     <Volume2 className="w-3.5 h-3.5" /> Repeat Voice
@@ -425,11 +425,11 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                 </div>
 
                 <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-2">
-                  {selectedLang === 'hi' ? sihQuestions[currentQIndex].promptHi : sihQuestions[currentQIndex].promptEn}
+                  {selectedLang === 'hi' ? skillingQuestions[currentQIndex].promptHi : skillingQuestions[currentQIndex].promptEn}
                 </h3>
                 
                 <p className="text-sm text-slate-400 italic">
-                  {sihQuestions[currentQIndex].subtextHi}
+                  {skillingQuestions[currentQIndex].subtextHi}
                 </p>
               </div>
 
@@ -492,7 +492,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
                   Or select a sample answer:
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {sihQuestions[currentQIndex].optionsHi.map((opt, idx) => (
+                  {skillingQuestions[currentQIndex].optionsHi.map((opt, idx) => (
                     <button
                       key={idx}
                       onClick={() => handleSaveAnswer(opt)}
@@ -809,12 +809,12 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
 
             </div>
 
-            {/* 7. SIH PROBLEM VS SOLUTION CARD MATRIX (FOR JURY EVALUATION) */}
+            {/* 7. GIA PROBLEM VS SOLUTION CARD MATRIX (FOR PROGRAM EVALUATION) */}
             <div className="id-how-it-works-sec bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-xl">
               
               <div className="mb-8">
                 <div className="inline-flex items-center gap-2 bg-amber-500/10 text-amber-300 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider mb-2">
-                  SIH 2026 Problem Statement Solution
+                  PM-AJAY GIA Component Solutions
                 </div>
                 <h3 className="text-2xl md:text-3xl font-extrabold text-white">How Sarkari Sathi Solves GIA PM-AJAY Challenges</h3>
                 <p className="text-xs text-slate-400 mt-1">Directly addressing key operational gaps identified in government skilling programs</p>
@@ -917,7 +917,7 @@ export function SihSkillingPortal({ onBackToHome }: SihSkillingPortalProps) {
           </div>
         )}
 
-        {/* 10. JURY DEMO DASHBOARD (TAB === 'dashboard') */}
+        {/* 10. PROGRAM DASHBOARD (TAB === 'dashboard') */}
         {activeTab === 'dashboard' && (
           <div className="space-y-8 animate-fade-in-up">
             

@@ -3,25 +3,25 @@
 > **Your Voice. Your Skills. Your Opportunity.**  
 > *AI-Driven Voice Assistant for Livelihood Mapping and NSQF-Aligned Skilling Recommendations for SC Communities under the GIA Component of PM-AJAY.*
 
-[![SIH 2026 Prototype](https://img.shields.io/badge/SIH_2026-PM--AJAY_Skilling-orange?style=for-the-badge&logo=gov)](https://paritoshsen01.github.io/-sarkari-sathi/)
+[![PM-AJAY GIA Component](https://img.shields.io/badge/PM--AJAY_Skilling-Livelihood_AI-orange?style=for-the-badge&logo=gov)](https://paritoshsen01.github.io/-sarkari-sathi/)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-brightgreen?style=for-the-badge&logo=github)](https://paritoshsen01.github.io/-sarkari-sathi/)
 [![Built with React](https://img.shields.io/badge/React_19-TypeScript-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS_v4-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 
 ---
 
-## 🏆 SIH 2026 Special Challenge Feature
+## 🏆 PM-AJAY Special Skilling Feature
 
-### Problem Statement:
+### Objective:
 > **“AI-Driven Voice Assistant for Livelihood Mapping and NSQF-Aligned Skilling Recommendations for SC Communities under the GIA Component of PM-AJAY.”**
 
 ### Core Highlights:
 - 🎙️ **Voice-First Natural Interface**: Hands-free multi-lingual diagnostic interview covering education, current occupation, traditional work, skills, career interests, employment preference, mobility, and location.
-- 🚀 **1-Click Jury Demo Presets**: Includes pre-configured beneficiary profiles (*Rural Youth, Homemaker, Mechanics*) for instant evaluation during live jury demonstrations.
+- 🚀 **1-Click Sample Presets**: Includes pre-configured beneficiary profiles (*Rural Youth, Homemaker, Mechanics*) for instant evaluation during demonstration.
 - ⚡ **Skill Gap Analysis & NSQF Ranking**: Dynamically calculates match scores for NSQF-aligned pathways (*Assistant Electrician, Solar PV Technician, Automotive EV Repair, Digital Kiosk Operator*).
 - 💼 **Training-to-Livelihood Outcome Mapping**: Links training courses to tangible wage jobs, PM Surya Ghar installations, Mudra loans, and self-employment micro-enterprises.
 - 🗺️ **Personalized Livelihood Roadmap**: 6-step visual timeline from current skills to sustainable enterprise creation.
-- 📊 **SIH Jury Dashboard**: Live analytics tracking beneficiaries profiled, training match distribution, and district demand metrics.
+- 📊 **PM-AJAY Program Dashboard**: Live analytics tracking beneficiaries profiled, training match distribution, and district demand metrics.
 
 ---
 

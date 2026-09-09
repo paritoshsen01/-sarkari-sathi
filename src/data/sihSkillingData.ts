@@ -252,7 +252,7 @@ export const nsqfPathways: NsqfPathway[] = [
   }
 ];
 
-export const sihQuestions = [
+export const skillingQuestions = [
   {
     id: "education",
     num: 1,
