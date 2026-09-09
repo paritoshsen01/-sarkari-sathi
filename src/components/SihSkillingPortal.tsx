@@ -469,7 +469,7 @@ export function SihSkillingPortal({ lang = 'hi', onChangeLang, onBackToHome }: S
                   {pt.orClick}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {skillingQuestions[currentQIndex].optionsHi.map((opt, idx) => (
+                  {(pt.questions?.[currentQIndex]?.options || skillingQuestions[currentQIndex].optionsHi).map((opt: string, idx: number) => (
                     <button
                       key={idx}
                       onClick={() => handleSaveAnswer(opt)}
