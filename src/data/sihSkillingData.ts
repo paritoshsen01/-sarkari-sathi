@@ -42,7 +42,7 @@ export interface BeneficiaryProfile {
 
 export const samplePresets: { label: string; profile: BeneficiaryProfile }[] = [
   {
-    label: "⚡ Demo 1: Basic Electrical Skill (Ramesh, Rural Youth)",
+    label: "⚡ Ramesh (Electrical & Wiring Experience)",
     profile: {
       education: "Class 12th Pass",
       currentOccupation: "Agricultural Labourer",
@@ -57,7 +57,7 @@ export const samplePresets: { label: string; profile: BeneficiaryProfile }[] = [
     }
   },
   {
-    label: "☀️ Demo 2: Technical Aspirant (Sunita, Rural Homemaker)",
+    label: "☀️ Sunita (Tailoring & Computer Literacy)",
     profile: {
       education: "Class 10th Pass",
       currentOccupation: "Homemaker",
@@ -72,7 +72,7 @@ export const samplePresets: { label: string; profile: BeneficiaryProfile }[] = [
     }
   },
   {
-    label: "🔧 Demo 3: Mechanical Aspirant (Vikram, Semi-Rural)",
+    label: "🔧 Vikram (Mechanical & Workshop Experience)",
     profile: {
       education: "Class 8th Pass",
       currentOccupation: "Helper at Auto Workshop",
@@ -260,8 +260,7 @@ export const skillingQuestions = [
     promptEn: "What is your highest educational qualification?",
     promptHi: "आपकी पढ़ाई कितनी हुई है?",
     subtextHi: "(जैसे: 8वीं पास, 10वीं पास, 12वीं पास, या कोई अन्य)",
-    optionsHi: ["8वीं पास या कम", "10वीं पास", "12वीं पास", "डिप्लोमा / स्नातक"],
-    demoAnswersHi: ["12वीं पास (विज्ञान/कला)", "10वीं पास", "8वीं पास"]
+    optionsHi: ["8वीं पास या कम", "10वीं पास", "12वीं पास", "डिप्लोमा / स्नातक"]
   },
   {
     id: "currentOccupation",
@@ -270,8 +269,7 @@ export const skillingQuestions = [
     promptEn: "What work do you currently do?",
     promptHi: "आप अभी क्या काम करते हैं?",
     subtextHi: "(जैसे: खेती-मजदूरी, दुकान पर काम, वर्कशॉप हेल्पर, या गृहिणी)",
-    optionsHi: ["खेती / कृषि मजदूर", "दुकान / वर्कशॉप हेल्पर", "गृहिणी", "विद्यार्थी / बेरोजगार"],
-    demoAnswersHi: ["कृषि मजदूरी और कभी-कभी बिजली का काम", "वर्कशॉप में हेल्पर", "घर का काम (गृहिणी)"]
+    optionsHi: ["खेती / कृषि मजदूर", "दुकान / वर्कशॉप हेल्पर", "गृहिणी", "विद्यार्थी / बेरोजगार"]
   },
   {
     id: "traditionalOccupation",
@@ -280,8 +278,7 @@ export const skillingQuestions = [
     promptEn: "What has been your family's traditional work?",
     promptHi: "आपके परिवार का ट्रेडिशनल काम क्या रहा है?",
     subtextHi: "(जैसे: खेती, बढ़ईगीरी, सिलाई, दस्तकारी, या अन्य)",
-    optionsHi: ["खेती / किसानी", "बढ़ईगीरी / मिस्त्री", "सिलाई / कपड़ा बुनाई", "हस्तशिल्प / पशुपालन"],
-    demoAnswersHi: ["खेती और मजदूरी", "बढ़ईगीरी और निर्माण कार्य", "सिलाई और हस्तशिल्प"]
+    optionsHi: ["खेती / किसानी", "बढ़ईगीरी / मिस्त्री", "सिलाई / कपड़ा बुनाई", "हस्तशिल्प / पशुपालन"]
   },
   {
     id: "existingSkills",
@@ -290,8 +287,7 @@ export const skillingQuestions = [
     promptEn: "What skills or tasks do you already know?",
     promptHi: "आपको अभी कौन-कौन से काम या स्किल्स आते हैं?",
     subtextHi: "(जैसे: घर की वायरिंग, सिलाई, कंप्यूटर चलाना, वाहन सुधार)",
-    optionsHi: ["बेसिक वायरिंग / बिजली मरम्मत", "सिलाई व कटाई", "गाड़ी सुधार / टूल्स", "कंप्यूटर चलाना"],
-    demoAnswersHi: ["घर की बेसिक वायरिंग और पंखा/बोर्ड सुधारना", "सिलाई और बेसिक कंप्यूटर", "टू-व्हीलर सर्विसिंग"]
+    optionsHi: ["बेसिक वायरिंग / बिजली मरम्मत", "सिलाई व कटाई", "गाड़ी सुधार / टूल्स", "कंप्यूटर चलाना"]
   },
   {
     id: "interest",
@@ -300,8 +296,7 @@ export const skillingQuestions = [
     promptEn: "What type of work would you like to learn for the future?",
     promptHi: "आप फ्यूचर में किस टाइप का काम सीखना चाहेंगे?",
     subtextHi: "(जैसे: सोलर पावर, इलेक्ट्रिशियन, गारमेंट मेकिंग, आईटी/कंप्यूटर)",
-    optionsHi: ["इलेक्ट्रिशियन / बिजली काम", "सोलर पीवी / सोलर पंप", "ऑटोमोटिव / ईवी टेक्निशियन", "कंप्यूटर / डिजिटल सेवाएं"],
-    demoAnswersHi: ["सोलर पावर और इलेक्ट्रिशियन काम", "कपड़ा निर्माण और सिलाई business", "ई-रिक्शा और ऑटो मरम्मत"]
+    optionsHi: ["इलेक्ट्रिशियन / बिजली काम", "सोलर पीवी / सोलर पंप", "ऑटोमोटिव / ईवी टेक्निशियन", "कंप्यूटर / डिजिटल सेवाएं"]
   },
   {
     id: "employmentPreference",
@@ -310,8 +305,7 @@ export const skillingQuestions = [
     promptEn: "Do you want to get a job or start your own work?",
     promptHi: "आप जॉब करना चाहते हैं या अपना काम शुरू करना चाहते हैं?",
     subtextHi: "(जैसे: अपना खुद का बिजनेस / दुकान या वेतन वाली नौकरी)",
-    optionsHi: ["अपना खुद का काम (स्वरोजगार)", "वेतन वाली नौकरी (Job)", "दोनों में से जो भी बेहतर हो"],
-    demoAnswersHi: ["अपना खुद का काम शुरू करना चाहता हूँ", "नौकरी करना चाहता हूँ"]
+    optionsHi: ["अपना खुद का काम (स्वरोजगार)", "वेतन वाली नौकरी (Job)", "दोनों में से जो भी बेहतर हो"]
   },
   {
     id: "mobility",
@@ -320,8 +314,7 @@ export const skillingQuestions = [
     promptEn: "How far can you travel for training or employment?",
     promptHi: "आप ट्रेनिंग या काम के लिए कितनी दूर जा सकते हैं?",
     subtextHi: "(जैसे: अपने गांव के पास, 25 किमी के भीतर, या पूरे जिले में)",
-    optionsHi: ["गांव / 10 किमी के भीतर", "20-25 किमी तक", "पूरे जिले में", "राज्य के किसी भी शहर में"],
-    demoAnswersHi: ["20-25 किमी तक जा सकता हूँ", "अपने गांव/ब्लॉक के पास"]
+    optionsHi: ["गांव / 10 किमी के भीतर", "20-25 किमी तक", "पूरे जिले में", "राज्य के किसी भी शहर में"]
   },
   {
     id: "location",
@@ -330,41 +323,7 @@ export const skillingQuestions = [
     promptEn: "Where do you live? (State, District, Village)",
     promptHi: "आप कहाँ रहते हैं? (राज्य, जिला, ब्लॉक/गाँव)",
     subtextHi: "(उदाहरण: मध्य प्रदेश, भोपाल, कोठरी)",
-    optionsHi: ["भोपाल, मध्य प्रदेश", "सीहोर, मध्य प्रदेश", "इंदौर, मध्य प्रदेश", "रायसेन, मध्य प्रदेश"],
-    demoAnswersHi: ["मध्य प्रदेश, भोपाल, गाँव-कोठरी", "मध्य प्रदेश, सीहोर, आष्टा"]
-  }
-];
-
-export const giaProblemSolutions = [
-  {
-    problemTitle: "Lack of Proper Livelihood Planning",
-    problemDesc: "Beneficiaries are often assigned generic training without assessing local market demand or personal aptitude.",
-    solutionTitle: "Personalized AI Livelihood Mapping",
-    solutionDesc: "Sarkari Sathi maps individual education, traditional skills, and local district economic demand into a tailored roadmap."
-  },
-  {
-    problemTitle: "Participant Skill Identification Gap",
-    problemDesc: "Rural SC youth struggle with written forms and digital literacy, hiding their practical talents.",
-    solutionTitle: "Voice-Based Natural Language Profiling",
-    solutionDesc: "Multi-lingual voice interface in regional dialects allowing hands-free, spoken diagnostic interviews."
-  },
-  {
-    problemTitle: "Job Placement & Sustained Income Issues",
-    problemDesc: "Training programs end without linking trainees to actual wage jobs or micro-enterprise setup.",
-    solutionTitle: "Training-to-Livelihood Opportunity Mapping",
-    solutionDesc: "Directly connects NSQF course output to specific local opportunities (e.g. PM Surya Ghar, Mudra Loan, CSC)."
-  },
-  {
-    problemTitle: "Inter-Agency Coordination Gaps",
-    problemDesc: "Fragmented data across Sector Skill Councils, District Industry Centers, and PM-AJAY Implementing Agencies.",
-    solutionTitle: "Centralized Beneficiary Livelihood Data",
-    solutionDesc: "Unified dashboard providing real-time tracking from voice profiling to certification and enterprise setup."
-  },
-  {
-    problemTitle: "Inadequate Ground-Level Reach",
-    problemDesc: "High dropouts due to lack of local access points in remote tribal and rural Gram Panchayats.",
-    solutionTitle: "Multi-Channel Access (IVR, WhatsApp, Kiosk)",
-    solutionDesc: "Accessible via IVR feature phone calls, WhatsApp voice notes, and CSC Gram Panchayat kiosks."
+    optionsHi: ["भोपाल, मध्य प्रदेश", "सीहोर, मध्य प्रदेश", "इंदौर, मध्य प्रदेश", "रायसेन, मध्य प्रदेश"]
   }
 ];
 
@@ -375,20 +334,19 @@ export function calculateDynamicScores(profile: BeneficiaryProfile): (NsqfPathwa
     const interestLower = (profile.interest || "").toLowerCase();
     const prefLower = (profile.employmentPreference || "").toLowerCase();
 
-    // Skill match (+15)
+    // Skill match (+5)
     if (pathway.currentSkillsMatch.some(s => skillsLower.includes(s.toLowerCase()))) {
       score += 5;
     }
-    // Interest match (+10)
+    // Interest match (+5)
     if (pathway.interestsMatch.some(i => interestLower.includes(i.toLowerCase()))) {
       score += 5;
     }
-    // Preference match (+5)
+    // Preference match (+3)
     if (prefLower.includes("self") && pathway.livelihoodOutcomes.some(l => l.type === 'Self-Employment' || l.type === 'Micro-Enterprise')) {
       score += 3;
     }
 
-    // Clamp score between 65% and 98%
     const finalScore = Math.min(98, Math.max(68, score));
 
     return {
