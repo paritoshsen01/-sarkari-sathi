@@ -75,7 +75,7 @@ function App() {
       <header className="glass-panel sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <div 
-            className="flex items-center gap-2 cursor-pointer hover-lift" 
+            className="flex items-center gap-2 cursor-pointer hover-lift shrink-0" 
             onClick={navigateHome}
           >
             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-slate-100">
@@ -86,23 +86,24 @@ function App() {
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             
             {/* PM-AJAY Skilling Navigation Badge */}
             <button 
               onClick={handleStartSihSkilling}
-              className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-md shadow-emerald-600/20 transition-all hover:scale-105"
+              className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md shadow-emerald-600/20 transition-all hover:scale-105 whitespace-nowrap"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>PM-AJAY Skilling 🎙️</span>
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">PM-AJAY Skilling 🎙️</span>
+              <span className="sm:hidden">Skilling 🎙️</span>
             </button>
 
-            <div className="relative group flex items-center gap-2 bg-slate-50/50 px-3 py-1.5 rounded-full border border-slate-200/50">
-              <Globe className="w-4 h-4 text-slate-500" />
+            <div className="relative group flex items-center gap-1 sm:gap-2 bg-slate-50/50 px-2 sm:px-3 py-1.5 rounded-full border border-slate-200/50">
+              <Globe className="w-4 h-4 text-slate-500 shrink-0" />
               <select 
                 value={lang}
                 onChange={(e) => setLang(e.target.value as LanguageCode)}
-                className="bg-transparent border-none focus:outline-none text-sm font-medium text-slate-700 cursor-pointer appearance-none pr-4"
+                className="bg-transparent border-none focus:outline-none text-[10px] sm:text-sm font-medium text-slate-700 cursor-pointer appearance-none pr-3 sm:pr-4"
               >
                 {Object.values(languages).map((l) => (
                   <option key={l.code} value={l.code}>
