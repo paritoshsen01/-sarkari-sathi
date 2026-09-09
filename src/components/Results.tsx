@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowRight, AlertCircle, Volume2, Square } from 'lucide-react';
 import { type LanguageCode, getTranslation } from '../data/languages';
-import { prototypeSchemes, type Scheme } from '../data/schemes';
+import { prototypeSchemes, type Scheme, getLocalizedScheme } from '../data/schemes';
 import { calculateDetailedScores } from '../utils/aiMatching';
 
 interface ResultsProps {
@@ -100,53 +100,56 @@ export function Results({ lang, answers, forcedSchemes, onSelectScheme }: Result
             <p className="text-slate-600">{content.tryDifferent}</p>
           </div>
         ) : (
-          matchedSchemes.map((scheme) => (
-            <div 
-              key={scheme.id} 
-              className="glass-panel rounded-2xl p-5 md:p-6 hover-lift"
-            >
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-2xl flex-shrink-0">
-                  {scheme.icon}
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className="text-xl font-bold text-slate-900">{scheme.name}</h3>
-                    <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
-                      {scheme.category}
-                    </span>
-                  </div>
-                  <p className="text-slate-600 mb-3">{scheme.benefit}</p>
-                  
-                  {scheme.score !== undefined && (
-                    <div className="flex items-center gap-2">
-                      {scheme.score >= 80 ? (
-                        <span className="inline-flex items-center gap-1 text-green-700 bg-green-50 px-2.5 py-1 rounded-md text-sm font-medium">
-                          <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                          {content.highMatch} ({scheme.score}%)
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-yellow-700 bg-yellow-50 px-2.5 py-1 rounded-md text-sm font-medium">
-                          <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                          {content.possibleMatch} ({scheme.score}%)
-                        </span>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-              
-              <button 
-                onClick={() => onSelectScheme(scheme)}
-                className="flex items-center justify-center gap-2 w-full md:w-auto px-6 py-3 bg-primary-50 text-primary-700 hover:bg-primary-100 font-medium rounded-xl transition-colors"
+          matchedSchemes.map((rawScheme) => {
+            const scheme = getLocalizedScheme(rawScheme, lang);
+            return (
+              <div 
+                key={scheme.id} 
+                className="glass-panel rounded-2xl p-5 md:p-6 hover-lift"
               >
-                {content.viewDetails}
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-2xl flex-shrink-0">
+                    {scheme.icon}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-1">
+                      <h3 className="text-xl font-bold text-slate-900">{scheme.name}</h3>
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                        {scheme.category}
+                      </span>
+                    </div>
+                    <p className="text-slate-600 mb-3">{scheme.benefit}</p>
+                    
+                    {scheme.score !== undefined && (
+                      <div className="flex items-center gap-2">
+                        {scheme.score >= 80 ? (
+                          <span className="inline-flex items-center gap-1 text-green-700 bg-green-50 px-2.5 py-1 rounded-md text-sm font-medium">
+                            <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                            {content.highMatch} ({scheme.score}%)
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-yellow-700 bg-yellow-50 px-2.5 py-1 rounded-md text-sm font-medium">
+                            <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                            {content.possibleMatch} ({scheme.score}%)
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <button 
+                  onClick={() => onSelectScheme(scheme)}
+                  className="flex items-center justify-center gap-2 w-full md:w-auto px-6 py-3 bg-primary-50 text-primary-700 hover:bg-primary-100 font-medium rounded-xl transition-colors"
+                >
+                  {content.viewDetails}
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-          </div>
-        )))}
+          );
+        }))}
       </div>
     </div>
   );

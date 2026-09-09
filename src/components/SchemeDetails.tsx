@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ExternalLink, CheckCircle2, FileText, Info, Users, Mic, Volume2, Square } from 'lucide-react';
 import { type LanguageCode, getTranslation } from '../data/languages';
-import { type Scheme } from '../data/schemes';
+import { type Scheme, getLocalizedScheme } from '../data/schemes';
 import { SchemeGuide } from './SchemeGuide';
 
 interface SchemeDetailsProps {
@@ -10,7 +10,8 @@ interface SchemeDetailsProps {
   onBack: () => void;
 }
 
-export function SchemeDetails({ lang, scheme, onBack }: SchemeDetailsProps) {
+export function SchemeDetails({ lang, scheme: rawScheme, onBack }: SchemeDetailsProps) {
+  const scheme = getLocalizedScheme(rawScheme, lang);
   const t = getTranslation(lang);
   const content = t.details;
   const [showGuide, setShowGuide] = useState(false);

@@ -1,3 +1,12 @@
+export interface SchemeTranslation {
+  name?: string;
+  category?: string;
+  benefit?: string;
+  whatIsIt?: string;
+  whoIsEligible?: string;
+  documents?: string[];
+}
+
 export interface Scheme {
   eligibility?: {
     minAge?: number;
@@ -22,6 +31,7 @@ export interface Scheme {
   link: string;
   tags: string[]; 
   guideSteps: Record<string, string[]>;
+  translations?: Record<string, SchemeTranslation>;
   score?: number;
 }
 
@@ -45,6 +55,21 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://pmkisan.gov.in/",
     tags: ["money", "पैसा", "agriculture", "farmer", "finance"],
+        translations: {
+      hi: {
+        name: "पीएम-किसान (प्रधान मंत्री किसान सम्मान निधि)",
+        category: "कृषि / किसान सहायता",
+        benefit: "पात्र किसानों को ₹6,000 प्रति वर्ष की वित्तीय सहायता दी जाती है।",
+        whatIsIt: "प्रधानमंत्री किसान सम्मान निधि (PM-KISAN) एक केंद्रीय योजना है जो देश के सभी भूमिधारक किसान परिवारों को आय सहायता प्रदान करती है।",
+        whoIsEligible: "आवेदक के नाम पर कृषि योग्य भूमि होनी चाहिए।",
+        documents: [
+          "आधार कार्ड",
+          "बैंक खाता (आधार से जुड़ा)",
+          "भूमि स्वामित्व दस्तावेज (खसरा/खतौनी)",
+          "नागरिकता प्रमाण पत्र"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "First, open your web browser and navigate to the official portal: pmkisan.gov.in.",
@@ -83,6 +108,21 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://beneficiary.nha.gov.in/",
     tags: ["health", "hospital", "स्वास्थ्य", "इलाज", "medical"],
+        translations: {
+      hi: {
+        name: "आयुष्मान भारत - पीएम-जय",
+        category: "स्वास्थ्य एवं चिकित्सा",
+        benefit: "पात्र परिवारों को प्रति वर्ष ₹5 लाख तक का मुफ्त इलाज।",
+        whatIsIt: "प्रधानमंत्री जन आरोग्य योजना (PM-JAY) गरीब और कमजोर परिवारों को अस्पताल में भर्ती होने पर ₹5 लाख तक का स्वास्थ्य बीमा कवर प्रदान करती है।",
+        whoIsEligible: "SECC 2011 डेटाबेस के अनुसार गरीब और कमजोर परिवार।",
+        documents: [
+          "आधार कार्ड",
+          "राशन कार्ड",
+          "मोबाइल नंबर",
+          "आयुष्मान कार्ड / पीएमजेएवाई आईडी"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "First, open your browser and go to the official beneficiary portal: beneficiary.nha.gov.in.",
@@ -122,6 +162,22 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://scholarships.gov.in/",
     tags: ["education", "school", "college", "पढ़ाई", "शिक्षा", "money"],
+        translations: {
+      hi: {
+        name: "राष्ट्रीय छात्रवृत्ति योजना (NSP)",
+        category: "शिक्षा एवं छात्रवृत्ति",
+        benefit: "पात्र छात्रों को आगे की पढ़ाई के लिए वित्तीय सहायता।",
+        whatIsIt: "कम आय वाले परिवारों के मेधावी छात्रों को उच्च शिक्षा प्राप्त करने के दौरान उनके दैनिक खर्चों को पूरा करने के लिए वित्तीय सहायता प्रदान करता है।",
+        whoIsEligible: "विशिष्ट शैक्षणिक मानदंडों और पारिवारिक आय सीमाओं को पूरा करने वाले छात्र।",
+        documents: [
+          "आधार कार्ड",
+          "बैंक खाता",
+          "आय प्रमाण पत्र",
+          "पिछली कक्षा की अंकसूची",
+          "जाति प्रमाण पत्र (यदि लागू हो)"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "First, open your web browser and go to the National Scholarship Portal at scholarships.gov.in.",
@@ -161,6 +217,22 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://www.pmuy.gov.in/",
     tags: ["gas", "fuel", "गैस", "खाना", "cylinder"],
+        translations: {
+      hi: {
+        name: "पीएम उज्ज्वला योजना (PMUY)",
+        category: "घरेलू / मुफ्त एलपीजी",
+        benefit: "पात्र परिवारों को मुफ्त एलपीजी गैस कनेक्शन और पहला सिलेंडर।",
+        whatIsIt: "प्रधानमंत्री उज्ज्वला योजना का उद्देश्य महिलाओं और बच्चों के स्वास्थ्य की रक्षा के लिए उन्हें स्वच्छ खाना पकाने का ईंधन (LPG) प्रदान करना है।",
+        whoIsEligible: "गरीब परिवार की वयस्क महिला जिसके नाम पर पहले से एलपीजी कनेक्शन न हो।",
+        documents: [
+          "आधार कार्ड",
+          "राशन कार्ड",
+          "बैंक खाता",
+          "निवास प्रमाण पत्र",
+          "पासपोर्ट साइज फोटो"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "First, go to the official PM Ujjwala Yojana website at pmuy.gov.in.",
@@ -200,6 +272,22 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://pmajay.dosje.gov.in/",
     tags: ["welfare", "money", "business", "पैसा", "व्यापार"],
+        translations: {
+      hi: {
+        name: "पीएम-अजय (अनुसूचित जाति अभ्युदय योजना)",
+        category: "जन कल्याण एवं कौशल विकास",
+        benefit: "अनुसूचित जाति समुदायों के लिए वित्तीय सहायता, कौशल विकास और स्वरोजगार समर्थन।",
+        whatIsIt: "प्रधानमंत्री अनुसूचित जाति अभ्युदय योजना (PM-AJAY) का उद्देश्य कौशल विकास, आय सृजन योजनाओं और अन्य पहलों के माध्यम से अनुसूचित जाति समुदायों की गरीबी को कम करना है।",
+        whoIsEligible: "आय और अन्य मानदंडों को पूरा करने वाले अनुसूचित जाति (SC) के व्यक्ति।",
+        documents: [
+          "आधार कार्ड",
+          "जाति प्रमाण पत्र (SC)",
+          "आय प्रमाण पत्र",
+          "बैंक खाता विवरण",
+          "निवास प्रमाण पत्र"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "First, navigate to the official portal at pmajay.dosje.gov.in.",
@@ -237,6 +325,20 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://jaljeevanmission.gov.in/",
     tags: ["water", "पानी", "जल", "drinking"],
+        translations: {
+      hi: {
+        name: "जल जीवन मिशन (हर घर जल)",
+        category: "बुनियादी ढांचा / पेयजल",
+        benefit: "हर ग्रामीण घर में व्यक्तिगत नल कनेक्शन के माध्यम से स्वच्छ पेयजल।",
+        whatIsIt: "जल जीवन मिशन का उद्देश्य ग्रामीण भारत के सभी घरों में नल के माध्यम से सुरक्षित और पर्याप्त पीने का पानी उपलब्ध कराना है।",
+        whoIsEligible: "प्रत्येक ग्रामीण परिवार जिसके पास नल का पानी का कनेक्शन नहीं है।",
+        documents: [
+          "आधार कार्ड",
+          "निवास का प्रमाण / राशन कार्ड",
+          "ग्राम पंचायत की सहमति / आवेदन"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "Please note: The Jal Jeevan Mission application is primarily managed locally through your state's Water Supply Department portal, not the central website.",
@@ -274,6 +376,20 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://saubhagya.gov.in/",
     tags: ["electricity", "बिजली", "power", "light", "current"],
+        translations: {
+      hi: {
+        name: "सौभाग्य योजना (सहज बिजली हर घर)",
+        category: "बुनियादी ढांचा / बिजली",
+        benefit: "ग्रामीण क्षेत्रों के सभी गैर-विद्युतीकृत घरों को मुफ्त बिजली कनेक्शन।",
+        whatIsIt: "प्रधानमंत्री सहज बिजली हर घर योजना (सौभाग्य) देश के सभी इच्छुक परिवारों का विद्युतीकरण सुनिश्चित करने की योजना है।",
+        whoIsEligible: "बिना बिजली कनेक्शन वाले गरीब परिवार।",
+        documents: [
+          "आधार कार्ड",
+          "राशन कार्ड / बीपीएल कार्ड",
+          "निवास प्रमाण पत्र"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "While you can view scheme details at saubhagya.gov.in, actual applications are processed through your State Electricity Distribution Company (DISCOM) portal.",
@@ -310,6 +426,19 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://nfsa.gov.in/",
     tags: ["food grains", "राशन", "अनाज", "food", "ration"],
+        translations: {
+      hi: {
+        name: "पीएम गरीब कल्याण अन्न योजना",
+        category: "खाद्य सुरक्षा / राशन",
+        benefit: "राशन कार्ड धारकों को प्रति व्यक्ति मुफ्त अनाज (चावल/गेहूं)।",
+        whatIsIt: "सार्वजनिक वितरण प्रणाली (PDS) के माध्यम से गरीबों को मुफ्त खाद्यान्न प्रदान करने के लिए एक खाद्य सुरक्षा कल्याणकारी योजना।",
+        whoIsEligible: "प्राथमिकता वाले गृहस्थ (PHH) या अंत्योदय अन्न योजना (AAY) राशन कार्ड धारक परिवार।",
+        documents: [
+          "आधार कार्ड",
+          "सक्रिय राशन कार्ड"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "There is no direct online application for PM-GKAY. You only need a valid, active Ration Card to be eligible.",
@@ -348,6 +477,21 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://pmayg.nic.in/",
     tags: ["housing", "घर", "मकान", "house", "shelter", "money"],
+        translations: {
+      hi: {
+        name: "पीएम आवास योजना - ग्रामीण (PMAY-G)",
+        category: "आवास / पक्का मकान",
+        benefit: "पक्का मकान बनाने के लिए ₹1.20 लाख से ₹1.30 लाख तक की वित्तीय सहायता।",
+        whatIsIt: "प्रधानमंत्री आवास योजना - ग्रामीण का उद्देश्य ग्रामीण गरीबों को बुनियादी सुविधाओं के साथ पक्का घर बनाने के लिए वित्तीय सहायता प्रदान करना है।",
+        whoIsEligible: "बेघर परिवार या कच्चे/जर्जर मकानों में रहने वाले परिवार।",
+        documents: [
+          "आधार कार्ड",
+          "बैंक खाता पासबुक",
+          "मनरेगा जॉब कार्ड",
+          "स्वच्छ भारत मिशन (SBM) नंबर"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "First, go to the official portal for rural housing: pmayg.nic.in.",
@@ -386,6 +530,21 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://pmmvy.wcd.gov.in/",
     tags: ["health", "pregnancy", "mother", "maternity", "baby", "गर्भवती", "महिला"],
+        translations: {
+      hi: {
+        name: "प्रधानमंत्री मातृ वंदना योजना (PMMVY)",
+        category: "महिला एवं बाल विकास",
+        benefit: "गर्भवती महिलाओं और स्तनपान कराने वाली माताओं को ₹5,000 की नकद सहायता।",
+        whatIsIt: "गर्भवती महिलाओं और स्तनपान कराने वाली माताओं के स्वास्थ्य और पोषण में सुधार के लिए मातृत्व लाभ कार्यक्रम।",
+        whoIsEligible: "पहले जीवित बच्चे के लिए गर्भवती महिलाएं और स्तनपान कराने वाली माताएं।",
+        documents: [
+          "आधार कार्ड",
+          "बैंक खाता",
+          "माता और बाल संरक्षण (MCP) कार्ड",
+          "पति का आधार कार्ड"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "First, visit your nearest Anganwadi Centre (AWC) or approved Health facility.",
@@ -421,6 +580,18 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "http://janaushadhi.gov.in/",
     tags: ["medicine", "dawai", "pharmacy", "दवा", "मेडिकल", "health"],
+        translations: {
+      hi: {
+        name: "पीएम भारतीय जनऔषधि परियोजना",
+        category: "स्वास्थ्य एवं सस्ती दवाएं",
+        benefit: "जनऔषधि केंद्रों से 50% से 90% कम कीमत पर उच्च गुणवत्ता वाली जेनेरिक दवाएं।",
+        whatIsIt: "प्रधानमंत्री भारतीय जनऔषधि केंद्रों के माध्यम से आम जनता को किफायती मूल्य पर गुणवत्तापूर्ण दवाएं उपलब्ध कराने का एक अभियान।",
+        whoIsEligible: "भारत का प्रत्येक नागरिक सस्ती दवाएं प्राप्त कर सकता है।",
+        documents: [
+          "वैध डॉक्टर का पर्चा (यदि आवश्यक हो)"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "There is no online application required to buy medicines. However, you can find your nearest PMBJP Kendra online.",
@@ -461,6 +632,21 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://cmladlibahna.mp.gov.in/",
     tags: ["money", "पैसा", "women", "mahila", "madhya pradesh"],
+        translations: {
+      hi: {
+        name: "मुख्यमंत्री लाड़ली बहना योजना (मध्य प्रदेश)",
+        category: "महिला सशक्तिकरण",
+        benefit: "पात्र महिलाओं को प्रतिमाह ₹1,250 की नकद आर्थिक सहायता।",
+        whatIsIt: "मध्य प्रदेश की महिलाओं को आर्थिक रूप से स्वावलंबी बनाने और उनके स्वास्थ्य एवं पोषण स्तर में सुधार के लिए राज्य स्तरीय योजना।",
+        whoIsEligible: "मध्य प्रदेश की 21 से 60 वर्ष की महिलाएं जिनकी पारिवारिक आय ₹2.5 लाख से कम हो।",
+        documents: [
+          "समग्र आईडी",
+          "आधार कार्ड",
+          "बैंक खाता (DBT इनेबल्ड)",
+          "आधार से लिंक मोबाइल नंबर"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "Visit your local Gram Panchayat or Ward Office.",
@@ -494,6 +680,20 @@ export const prototypeSchemes: Scheme[] = [
     ],
     link: "https://sehore.nic.in/",
     tags: ["agriculture", "farmer", "kisan", "kheti", "sehore"],
+        translations: {
+      hi: {
+        name: "सीहोर कृषि सहायता योजना",
+        category: "कृषि उपकरण एवं बीज सब्सिडी",
+        benefit: "कृषि उपकरणों और बीजों पर जिला स्तरीय सब्सिडी।",
+        whatIsIt: "सीहोर जिले के किसानों के लिए आधुनिक खेती की तकनीकों को बढ़ावा देने की एक जिला स्तरीय पहल।",
+        whoIsEligible: "सीहोर जिले में रहने वाले पंजीकृत किसान।",
+        documents: [
+          "किसान क्रेडिट कार्ड",
+          "खसरा/खतौनी",
+          "सीहोर का मूल निवासी प्रमाण पत्र"
+        ]
+      }
+    },
     guideSteps: {
       en: [
         "Visit the District Agriculture Office in Sehore.",
@@ -506,3 +706,27 @@ export const prototypeSchemes: Scheme[] = [
     }
   }
 ];
+
+
+export function getLocalizedScheme(scheme: Scheme, lang: string): Scheme {
+  if (!scheme) return scheme;
+  if (lang === 'en') return scheme;
+
+  const targetLang = scheme.translations?.[lang] ? lang : (scheme.translations?.['hi'] ? 'hi' : null);
+
+  if (!targetLang || !scheme.translations?.[targetLang]) {
+    return scheme;
+  }
+
+  const trans = scheme.translations[targetLang];
+
+  return {
+    ...scheme,
+    name: trans.name || scheme.name,
+    category: trans.category || scheme.category,
+    benefit: trans.benefit || scheme.benefit,
+    whatIsIt: trans.whatIsIt || scheme.whatIsIt,
+    whoIsEligible: trans.whoIsEligible || scheme.whoIsEligible,
+    documents: trans.documents || scheme.documents
+  };
+}
