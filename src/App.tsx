@@ -10,6 +10,7 @@ import { SihSkillingPortal } from './components/SihSkillingPortal';
 import { type LanguageCode, languages } from './data/languages';
 import { type Scheme } from './data/schemes';
 import { Globe, Menu, Sparkles } from 'lucide-react';
+import logoImg from './assets/logo.png';
 
 type ViewState = 'home' | 'assistant' | 'need-assistant' | 'manual' | 'results' | 'details' | 'scam-verification' | 'sih-skilling';
 
